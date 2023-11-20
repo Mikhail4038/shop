@@ -14,7 +14,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
@@ -24,7 +24,7 @@ import java.util.Set;
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 
-@Service
+@Component
 @Slf4j
 public class DefaultJwtProvider implements JwtProvider {
 
@@ -50,8 +50,6 @@ public class DefaultJwtProvider implements JwtProvider {
     public String generateAccessToken (@NonNull User user) {
         final String email = user.getEmail ();
         final String name = user.getName ();
-
-        //TODO put only role name?
         final Set<Role> roles = user.getRoles ();
 
         final Long validityPeriod = jwtProperties.getValidityPeriodAccessToken ();
