@@ -15,8 +15,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import static java.util.Collections.EMPTY_SET;
 import static java.util.stream.Collectors.toSet;
 
 @Component
@@ -82,8 +84,11 @@ public class DefaultJwtProvider implements JwtProvider {
 
     private Set<Role> getRoles (Claims claims) {
         List<String> names = claims.get ("roles", List.class);
-        Set<Role> roles = names.stream ()
-                .map (Role::new).collect (toSet ());
-        return roles;
+        if (Objects.nonNull (names)) {
+            Set<Role> roles = names.stream ()
+                    .map (Role::new).collect (toSet ());
+            return roles;
+        }
+        return EMPTY_SET;
     }
 }
