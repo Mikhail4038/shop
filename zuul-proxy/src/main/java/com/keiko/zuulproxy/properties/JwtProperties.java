@@ -6,12 +6,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties
-//@PropertySource ("classpath:jwt.properties")
+@ConfigurationProperties (prefix = "jwt")
 @Getter
 @Setter
 public class JwtProperties {
-    private String jwtAccessSecret;
+    private String accessSecret;
     private String refreshSecret;
 
     public JwtProperties () {

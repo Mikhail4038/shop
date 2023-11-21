@@ -23,6 +23,7 @@ import java.util.Set;
 
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
+import static java.util.stream.Collectors.toSet;
 
 @Component
 @Slf4j
@@ -50,7 +51,10 @@ public class DefaultJwtProvider implements JwtProvider {
     public String generateAccessToken (@NonNull User user) {
         final String email = user.getEmail ();
         final String name = user.getName ();
-        final Set<Role> roles = user.getRoles ();
+        final Set<String> roles = user.getRoles ()
+                .stream ()
+                .map (Role::getName)
+                .collect (toSet ());
 
         final Long validityPeriod = jwtProperties.getValidityPeriodAccessToken ();
         final Instant accessExpirationInstant = now ().plusMinutes (validityPeriod).atZone (systemDefault ()).toInstant ();
@@ -61,7 +65,7 @@ public class DefaultJwtProvider implements JwtProvider {
                 .signWith (accessKey)
                 .setExpiration (accessExpiration)
                 .setSubject (email)
-                .claim ("role", roles)
+                .claim ("roles", roles)
                 .claim ("name", name)
                 .compact ();
     }

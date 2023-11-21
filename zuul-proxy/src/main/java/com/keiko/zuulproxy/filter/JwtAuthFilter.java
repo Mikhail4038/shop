@@ -1,8 +1,6 @@
 package com.keiko.zuulproxy.filter;
 
-import com.keiko.zuulproxy.controller.ConfigController;
 import com.keiko.zuulproxy.jwt.JwtProvider;
-import com.keiko.zuulproxy.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
-    private ConfigController configController;
-
     @Override
     protected void doFilterInternal (HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        JwtProperties jwtProperties = configController.prop ();
         final String token = getTokenFromRequest (request);
         if (nonNull (token) && jwtProvider.validateAccessToken (token)) {
             Claims claims = jwtProvider.getClaims (token);

@@ -5,6 +5,8 @@ import com.keiko.zuulproxy.entity.Role;
 import com.keiko.zuulproxy.jwt.JwtProvider;
 import com.keiko.zuulproxy.properties.JwtProperties;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
+import java.util.List;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @Component
 @Slf4j
@@ -20,16 +25,17 @@ public class DefaultJwtProvider implements JwtProvider {
 
     @Autowired
     private JwtProperties jwtProperties;
+
     private SecretKey accessKey;
     private SecretKey refreshKey;
 
     @PostConstruct
     public void init () {
-        String jwtSecretAccess = jwtProperties.getJwtAccessSecret ();
+        String jwtSecretAccess = jwtProperties.getAccessSecret ();
         String jwtSecretRefresh = jwtProperties.getRefreshSecret ();
 
-        //this.accessKey = Keys.hmacShaKeyFor (Decoders.BASE64.decode (jwtSecretAccess));
-        //this.refreshKey = Keys.hmacShaKeyFor (Decoders.BASE64.decode (jwtSecretRefresh));
+        this.accessKey = Keys.hmacShaKeyFor (Decoders.BASE64.decode (jwtSecretAccess));
+        this.refreshKey = Keys.hmacShaKeyFor (Decoders.BASE64.decode (jwtSecretRefresh));
     }
 
     @Override
@@ -71,12 +77,13 @@ public class DefaultJwtProvider implements JwtProvider {
         authentication.setEmail (claims.getSubject ());
         authentication.setName (claims.get ("name", String.class));
         authentication.setRoles (getRoles (claims));
-        final String email = claims.getSubject ();
-        return null;
+        return authentication;
     }
 
     private Set<Role> getRoles (Claims claims) {
-        Set<Role> roles = claims.get ("roles", Set.class);
+        List<String> names = claims.get ("roles", List.class);
+        Set<Role> roles = names.stream ()
+                .map (Role::new).collect (toSet ());
         return roles;
     }
 }
