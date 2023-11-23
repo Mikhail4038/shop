@@ -38,6 +38,7 @@ class JwtProviderUnitTest {
 
     @InjectMocks
     private static DefaultJwtProvider jwtProvider;
+
     private static User user;
     private static Role role;
 
