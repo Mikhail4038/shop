@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.keiko.authservice.util.TestData.*;
@@ -85,7 +84,7 @@ class JwtTokenHelperUnitTest {
         verify (jwtProvider, times (1)).validateRefreshToken (anyString ());
         verify (jwtProvider, times (1)).getRefreshClaims (anyString ());
         verifyNoMoreInteractions (jwtProvider);
-        InOrder orderJwtProvider = Mockito.inOrder (jwtProvider);
+        InOrder orderJwtProvider = inOrder (jwtProvider);
         orderJwtProvider.verify (jwtProvider).validateRefreshToken (anyString ());
         orderJwtProvider.verify (jwtProvider).getRefreshClaims (anyString ());
 
@@ -116,7 +115,7 @@ class JwtTokenHelperUnitTest {
         verify (jwtProvider, times (1)).getRefreshClaims (anyString ());
         verify (jwtProvider, times (1)).generateAccessToken (any (User.class));
         verifyNoMoreInteractions (jwtProvider);
-        InOrder orderJwtProvider = Mockito.inOrder (jwtProvider);
+        InOrder orderJwtProvider = inOrder (jwtProvider);
         orderJwtProvider.verify (jwtProvider).validateRefreshToken (anyString ());
         orderJwtProvider.verify (jwtProvider).getRefreshClaims (anyString ());
         orderJwtProvider.verify (jwtProvider).generateAccessToken (any (User.class));
@@ -159,7 +158,7 @@ class JwtTokenHelperUnitTest {
 
         verify (jwtProvider, times (1)).validateRefreshToken (anyString ());
         verify (jwtProvider, times (1)).getRefreshClaims (anyString ());
-        InOrder orderJwtProvider = Mockito.inOrder (jwtProvider);
+        InOrder orderJwtProvider = inOrder (jwtProvider);
         orderJwtProvider.verify (jwtProvider).validateRefreshToken (anyString ());
         orderJwtProvider.verify (jwtProvider).getRefreshClaims (anyString ());
         verifyNoMoreInteractions (jwtProvider);
@@ -195,7 +194,7 @@ class JwtTokenHelperUnitTest {
 
         verify (refreshTokenService, times (1)).findByEmail (anyString ());
         verify (refreshTokenService, times (1)).save (any (JwtRefreshToken.class));
-        InOrder orderRefreshTokenService = Mockito.inOrder (refreshTokenService);
+        InOrder orderRefreshTokenService = inOrder (refreshTokenService);
         orderRefreshTokenService.verify (refreshTokenService).findByEmail (anyString ());
         orderRefreshTokenService.verify (refreshTokenService).save (any (JwtRefreshToken.class));
         verifyNoMoreInteractions (refreshTokenService);

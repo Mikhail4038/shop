@@ -75,6 +75,7 @@ class AuthControllerTest {
                 .queryParam ("token", "25922")
                 .contentType ("application/json"))
                 .andExpect (status ().isOk ());
+
         verify (authService, times (1)).confirmRegistration (anyString ());
         verifyNoMoreInteractions (authService);
     }
@@ -82,6 +83,7 @@ class AuthControllerTest {
     @Test
     void login_should_successfully () throws Exception {
         when (authService.login (loginRequest)).thenReturn (loginResponse);
+
         mockMvc.perform (post (AUTH_BASE + LOGIN_USER)
                 .content (objectMapper.writeValueAsString (loginRequest))
                 .contentType ("application/json"))
@@ -89,6 +91,7 @@ class AuthControllerTest {
                 .andExpect (jsonPath ("$.accessToken", is (loginResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (loginResponse.getRefreshToken ())))
                 .andExpect (status ().isOk ());
+
         verify (authService, times (1)).login (any (LoginRequest.class));
         verifyNoMoreInteractions (authService);
     }
@@ -99,6 +102,7 @@ class AuthControllerTest {
                 .queryParam ("email", user.getEmail ())
                 .contentType ("application/json"))
                 .andExpect (status ().isOk ());
+
         verify (authService, times (1)).blockUser (anyString ());
         verifyNoMoreInteractions (authService);
     }
@@ -106,12 +110,14 @@ class AuthControllerTest {
     @Test
     void generate_new_access_token_should_successfully () throws Exception {
         when (jwtTokenHelper.getAccessToken (jwtRefreshRequest)).thenReturn (jwtRefreshResponse);
+
         mockMvc.perform (post (AUTH_BASE + GENERATE_NEW_ACCESS_TOKEN)
                 .content (objectMapper.writeValueAsString (jwtRefreshRequest))
                 .contentType ("application/json"))
                 .andExpect (jsonPath ("$.accessToken", is (jwtRefreshResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (jwtRefreshResponse.getRefreshToken ())))
                 .andExpect (status ().isOk ());
+
         verify (jwtTokenHelper, times (1)).getAccessToken (any (JwtRefreshRequest.class));
         verifyNoMoreInteractions (jwtTokenHelper);
     }
@@ -119,12 +125,14 @@ class AuthControllerTest {
     @Test
     void generate_new_refresh_token_should_successfully () throws Exception {
         when (jwtTokenHelper.getRefreshToken (jwtRefreshRequest)).thenReturn (jwtRefreshResponse);
+
         mockMvc.perform (post (AUTH_BASE + GENERATE_NEW_REFRESH_TOKEN)
                 .content (objectMapper.writeValueAsString (jwtRefreshRequest))
                 .contentType ("application/json"))
                 .andExpect (jsonPath ("$.accessToken", is (jwtRefreshResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (jwtRefreshResponse.getRefreshToken ())))
                 .andExpect (status ().isOk ());
+
         verify (jwtTokenHelper, times (1)).getRefreshToken (any (JwtRefreshRequest.class));
         verifyNoMoreInteractions (jwtTokenHelper);
     }

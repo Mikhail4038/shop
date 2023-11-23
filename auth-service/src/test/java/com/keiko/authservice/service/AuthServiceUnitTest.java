@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
@@ -73,7 +72,7 @@ class AuthServiceUnitTest {
 
         verify (userService, times (1)).findByEmail (anyString ());
         verify (userService, times (1)).save (any (User.class));
-        InOrder inOrder = Mockito.inOrder (userService);
+        InOrder inOrder = inOrder (userService);
         inOrder.verify (userService).findByEmail (anyString ());
         inOrder.verify (userService).save (any (User.class));
     }

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -44,12 +45,16 @@ public class User extends BaseEntity {
     @OneToOne (mappedBy = "user", fetch = LAZY)
     private VerificationToken verificationToken;
 
-    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles) {
+    @OneToOne (fetch = LAZY, cascade = PERSIST)
+    private Address address;
+
+    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, Address address) {
         super (id, created, modified);
         this.email = email;
         this.password = password;
         this.name = name;
         this.roles = roles;
+        this.address = address;
     }
 
     @Override
@@ -64,6 +69,7 @@ public class User extends BaseEntity {
                 .append (email, user.email)
                 .append (password, user.password)
                 .append (name, user.name)
+                .append (address, user.getAddress ())
                 .isEquals ();
     }
 
@@ -74,6 +80,7 @@ public class User extends BaseEntity {
                 .append (email)
                 .append (password)
                 .append (name)
+                .append (address)
                 .toHashCode ();
     }
 }

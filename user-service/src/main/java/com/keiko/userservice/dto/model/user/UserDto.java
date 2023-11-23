@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
+// TODO address!!!
 @Getter
 @Setter
 public class UserDto extends BaseDto {

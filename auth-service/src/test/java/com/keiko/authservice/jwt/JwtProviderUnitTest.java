@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
@@ -63,7 +62,7 @@ class JwtProviderUnitTest {
         verify (jwtProperties, times (1)).getRefreshSecret ();
         verify (jwtProperties, times (1)).getValidityPeriodAccessToken ();
         verifyNoMoreInteractions (jwtProperties);
-        InOrder orderJwtProperties = Mockito.inOrder (jwtProperties);
+        InOrder orderJwtProperties = inOrder (jwtProperties);
         orderJwtProperties.verify (jwtProperties).getAccessSecret ();
         orderJwtProperties.verify (jwtProperties).getRefreshSecret ();
         orderJwtProperties.verify (jwtProperties).getValidityPeriodAccessToken ();
@@ -85,7 +84,7 @@ class JwtProviderUnitTest {
         verify (jwtProperties, times (1)).getRefreshSecret ();
         verify (jwtProperties, times (1)).getValidityPeriodRefreshToken ();
         verifyNoMoreInteractions (jwtProperties);
-        InOrder orderJwtProperties = Mockito.inOrder (jwtProperties);
+        InOrder orderJwtProperties = inOrder (jwtProperties);
         orderJwtProperties.verify (jwtProperties).getAccessSecret ();
         orderJwtProperties.verify (jwtProperties).getRefreshSecret ();
         orderJwtProperties.verify (jwtProperties).getValidityPeriodRefreshToken ();

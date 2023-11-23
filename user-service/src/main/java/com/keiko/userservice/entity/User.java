@@ -1,10 +1,7 @@
 package com.keiko.userservice.entity;
 
 import com.keiko.userservice.listener.TimeEntityListener;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,12 +36,16 @@ public class User extends BaseEntity {
     @ManyToMany (fetch = LAZY, cascade = {MERGE})
     private Set<Role> roles;
 
-    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles) {
+    @OneToOne (fetch = LAZY)
+    private Address address;
+
+    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, Address address) {
         super (id, created, modified);
         this.email = email;
         this.password = password;
         this.name = name;
         this.roles = roles;
+        this.address = address;
     }
 
     @Override
@@ -59,6 +60,7 @@ public class User extends BaseEntity {
                 .append (email, user.email)
                 .append (password, user.password)
                 .append (name, user.name)
+                .append (address, user.getAddress ())
                 .isEquals ();
     }
 
@@ -69,6 +71,7 @@ public class User extends BaseEntity {
                 .append (email)
                 .append (password)
                 .append (name)
+                .append (address)
                 .toHashCode ();
     }
 }
