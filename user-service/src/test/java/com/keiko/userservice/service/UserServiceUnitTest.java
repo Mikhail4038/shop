@@ -28,7 +28,7 @@ class UserServiceUnitTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private static UserService userService;
+    private static DefaultUserService userService;
 
     private static User user;
     private static Role role;
@@ -39,6 +39,12 @@ class UserServiceUnitTest {
         user = createTestUser ();
         role = createTestRole ();
         user.setRoles (Set.of (role));
+    }
+
+    @Test
+    void should_unSuccessfully_save_new_user () {
+        assertThrows (UnsupportedOperationException.class,
+                () -> userService.save (user));
     }
 
     @Test
