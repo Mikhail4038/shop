@@ -6,6 +6,7 @@ import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.entity.User;
 import jakarta.annotation.PostConstruct;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -31,8 +32,9 @@ public class DtoToUserConverter
     public void mapSpecificFields (UserDto dto, User user) {
         Set<RoleData> rolesData = dto.getRoles ();
         if (nonNull (rolesData)) {
+            ModelMapper roleMapper = new ModelMapper ();
             Set<Role> roles = rolesData.stream ()
-                    .map (d -> getModelMapper ().map (d, Role.class))
+                    .map (data -> roleMapper.map (data, Role.class))
                     .collect (toSet ());
             user.setRoles (roles);
         }

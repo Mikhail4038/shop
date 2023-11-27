@@ -1,17 +1,18 @@
-package com.keiko.userservice.service.impl;
+package com.keiko.productservice.service.impl;
 
-import com.keiko.userservice.entity.BaseEntity;
-import com.keiko.userservice.repository.AbstractCrudRepository;
-import com.keiko.userservice.service.AbstractCrudService;
+import com.keiko.productservice.entity.BaseEntity;
+import com.keiko.productservice.repository.CrudRepository;
+import com.keiko.productservice.service.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class DefaultCrudService<E extends BaseEntity>
-        implements AbstractCrudService<E> {
+@Service
+public class CrudServiceImpl<E extends BaseEntity> implements CrudService<E> {
 
     @Autowired
-    private AbstractCrudRepository<E> crudRepository;
+    private CrudRepository<E> crudRepository;
 
     @Override
     public void save (E entity) {
