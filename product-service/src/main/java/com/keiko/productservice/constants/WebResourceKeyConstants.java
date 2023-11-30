@@ -18,6 +18,8 @@ public class WebResourceKeyConstants {
 
     //reviews
     public static final String REVIEW_BASE = "/review";
+    public static final String USER_REVIEWS = "/userReviews";
+    public static final String PRODUCT_REVIEWS = "/productReviews";
 
     //user
     public static final String USER_BASE = "/user";

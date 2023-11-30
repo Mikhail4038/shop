@@ -1,4 +1,4 @@
-package com.keiko.productservice.repository;
+package com.keiko.productservice.repository.crud;
 
 import com.keiko.productservice.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

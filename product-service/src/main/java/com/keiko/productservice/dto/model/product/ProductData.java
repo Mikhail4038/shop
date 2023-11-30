@@ -1,6 +1,7 @@
 package com.keiko.productservice.dto.model.product;
 
 import com.keiko.productservice.dto.model.BaseDto;
+import com.keiko.productservice.entity.Rating;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +14,5 @@ public class ProductData extends BaseDto {
     private String name;
     private Double price;
     private Timestamp expirationDate;
-    private Double rating;
+    private Rating rating;
 }

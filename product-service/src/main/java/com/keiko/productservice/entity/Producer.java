@@ -1,6 +1,6 @@
 package com.keiko.productservice.entity;
 
-import com.keiko.productservice.listener.TimeEntityListener;
+import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

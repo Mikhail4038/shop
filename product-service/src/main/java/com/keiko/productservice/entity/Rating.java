@@ -4,18 +4,19 @@ import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table (name = "t_address")
+@Table (name = "t_rating")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners (TimeEntityListener.class)
-public class Address extends BaseEntity {
-    private String street;
-    private String house;
-    private String city;
-    private String country;
-    private String locale;
+public class Rating extends BaseEntity {
+    private Float averageAssessment;
+    private Integer countReviews;
 }

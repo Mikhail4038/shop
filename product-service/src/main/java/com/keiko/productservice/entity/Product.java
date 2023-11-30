@@ -1,6 +1,6 @@
 package com.keiko.productservice.entity;
 
-import com.keiko.productservice.listener.TimeEntityListener;
+import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -18,7 +18,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @EntityListeners (TimeEntityListener.class)
 public class Product extends BaseEntity {
 
-    @Column (unique = true, nullable = false)
+    @Column (unique = true)
     private String ean;
     private String name;
     private Double price;
@@ -26,11 +26,8 @@ public class Product extends BaseEntity {
     // TODO
     private Timestamp expirationDate;
 
-    @Transient
-    // TODO dynamic attribute (reviews.assessment), implement with interceptor
-    //@PostLoad
-    @Column (insertable = false)
-    private Double rating;
+    @OneToOne (cascade = {PERSIST, MERGE, REMOVE})
+    private Rating rating;
 
     @OneToMany (fetch = LAZY, mappedBy = "product", cascade = REMOVE)
     private List<Review> reviews;

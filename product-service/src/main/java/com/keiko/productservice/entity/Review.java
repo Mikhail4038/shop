@@ -1,12 +1,13 @@
 package com.keiko.productservice.entity;
 
-import com.keiko.productservice.listener.TimeEntityListener;
+import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
+import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -25,6 +26,6 @@ public class Review extends BaseEntity {
     @Max (value = 10, message = "assessment should be no more than 10")
     private byte assessment;
 
-    @ManyToOne (fetch = LAZY)
+    @ManyToOne (fetch = LAZY, cascade = MERGE)
     private Product product;
 }

@@ -1,4 +1,4 @@
-package com.keiko.productservice.listener;
+package com.keiko.productservice.event.listener;
 
 import com.keiko.productservice.entity.BaseEntity;
 import jakarta.persistence.PrePersist;
