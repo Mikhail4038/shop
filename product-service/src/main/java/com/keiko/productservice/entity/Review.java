@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
-import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@Table (name = "t_review")
+@Table (name = "t_review", uniqueConstraints = {
+        @UniqueConstraint (columnNames = {"user", "product_id"})})
 @Getter
 @Setter
 @EntityListeners (TimeEntityListener.class)
@@ -26,6 +26,6 @@ public class Review extends BaseEntity {
     @Max (value = 10, message = "assessment should be no more than 10")
     private byte assessment;
 
-    @ManyToOne (fetch = LAZY, cascade = MERGE)
+    @ManyToOne (fetch = LAZY)
     private Product product;
 }

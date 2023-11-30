@@ -7,10 +7,10 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 @Setter
-public class OnSaveReviewCompleteEvent extends ApplicationEvent {
+public class AfterSavedReviewEvent extends ApplicationEvent {
     private Review review;
 
-    public OnSaveReviewCompleteEvent (Review review) {
+    public AfterSavedReviewEvent (Review review) {
         super (review);
         this.review = review;
     }

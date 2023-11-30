@@ -3,7 +3,7 @@ package com.keiko.productservice.event.listener;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Rating;
 import com.keiko.productservice.entity.Review;
-import com.keiko.productservice.event.OnSaveReviewCompleteEvent;
+import com.keiko.productservice.event.AfterSavedReviewEvent;
 import com.keiko.productservice.service.CrudService;
 import com.keiko.productservice.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 public class SaveReviewListener
-        implements ApplicationListener<OnSaveReviewCompleteEvent> {
+        implements ApplicationListener<AfterSavedReviewEvent> {
 
     @Autowired
     private CrudService<Rating> ratingService;
@@ -26,7 +26,7 @@ public class SaveReviewListener
     private CrudService<Product> productService;
 
     @Override
-    public void onApplicationEvent (OnSaveReviewCompleteEvent event) {
+    public void onApplicationEvent (AfterSavedReviewEvent event) {
         final Review review = event.getReview ();
         final float presentedAssessment = review.getAssessment ();
         final Long productId = review.getProduct ().getId ();
@@ -45,10 +45,9 @@ public class SaveReviewListener
 
         List<Review> reviews = reviewService.getProductReviews (productId);
         int countAssessment = reviews.size ();
-        Double sum = reviews.stream ().mapToDouble (Review::getAssessment).sum ();
-        sum += assessment;
-        countAssessment++;
-        Double averageAssessment = sum / countAssessment;
+        Double averageAssessment = reviews.stream ()
+                .mapToDouble (Review::getAssessment)
+                .summaryStatistics ().getAverage ();
         return new Rating (averageAssessment.floatValue (), countAssessment);
     }
 }
