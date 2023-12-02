@@ -4,7 +4,7 @@ import com.keiko.productservice.controller.CrudController;
 import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
-import com.keiko.productservice.service.product.impl.ProductServiceImpl;
+import com.keiko.productservice.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,27 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.SEARCH;
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE)
 public class ProductController extends CrudController<Product, ProductDto> {
 
-    //TODO
     @Autowired
-    private ProductServiceImpl productService;
+    private ProductService productService;
 
     @Autowired
     private Function<Product, ProductData> toDataConverter;
-
-    @GetMapping (value = PROMO_PRODUCTS)
-    public ResponseEntity<List<ProductDto>> findPromoProducts (@RequestParam (required = false) Boolean sortByAscend) {
-        List<Product> products = productService.findPromoProducts (sortByAscend);
-        List<ProductDto> dto = convertToDto (products);
-        return ResponseEntity.ok (dto);
-    }
-
 
     @GetMapping (value = SEARCH)
     public ResponseEntity<List<ProductData>> search (@RequestParam (required = false) Long producerId,
@@ -44,7 +36,7 @@ public class ProductController extends CrudController<Product, ProductDto> {
                                                      @RequestParam (required = false) Double maxPrice,
                                                      @RequestParam (required = false) Float minRating,
                                                      @RequestParam (required = false) Float maxRating) {
-        List<Product> products = productService.searchProduct (producerId, isPromotional, minPrice, maxPrice, minRating, maxRating);
+        List<Product> products = productService.searchProducts (producerId, isPromotional, minPrice, maxPrice, minRating, maxRating);
         List<ProductData> dto = convertToData (products);
         return ResponseEntity.ok (dto);
     }

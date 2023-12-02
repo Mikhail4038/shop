@@ -14,14 +14,14 @@ import java.util.List;
 
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
-//@RestController
-//@RequestMapping (value = PRODUCER_BASE)
+@RestController
+@RequestMapping (value = PRODUCT_BASE + PRODUCT_PRODUCER_BASE)
 public class ProductProducerController extends ProductController {
 
     @Autowired
     private ProductProducerService productProducerService;
 
-    //@GetMapping (value = BY_PRODUCER)
+    @GetMapping (value = BY_PRODUCER)
     public ResponseEntity<List<ProductData>> findByProducer (@RequestParam Long producerId,
                                                              @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findProductsByProducer (producerId, sortByAscend);
@@ -29,7 +29,7 @@ public class ProductProducerController extends ProductController {
         return ResponseEntity.ok (dto);
     }
 
-    //@GetMapping (value = PROMO_BY_PRODUCER)
+    @GetMapping (value = PROMO_BY_PRODUCER)
     public ResponseEntity<List<ProductData>> findPromoProductByProducer (@RequestParam Long producerId,
                                                                          @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findPromoProductByProducer (producerId, sortByAscend);

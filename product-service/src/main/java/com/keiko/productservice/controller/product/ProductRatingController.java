@@ -15,7 +15,7 @@ import java.util.List;
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController
-@RequestMapping (value = RATING_BASE)
+@RequestMapping (value = PRODUCT_BASE + RATING_BASE)
 public class ProductRatingController extends ProductController {
 
     @Autowired

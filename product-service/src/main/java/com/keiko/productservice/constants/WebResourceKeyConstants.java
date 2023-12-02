@@ -23,12 +23,13 @@ public class WebResourceKeyConstants {
     public static final String RATING_RANGE = "/range";
 
     //product.producer
-    public static final String BY_PRODUCER = "/producer";
+    public static final String PRODUCT_PRODUCER_BASE = "/manufacturer";
+    public static final String BY_PRODUCER = "/products";
     public static final String PROMO_BY_PRODUCER = "/promo";
 
     //product promo
     public static final String PROMO_BASE = "/promo";
-    public static final String PROMO_PRODUCTS = "/";
+    public static final String PROMO_PRODUCTS = "/products";
 
     public static final String SEARCH = "/search";
 

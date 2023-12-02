@@ -83,9 +83,9 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
     }
 
     @Override
-    public List<Product> searchProduct (Long producerId, boolean isPromotional,
-                                        Double minPrice, Double maxPrice,
-                                        Float minRating, Float maxRating) {
+    public List<Product> searchProducts (Long producerId, boolean isPromotional,
+                                         Double minPrice, Double maxPrice,
+                                         Float minRating, Float maxRating) {
         Specification<Product> spec = Specification.where (null);
 
         if (nonNull (producerId)) {
