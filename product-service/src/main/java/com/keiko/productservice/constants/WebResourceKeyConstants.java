@@ -10,9 +10,30 @@ public class WebResourceKeyConstants {
     //product
     public static final String PRODUCT_BASE = "/product";
 
+    //product.price
+    public static final String PRICE_BASE = "/price";
+    public static final String PRICE_LESS_THAN = "/less";
+    public static final String PRICE_MORE_THAN = "/more";
+    public static final String PRICE_RANGE = "/range";
+
+    //product.rating
+    public static final String RATING_BASE = "/rating";
+    public static final String RATING_LESS_THAN = "/less";
+    public static final String RATING_MORE_THAN = "/more";
+    public static final String RATING_RANGE = "/range";
+
+    //product.producer
+    public static final String BY_PRODUCER = "/producer";
+    public static final String PROMO_BY_PRODUCER = "/promo";
+
+    //product promo
+    public static final String PROMO_BASE = "/promo";
+    public static final String PROMO_PRODUCTS = "/";
+
+    public static final String SEARCH = "/search";
+
     //producer
     public static final String PRODUCER_BASE = "/producer";
-
     //address
     public static final String ADDRESS_BASE = "/address";
 

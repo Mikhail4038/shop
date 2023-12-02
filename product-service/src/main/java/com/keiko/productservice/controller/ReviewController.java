@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
@@ -23,9 +22,6 @@ public class ReviewController extends CrudController<Review, ReviewDto> {
 
     @Autowired
     private ReviewService reviewService;
-
-    @Autowired
-    private Function<Review, ReviewData> toDtoConverter;
 
     @GetMapping (value = USER_REVIEWS)
     public ResponseEntity<List<ReviewData>> getUserReviews (@RequestParam Long userId) {
@@ -43,7 +39,7 @@ public class ReviewController extends CrudController<Review, ReviewDto> {
 
     private List<ReviewData> toDtoConvert (List<Review> reviews) {
         return reviews.stream ()
-                .map (toDtoConverter::apply)
+                .map (getToDtoConverter ()::apply)
                 .collect (toList ());
     }
 }

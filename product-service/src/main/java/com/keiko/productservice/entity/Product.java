@@ -21,10 +21,10 @@ public class Product extends BaseEntity {
     @Column (unique = true)
     private String ean;
     private String name;
-    private Double price;
-
-    // TODO
     private Timestamp expirationDate;
+
+    @OneToOne (fetch = LAZY, cascade = {PERSIST, MERGE, REMOVE})
+    private Price price;
 
     @OneToOne (cascade = {PERSIST, MERGE, REMOVE})
     private Rating rating;

@@ -53,4 +53,8 @@ public class CrudController<E extends BaseEntity, D extends BaseDto> {
         crudService.delete (id);
         return ResponseEntity.ok ().build ();
     }
+
+    public Function<E, D> getToDtoConverter () {
+        return toDtoConverter;
+    }
 }

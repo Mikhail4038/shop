@@ -42,11 +42,9 @@ public class DeleteReviewListener
         if (reviews.isEmpty ()) {
             return new Rating (0f, 0);
         }
-
-        Double sum = reviews.stream ().mapToDouble (Review::getAssessment).sum ();
-        int count = reviews.size ();
-        Double averageAssessment = sum / count;
-        Rating rating = new Rating (averageAssessment.floatValue (), count);
+        int countAssessment = reviews.size ();
+        Double averageAssessment = reviews.stream ().mapToDouble (Review::getAssessment).summaryStatistics ().getAverage ();
+        Rating rating = new Rating (averageAssessment.floatValue (), countAssessment);
         return rating;
     }
 }
