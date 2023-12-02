@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PriceDto extends BaseDto {
-    private Double value;
+    private Double cost;
     private boolean isPromotional;
 }

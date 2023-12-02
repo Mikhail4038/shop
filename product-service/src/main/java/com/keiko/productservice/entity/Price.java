@@ -13,6 +13,6 @@ import lombok.Setter;
 @Setter
 @EntityListeners (TimeEntityListener.class)
 public class Price extends BaseEntity {
-    private Double value;
+    private Double cost;
     private boolean isPromotional;
 }
