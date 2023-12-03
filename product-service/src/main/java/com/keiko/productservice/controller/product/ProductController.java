@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.keiko.productservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
-import static com.keiko.productservice.constants.WebResourceKeyConstants.SEARCH;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -38,6 +37,13 @@ public class ProductController extends CrudController<Product, ProductDto> {
                                                      @RequestParam (required = false) Float maxRating) {
         List<Product> products = productService.searchProducts (producerId, isPromotional, minPrice, maxPrice, minRating, maxRating);
         List<ProductData> dto = convertToData (products);
+        return ResponseEntity.ok (dto);
+    }
+
+    @GetMapping (value = BY_EAN)
+    public ResponseEntity<ProductDto> findByEan (@RequestParam String ean) {
+        Product product = productService.findByEan (ean);
+        ProductDto dto = getToDtoConverter ().apply (product);
         return ResponseEntity.ok (dto);
     }
 

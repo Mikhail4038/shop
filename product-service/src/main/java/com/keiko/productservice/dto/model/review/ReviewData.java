@@ -17,7 +17,7 @@ public class ReviewData extends BaseDto {
     @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp modified;
 
-    private Long user;
+    private Long userId;
     private String message;
     private byte assessment;
 }

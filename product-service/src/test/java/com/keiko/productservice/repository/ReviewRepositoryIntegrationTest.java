@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@DataJpaTest
+@DataJpaTest
 class ReviewRepositoryIntegrationTest {
 
     private static final Long USER_ID = 1L;
@@ -19,14 +19,14 @@ class ReviewRepositoryIntegrationTest {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    //@Test
+    @Test
     void whenFindByUserId_thenReturnReviews () {
-        List<Review> reviews = reviewRepository.findByUser (USER_ID);
+        List<Review> reviews = reviewRepository.findByUserId (USER_ID);
         assertFalse (reviews.isEmpty ());
         assertTrue (reviews.size () == 2);
     }
 
-   // @Test
+    @Test
     void whenFindByProductId_thenReturnReviews () {
         List<Review> reviews = reviewRepository.findByProduct_id (PRODUCT_ID);
         assertFalse (reviews.isEmpty ());

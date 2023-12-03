@@ -47,7 +47,7 @@ public class ReviewServiceImpl extends CrudServiceImpl<Review> implements Review
 
     @Override
     public List<Review> getUserReviews (Long userId) {
-        return reviewRepository.findByUser (userId);
+        return reviewRepository.findByUserId (userId);
     }
 
     @Override

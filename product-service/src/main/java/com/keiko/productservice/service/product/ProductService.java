@@ -8,4 +8,6 @@ public interface ProductService {
     List<Product> searchProducts (Long producerId, boolean isPromotional,
                                   Double minPrice, Double maxPrice,
                                   Float minRating, Float maxRating);
+
+    Product findByEan (String ean);
 }

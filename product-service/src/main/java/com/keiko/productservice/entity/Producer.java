@@ -4,6 +4,8 @@ import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 
@@ -23,4 +25,26 @@ public class Producer extends BaseEntity {
 
     @OneToMany (fetch = LAZY, mappedBy = "producer")
     private List<Product> products;
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass () != o.getClass ()) return false;
+
+        Producer producer = (Producer) o;
+
+        return new EqualsBuilder ()
+                .append (name, producer.name)
+                .append (address, producer.address)
+                .isEquals ();
+    }
+
+    @Override
+    public int hashCode () {
+        return new HashCodeBuilder (17, 37)
+                .append (name)
+                .append (address)
+                .toHashCode ();
+    }
 }

@@ -12,7 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import static java.util.Objects.nonNull;
 
 public class ProductRatingSpecs {
-    public static Specification<Product> hasRatingOfLessThan (Double averageAssessment, Boolean sortByAscend) {
+    public static Specification<Product> hasRatingOfLessThan (Float averageAssessment,
+                                                              Boolean sortByAscend) {
         return (root, query, builder) -> {
             Join<Product, Rating> productRating = root.join (Product_.RATING);
             if (nonNull (sortByAscend)) {
@@ -22,7 +23,8 @@ public class ProductRatingSpecs {
         };
     }
 
-    public static Specification<Product> hasRatingOfMoreThan (Double averageAssessment, Boolean sortByAscend) {
+    public static Specification<Product> hasRatingOfMoreThan (Float averageAssessment,
+                                                              Boolean sortByAscend) {
         return (root, query, builder) -> {
             Join<Product, Rating> productRating = root.join (Product_.RATING);
             if (nonNull (sortByAscend)) {
@@ -32,7 +34,9 @@ public class ProductRatingSpecs {
         };
     }
 
-    public static Specification<Product> hasRatingBetween (Float minAverageAssessment, Float maxAverageAssessment, Boolean sortByAscend) {
+    public static Specification<Product> hasRatingBetween (Float minAverageAssessment,
+                                                           Float maxAverageAssessment,
+                                                           Boolean sortByAscend) {
         return (root, query, builder) -> {
             Join<Product, Rating> productRating = root.join (Product_.RATING);
             if (nonNull (sortByAscend)) {

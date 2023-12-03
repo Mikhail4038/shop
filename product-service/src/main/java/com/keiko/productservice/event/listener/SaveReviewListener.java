@@ -45,9 +45,12 @@ public class SaveReviewListener
 
         List<Review> reviews = reviewService.getProductReviews (productId);
         int countAssessment = reviews.size ();
+
         Double averageAssessment = reviews.stream ()
                 .mapToDouble (Review::getAssessment)
                 .summaryStatistics ().getAverage ();
-        return new Rating (averageAssessment.floatValue (), countAssessment);
+
+        Rating rating = new Rating (averageAssessment.floatValue (), countAssessment);
+        return rating;
     }
 }

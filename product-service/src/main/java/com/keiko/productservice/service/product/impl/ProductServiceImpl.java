@@ -1,6 +1,7 @@
 package com.keiko.productservice.service.product.impl;
 
 import com.keiko.productservice.entity.Product;
+import com.keiko.productservice.exception.model.ProductNotFoundException;
 import com.keiko.productservice.repository.ProductRepository;
 import com.keiko.productservice.service.impl.CrudServiceImpl;
 import com.keiko.productservice.service.product.*;
@@ -42,22 +43,26 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
     }
 
     @Override
-    public List<Product> findProductsPriceRange (Double minPrice, Double maxPrice, Boolean sortByAscend) {
+    public List<Product> findProductsPriceRange (Double minPrice,
+                                                 Double maxPrice,
+                                                 Boolean sortByAscend) {
         return productRepository.findAll (hasPriceBetween (minPrice, maxPrice, sortByAscend));
     }
 
     @Override
-    public List<Product> findProductsRatingLessThan (Double averageAssessment, Boolean sortByAscend) {
+    public List<Product> findProductsRatingLessThan (Float averageAssessment, Boolean sortByAscend) {
         return productRepository.findAll (hasRatingOfLessThan (averageAssessment, sortByAscend));
     }
 
     @Override
-    public List<Product> findProductsRatingMoreThan (Double averageAssessment, Boolean sortByAscend) {
+    public List<Product> findProductsRatingMoreThan (Float averageAssessment, Boolean sortByAscend) {
         return productRepository.findAll (hasRatingOfMoreThan (averageAssessment, sortByAscend));
     }
 
     @Override
-    public List<Product> findProductsRatingRange (Float minAverageAssessment, Float maxAverageAssessment, Boolean sortByAscend) {
+    public List<Product> findProductsRatingRange (Float minAverageAssessment,
+                                                  Float maxAverageAssessment,
+                                                  Boolean sortByAscend) {
         return productRepository.findAll (hasRatingBetween (minAverageAssessment, maxAverageAssessment, sortByAscend));
     }
 
@@ -101,5 +106,14 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
             spec = spec.and (hasRatingBetween (minRating, maxRating, null));
         }
         return productRepository.findAll (spec);
+    }
+
+    @Override
+    public Product findByEan (String ean) {
+        return productRepository.findByEan (ean).orElseThrow (() -> {
+            String message = String.format ("Product with ean: %s not found", ean);
+            return new ProductNotFoundException (message);
+        });
+
     }
 }

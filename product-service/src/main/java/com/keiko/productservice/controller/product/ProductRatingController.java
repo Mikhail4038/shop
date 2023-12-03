@@ -22,7 +22,7 @@ public class ProductRatingController extends ProductController {
     private ProductRatingService productRatingService;
 
     @GetMapping (value = RATING_LESS_THAN)
-    public ResponseEntity<List<ProductDto>> findProductsRatingLess (@RequestParam Double averageAssessment,
+    public ResponseEntity<List<ProductDto>> findProductsRatingLess (@RequestParam Float averageAssessment,
                                                                     @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productRatingService.findProductsRatingLessThan (averageAssessment, sortByAscend);
         List<ProductDto> dto = convertToDto (products);
@@ -30,7 +30,7 @@ public class ProductRatingController extends ProductController {
     }
 
     @GetMapping (value = RATING_MORE_THAN)
-    public ResponseEntity<List<ProductDto>> findProductsRatingMore (@RequestParam Double averageAssessment,
+    public ResponseEntity<List<ProductDto>> findProductsRatingMore (@RequestParam Float averageAssessment,
                                                                     @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productRatingService.findProductsRatingMoreThan (averageAssessment, sortByAscend);
         List<ProductDto> dto = convertToDto (products);

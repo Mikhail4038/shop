@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReviewRepository extends CrudRepository<Review> {
 
-    List<Review> findByUser (Long userId);
+    List<Review> findByUserId (Long userId);
 
     List<Review> findByProduct_id (Long productId);
 }

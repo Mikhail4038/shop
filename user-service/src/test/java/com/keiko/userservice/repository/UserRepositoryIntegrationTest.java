@@ -18,7 +18,7 @@ class UserRepositoryIntegrationTest {
     private static final String INCORRECT_USER_EMAIL = "unknowngmail.com";
     private static final String USER_PASSWORD = "500290";
     private static final String EXCEPTION_MESSAGE = "No value present";
-    private static final String ROLE_NAME = "USER";
+    private static final String ROLE_NAME = "SUPER_TEST";
 
     @Autowired
     private UserRepository userRepository;

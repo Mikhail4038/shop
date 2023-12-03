@@ -43,7 +43,11 @@ public class DeleteReviewListener
             return new Rating (0f, 0);
         }
         int countAssessment = reviews.size ();
-        Double averageAssessment = reviews.stream ().mapToDouble (Review::getAssessment).summaryStatistics ().getAverage ();
+
+        Double averageAssessment = reviews.stream ()
+                .mapToDouble (Review::getAssessment)
+                .summaryStatistics ().getAverage ();
+
         Rating rating = new Rating (averageAssessment.floatValue (), countAssessment);
         return rating;
     }

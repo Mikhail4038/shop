@@ -2,8 +2,8 @@ insert into t_address (created,modified,street,house,city,country,locale) values
 
 insert into t_producer (created,modified,name,address_id) values(now(),now(),'Conte',1);
 
-insert into t_price(created,modified,cost,is_promotional) values(now(),now(),"50.0",1);
-insert into t_price(created,modified,cost,is_promotional) values(now(),now(),"30.0",1);
+insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'45.0',1);
+insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'30.0',1);
 
 insert into t_product(created,modified,ean,name,price_id,expiration_date,producer_id) values(now(),now(),'1234','sweater',1,'2023-12-10',1);
 insert into t_product(created,modified,ean,name,price_id,expiration_date,producer_id) values(now(),now(),'5678','dress',2,'2024-11-04',1);

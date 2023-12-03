@@ -4,6 +4,8 @@ import com.keiko.productservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -34,4 +36,32 @@ public class Product extends BaseEntity {
 
     @ManyToOne (fetch = LAZY)
     private Producer producer;
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass () != o.getClass ()) return false;
+
+        Product product = (Product) o;
+
+        return new EqualsBuilder ()
+                .append (ean, product.ean)
+                .append (name, product.name)
+                .append (expirationDate, product.expirationDate)
+                .append (price, product.price)
+                .append (rating, product.rating)
+                .isEquals ();
+    }
+
+    @Override
+    public int hashCode () {
+        return new HashCodeBuilder (17, 37)
+                .append (ean)
+                .append (name)
+                .append (expirationDate)
+                .append (price)
+                .append (rating)
+                .toHashCode ();
+    }
 }
