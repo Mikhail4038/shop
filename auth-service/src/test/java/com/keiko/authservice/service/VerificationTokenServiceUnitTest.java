@@ -10,11 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.keiko.authservice.util.TestData.createTestVerificationToken;
+import static com.keiko.authservice.util.TestData.testVerificationToken;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -31,7 +30,7 @@ class VerificationTokenServiceUnitTest {
 
     @BeforeAll
     static void seUp () {
-        verificationToken = createTestVerificationToken ();
+        verificationToken = testVerificationToken ();
         verificationTokenService = new DefaultVerificationTokenService ();
     }
 

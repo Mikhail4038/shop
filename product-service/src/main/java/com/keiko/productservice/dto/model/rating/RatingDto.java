@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RatingDto extends BaseDto {
-    private Float averageAssessment;
+    private Float value;
     private Integer countReviews;
 }

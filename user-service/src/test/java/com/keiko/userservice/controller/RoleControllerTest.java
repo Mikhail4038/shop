@@ -20,6 +20,7 @@ import static com.keiko.userservice.util.TestData.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,11 +46,10 @@ class RoleControllerTest {
 
     @BeforeAll
     static void setUp () {
-        role = createTestRole ();
-        roleDto = new RoleDto ();
-        user = createTestUser ();
+        role = testRole ();
+        user = testUser ();
         role.setUsers (Set.of (user));
-        roleDto = createTestRoleDto ();
+        roleDto = testRoleDto ();
     }
 
     @Test
@@ -59,7 +59,7 @@ class RoleControllerTest {
 
         mockMvc.perform (get (ROLE_BASE + FIND_ROLE_BY_NAME)
                 .queryParam ("name", role.getName ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$.name", is (role.getName ())))
                 .andExpect (status ().isOk ());
 
@@ -73,7 +73,7 @@ class RoleControllerTest {
 
         mockMvc.perform (get (ROLE_BASE + GET_USER_ROLES)
                 .queryParam ("user", user.getEmail ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
                 .andExpect (jsonPath ("$[0]", is (role.getName ())))
                 .andExpect (status ().isOk ());

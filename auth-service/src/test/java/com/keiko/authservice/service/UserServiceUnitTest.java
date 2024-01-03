@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.keiko.authservice.util.TestData.createTestUser;
+import static com.keiko.authservice.util.TestData.testUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +34,7 @@ class UserServiceUnitTest {
     @BeforeAll
     static void setUp () {
         userService = new DefaultUserService ();
-        user = createTestUser ();
+        user = testUser ();
     }
 
     @Test

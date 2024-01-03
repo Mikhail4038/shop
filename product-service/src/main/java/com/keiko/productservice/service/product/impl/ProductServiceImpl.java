@@ -50,20 +50,20 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
     }
 
     @Override
-    public List<Product> findProductsRatingLessThan (Float averageAssessment, Boolean sortByAscend) {
-        return productRepository.findAll (hasRatingOfLessThan (averageAssessment, sortByAscend));
+    public List<Product> findProductsRatingLessThan (Float rating, Boolean sortByAscend) {
+        return productRepository.findAll (hasRatingOfLessThan (rating, sortByAscend));
     }
 
     @Override
-    public List<Product> findProductsRatingMoreThan (Float averageAssessment, Boolean sortByAscend) {
-        return productRepository.findAll (hasRatingOfMoreThan (averageAssessment, sortByAscend));
+    public List<Product> findProductsRatingMoreThan (Float rating, Boolean sortByAscend) {
+        return productRepository.findAll (hasRatingOfMoreThan (rating, sortByAscend));
     }
 
     @Override
-    public List<Product> findProductsRatingRange (Float minAverageAssessment,
-                                                  Float maxAverageAssessment,
+    public List<Product> findProductsRatingRange (Float minRating,
+                                                  Float maxRating,
                                                   Boolean sortByAscend) {
-        return productRepository.findAll (hasRatingBetween (minAverageAssessment, maxAverageAssessment, sortByAscend));
+        return productRepository.findAll (hasRatingBetween (minRating, maxRating, sortByAscend));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
     }
 
     @Override
-    public List<Product> searchProducts (Long producerId, boolean isPromotional,
+    public List<Product> searchProducts (Long producerId, Boolean isPromotional,
                                          Double minPrice, Double maxPrice,
                                          Float minRating, Float maxRating) {
         Specification<Product> spec = Specification.where (null);

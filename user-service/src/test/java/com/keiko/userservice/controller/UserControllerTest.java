@@ -22,6 +22,7 @@ import static com.keiko.userservice.util.TestData.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,9 +51,9 @@ class UserControllerTest {
 
     @BeforeAll
     static void setUp () {
-        user = createTestUser ();
-        userDto = createTestUserDto ();
-        role = createTestRole ();
+        user = testUser ();
+        userDto = testUserDto ();
+        role = testRole ();
         user.setRoles (Set.of (role));
     }
 
@@ -63,7 +64,7 @@ class UserControllerTest {
 
         mockMvc.perform (get (USER_BASE + FIND_USER_BY_EMAIL)
                 .queryParam ("email", user.getEmail ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$.email", is (user.getEmail ())))
                 .andExpect (jsonPath ("$.password", is (user.getPassword ())))
                 .andExpect (jsonPath ("$.name", is (user.getName ())))
@@ -80,7 +81,7 @@ class UserControllerTest {
 
         mockMvc.perform (delete (USER_BASE + DELETE_USER_BY_EMAIL)
                 .queryParam ("email", user.getEmail ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (userService, times (1)).deleteByEmail (anyString ());
@@ -93,7 +94,7 @@ class UserControllerTest {
 
         mockMvc.perform (get (USER_BASE + FIND_USERS_BY_ROLE)
                 .queryParam ("role", role.getName ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
                 .andExpect (jsonPath ("$[0]", is (user.getEmail ())))
                 .andExpect (status ().isOk ());
@@ -107,7 +108,7 @@ class UserControllerTest {
         ModifyUserRolesRequest request = new ModifyUserRolesRequest (1L, Set.of (1L));
         mockMvc.perform (post (USER_BASE + ADD_ROLES)
                 .content (objectMapper.writeValueAsString (request))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (userService, times (1)).addRoles (any (ModifyUserRolesRequest.class));
@@ -119,7 +120,7 @@ class UserControllerTest {
         ModifyUserRolesRequest request = new ModifyUserRolesRequest (1L, Set.of (1L));
         mockMvc.perform (post (USER_BASE + DELETE_ROLES)
                 .content (objectMapper.writeValueAsString (request))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (userService, times (1)).deleteRoles (any (ModifyUserRolesRequest.class));

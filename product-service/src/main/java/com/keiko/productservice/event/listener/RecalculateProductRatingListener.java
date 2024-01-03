@@ -3,7 +3,7 @@ package com.keiko.productservice.event.listener;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Rating;
 import com.keiko.productservice.entity.Review;
-import com.keiko.productservice.event.AfterDeletedReviewEvent;
+import com.keiko.productservice.event.RecalculateProductRatingEvent;
 import com.keiko.productservice.service.CrudService;
 import com.keiko.productservice.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DeleteReviewListener
-        implements ApplicationListener<AfterDeletedReviewEvent> {
+public class RecalculateProductRatingListener
+        implements ApplicationListener<RecalculateProductRatingEvent> {
 
     @Autowired
     private ReviewService reviewService;
@@ -23,21 +23,20 @@ public class DeleteReviewListener
     private CrudService<Product> productService;
 
     @Override
-    public void onApplicationEvent (AfterDeletedReviewEvent event) {
+    public void onApplicationEvent (RecalculateProductRatingEvent event) {
         final Review review = event.getReview ();
-        final byte assessment = review.getAssessment ();
-        final Long productId = review.getProduct ().getId ();
-        final Product product = productService.fetchBy (productId);
+        final Product product = review.getProduct ();
+        final Long productId = product.getId ();
 
-        Rating newRating = calculateProductRating (productId, assessment);
+        Rating newRating = recalculateProductRating (productId);
         Rating actualRating = product.getRating ();
-        actualRating.setAverageAssessment (newRating.getAverageAssessment ());
+        actualRating.setValue (newRating.getValue ());
         actualRating.setCountReviews (newRating.getCountReviews ());
         product.setRating (actualRating);
         productService.save (product);
     }
 
-    private Rating calculateProductRating (Long productId, byte assessment) {
+    private Rating  recalculateProductRating (Long productId) {
         List<Review> reviews = reviewService.getProductReviews (productId);
         if (reviews.isEmpty ()) {
             return new Rating (0f, 0);

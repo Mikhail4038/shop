@@ -1,6 +1,6 @@
 package com.keiko.productservice.controller.product;
 
-import com.keiko.productservice.dto.model.product.ProductData;
+import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,18 @@ public class ProductProducerController extends ProductController {
     private ProductProducerService productProducerService;
 
     @GetMapping (value = BY_PRODUCER)
-    public ResponseEntity<List<ProductData>> findByProducer (@RequestParam Long producerId,
-                                                             @RequestParam (required = false) Boolean sortByAscend) {
+    public ResponseEntity<List<ProductDto>> findByProducer (@RequestParam Long producerId,
+                                                            @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findProductsByProducer (producerId, sortByAscend);
-        List<ProductData> dto = convertToData (products);
+        List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
 
     @GetMapping (value = PROMO_BY_PRODUCER)
-    public ResponseEntity<List<ProductData>> findPromoProductByProducer (@RequestParam Long producerId,
-                                                                         @RequestParam (required = false) Boolean sortByAscend) {
+    public ResponseEntity<List<ProductDto>> findPromoProductByProducer (@RequestParam Long producerId,
+                                                                        @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findPromoProductByProducer (producerId, sortByAscend);
-        List<ProductData> dto = convertToData (products);
+        List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
 

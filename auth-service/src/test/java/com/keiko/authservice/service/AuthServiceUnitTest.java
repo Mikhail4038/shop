@@ -53,11 +53,11 @@ class AuthServiceUnitTest {
 
     @BeforeAll
     static void setUp () {
-        user = createTestUser ();
-        verificationToken = createTestVerificationToken ();
+        user = testUser ();
+        verificationToken = testVerificationToken ();
         verificationToken.setUser (user);
-        loginRequest = createTestLoginRequest ();
-        loginResponse = createTestLoginResponse ();
+        loginRequest = testLoginRequest ();
+        loginResponse = testLoginResponse ();
         authService = new DefaultAuthService ();
     }
 
@@ -72,9 +72,9 @@ class AuthServiceUnitTest {
 
         verify (userService, times (1)).findByEmail (anyString ());
         verify (userService, times (1)).save (any (User.class));
-        InOrder inOrder = inOrder (userService);
-        inOrder.verify (userService).findByEmail (anyString ());
-        inOrder.verify (userService).save (any (User.class));
+        InOrder orderUserService = inOrder (userService);
+        orderUserService.verify (userService).findByEmail (anyString ());
+        orderUserService.verify (userService).save (any (User.class));
     }
 
     @Test

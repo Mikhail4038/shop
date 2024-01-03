@@ -5,9 +5,9 @@ import com.keiko.productservice.entity.Product;
 import java.util.List;
 
 public interface ProductRatingService {
-    List<Product> findProductsRatingLessThan (Float averageAssessment, Boolean sortByAscend);
+    List<Product> findProductsRatingLessThan (Float rating, Boolean sortByAscend);
 
-    List<Product> findProductsRatingMoreThan (Float averageAssessment, Boolean sortByAscend);
+    List<Product> findProductsRatingMoreThan (Float rating, Boolean sortByAscend);
 
-    List<Product> findProductsRatingRange (Float minAverageAssessment, Float maxAverageAssessment, Boolean sortByAscend);
+    List<Product> findProductsRatingRange (Float minRating, Float maxRating, Boolean sortByAscend);
 }

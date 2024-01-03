@@ -22,26 +22,26 @@ public class ProductRatingController extends ProductController {
     private ProductRatingService productRatingService;
 
     @GetMapping (value = RATING_LESS_THAN)
-    public ResponseEntity<List<ProductDto>> findProductsRatingLess (@RequestParam Float averageAssessment,
+    public ResponseEntity<List<ProductDto>> findProductsRatingLess (@RequestParam Float rating,
                                                                     @RequestParam (required = false) Boolean sortByAscend) {
-        List<Product> products = productRatingService.findProductsRatingLessThan (averageAssessment, sortByAscend);
+        List<Product> products = productRatingService.findProductsRatingLessThan (rating, sortByAscend);
         List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
 
     @GetMapping (value = RATING_MORE_THAN)
-    public ResponseEntity<List<ProductDto>> findProductsRatingMore (@RequestParam Float averageAssessment,
+    public ResponseEntity<List<ProductDto>> findProductsRatingMore (@RequestParam Float rating,
                                                                     @RequestParam (required = false) Boolean sortByAscend) {
-        List<Product> products = productRatingService.findProductsRatingMoreThan (averageAssessment, sortByAscend);
+        List<Product> products = productRatingService.findProductsRatingMoreThan (rating, sortByAscend);
         List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
 
     @GetMapping (value = RATING_RANGE)
     public ResponseEntity<List<ProductDto>> findProductsRatingRange (
-            @RequestParam Float minAverageAssessment, Float maxAverageAssessment,
+            @RequestParam Float minRating, Float maxRating,
             @RequestParam (required = false) Boolean sortByAscend) {
-        List<Product> products = productRatingService.findProductsRatingRange (minAverageAssessment, maxAverageAssessment, sortByAscend);
+        List<Product> products = productRatingService.findProductsRatingRange (minRating, maxRating, sortByAscend);
         List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }

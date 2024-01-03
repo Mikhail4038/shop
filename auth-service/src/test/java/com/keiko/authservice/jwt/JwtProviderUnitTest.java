@@ -16,8 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
-import static com.keiko.authservice.util.TestData.createTestRole;
-import static com.keiko.authservice.util.TestData.createTestUser;
+import static com.keiko.authservice.util.TestData.testRole;
+import static com.keiko.authservice.util.TestData.testUser;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -43,8 +43,8 @@ class JwtProviderUnitTest {
 
     @BeforeAll
     static void setUp () {
-        user = createTestUser ();
-        role = createTestRole ();
+        user = testUser ();
+        role = testRole ();
         user.setRoles (Set.of (role));
     }
 

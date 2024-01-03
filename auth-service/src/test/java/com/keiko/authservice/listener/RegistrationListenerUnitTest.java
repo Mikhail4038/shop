@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static com.keiko.authservice.util.TestData.createTestEvent;
+import static com.keiko.authservice.util.TestData.registrationCompleteEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -43,7 +43,7 @@ public class RegistrationListenerUnitTest {
 
     @BeforeAll
     static void setUp () {
-        event = createTestEvent ();
+        event = registrationCompleteEvent ();
     }
 
     @Test

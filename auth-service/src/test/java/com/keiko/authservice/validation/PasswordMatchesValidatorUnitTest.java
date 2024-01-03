@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.keiko.authservice.util.TestData.createTestUser;
+import static com.keiko.authservice.util.TestData.testUser;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,7 +26,7 @@ public class PasswordMatchesValidatorUnitTest {
 
     @BeforeAll
     static void setUp () {
-        user = createTestUser ();
+        user = testUser ();
         passwordMatchesValidator = new PasswordMatchesValidator ();
     }
 

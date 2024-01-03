@@ -25,18 +25,15 @@ public class ProductController extends CrudController<Product, ProductDto> {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private Function<Product, ProductData> toDataConverter;
-
     @GetMapping (value = SEARCH)
-    public ResponseEntity<List<ProductData>> search (@RequestParam (required = false) Long producerId,
-                                                     @RequestParam (required = false) boolean isPromotional,
-                                                     @RequestParam (required = false) Double minPrice,
-                                                     @RequestParam (required = false) Double maxPrice,
-                                                     @RequestParam (required = false) Float minRating,
-                                                     @RequestParam (required = false) Float maxRating) {
+    public ResponseEntity<List<ProductDto>> search (@RequestParam (required = false) Long producerId,
+                                                    @RequestParam (required = false) boolean isPromotional,
+                                                    @RequestParam (required = false) Double minPrice,
+                                                    @RequestParam (required = false) Double maxPrice,
+                                                    @RequestParam (required = false) Float minRating,
+                                                    @RequestParam (required = false) Float maxRating) {
         List<Product> products = productService.searchProducts (producerId, isPromotional, minPrice, maxPrice, minRating, maxRating);
-        List<ProductData> dto = convertToData (products);
+        List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
 
@@ -51,15 +48,5 @@ public class ProductController extends CrudController<Product, ProductDto> {
         return products.stream ()
                 .map (getToDtoConverter ()::apply)
                 .collect (toList ());
-    }
-
-    protected List<ProductData> convertToData (List<Product> products) {
-        return products.stream ()
-                .map (toDataConverter::apply)
-                .collect (toList ());
-    }
-
-    public Function<Product, ProductData> getToDataConverter () {
-        return toDataConverter;
     }
 }

@@ -1,13 +1,9 @@
 package com.keiko.productservice.service.impl;
 
-import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Review;
-import com.keiko.productservice.event.AfterDeletedReviewEvent;
-import com.keiko.productservice.event.AfterSavedReviewEvent;
+import com.keiko.productservice.event.RecalculateProductRatingEvent;
 import com.keiko.productservice.repository.ReviewRepository;
-import com.keiko.productservice.service.CrudService;
 import com.keiko.productservice.service.ReviewService;
-import com.keiko.productservice.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,12 +15,6 @@ import java.util.List;
 public class ReviewServiceImpl extends CrudServiceImpl<Review> implements ReviewService {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CrudService<Product> productService;
-
-    @Autowired
     private ReviewRepository reviewRepository;
 
     @Autowired
@@ -34,7 +24,7 @@ public class ReviewServiceImpl extends CrudServiceImpl<Review> implements Review
     @Transactional
     public void save (Review review) {
         super.save (review);
-        eventPublisher.publishEvent (new AfterSavedReviewEvent (review));
+        eventPublisher.publishEvent (new RecalculateProductRatingEvent (review));
     }
 
     @Override
@@ -42,7 +32,7 @@ public class ReviewServiceImpl extends CrudServiceImpl<Review> implements Review
     public void delete (Long id) {
         Review review = this.fetchBy (id);
         super.delete (id);
-        eventPublisher.publishEvent (new AfterDeletedReviewEvent (review));
+        eventPublisher.publishEvent (new RecalculateProductRatingEvent (review));
     }
 
     @Override

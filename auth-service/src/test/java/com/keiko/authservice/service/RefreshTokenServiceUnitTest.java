@@ -3,7 +3,6 @@ package com.keiko.authservice.service;
 import com.keiko.authservice.entity.jwt.JwtRefreshToken;
 import com.keiko.authservice.repository.RefreshTokenRepository;
 import com.keiko.authservice.service.impl.DefaultRefreshTokenService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.keiko.authservice.util.TestData.createTestRefreshToken;
+import static com.keiko.authservice.util.TestData.testRefreshToken;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -30,7 +29,7 @@ class RefreshTokenServiceUnitTest {
 
     @BeforeAll
     static void setUp () {
-        jwtRefreshToken = createTestRefreshToken ();
+        jwtRefreshToken = testRefreshToken ();
         refreshTokenService = new DefaultRefreshTokenService ();
     }
 

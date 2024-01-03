@@ -18,7 +18,7 @@ public class ProductPriceSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByPriceValue (query, builder, productPrice, sortByAscend);
             }
-            return builder.lessThan (productPrice.get (Price_.COST), price);
+            return builder.lessThan (productPrice.get (Price_.VALUE), price);
         };
     }
 
@@ -28,7 +28,7 @@ public class ProductPriceSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByPriceValue (query, builder, productPrice, sortByAscend);
             }
-            return builder.greaterThan (productPrice.get (Price_.COST), price);
+            return builder.greaterThan (productPrice.get (Price_.VALUE), price);
         };
     }
 
@@ -38,17 +38,17 @@ public class ProductPriceSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByPriceValue (query, builder, productPrice, sortByAscend);
             }
-            return builder.between (productPrice.get (Price_.COST), minPrice, maxPrice);
+            return builder.between (productPrice.get (Price_.VALUE), minPrice, maxPrice);
         };
     }
 
     public static void setUpSortByPriceValue (CriteriaQuery<?> query, CriteriaBuilder builder,
                                               Join<Product, Price> productPrice, boolean sortByAscend) {
         if (sortByAscend) {
-            query.orderBy (builder.asc (productPrice.get (Price_.COST)));
+            query.orderBy (builder.asc (productPrice.get (Price_.VALUE)));
         }
         if (!sortByAscend) {
-            query.orderBy (builder.desc (productPrice.get (Price_.COST)));
+            query.orderBy (builder.desc (productPrice.get (Price_.VALUE)));
         }
     }
 }

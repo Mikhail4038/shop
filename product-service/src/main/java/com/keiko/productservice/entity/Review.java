@@ -26,7 +26,7 @@ public class Review extends BaseEntity {
     @Column (nullable = false)
     @Min (value = 0, message = "assessment must be at least 0")
     @Max (value = 10, message = "assessment should be no more than 10")
-    private byte assessment;
+    private Integer assessment;
 
     @ManyToOne (fetch = LAZY)
     private Product product;

@@ -13,12 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductPromoSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     private Product jersey;
-    private Product shorts;
 
     @Test
     void whenFindPromoProducts_thenReturnProducts () {
         jersey = getJersey ();
-        shorts = getShorts ();
 
         List<Product> products = productRepository.findAll (
                 isPromotionalPrice (true));

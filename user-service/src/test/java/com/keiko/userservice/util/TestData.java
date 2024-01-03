@@ -13,7 +13,7 @@ public class TestData {
     private static final String USER_NAME = "test";
     private static final String ROLE_NAME = "ADMIN";
 
-    public static User createTestUser () {
+    public static User testUser () {
         User user = new User ();
         user.setEmail (USER_EMAIL);
         user.setPassword (USER_PASSWORD);
@@ -21,7 +21,7 @@ public class TestData {
         return user;
     }
 
-    public static UserDto createTestUserDto () {
+    public static UserDto testUserDto () {
         UserDto dto = new UserDto ();
         dto.setEmail (USER_EMAIL);
         dto.setPassword (USER_PASSWORD);
@@ -29,13 +29,13 @@ public class TestData {
         return dto;
     }
 
-    public static Role createTestRole () {
+    public static Role testRole () {
         Role role = new Role ();
         role.setName (ROLE_NAME);
         return role;
     }
 
-    public static RoleDto createTestRoleDto () {
+    public static RoleDto testRoleDto () {
         RoleDto dto = new RoleDto ();
         dto.setName (ROLE_NAME);
         return dto;

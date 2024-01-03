@@ -9,6 +9,7 @@ public class WebResourceKeyConstants {
 
     //product
     public static final String PRODUCT_BASE = "/product";
+    public static final String SEARCH = "/search";
     public static final String BY_EAN = "/ean";
 
     //product.price
@@ -31,8 +32,6 @@ public class WebResourceKeyConstants {
     //product promo
     public static final String PROMO_BASE = "/promo";
     public static final String PROMO_PRODUCTS = "/products";
-
-    public static final String SEARCH = "/search";
 
     //producer
     public static final String PRODUCER_BASE = "/producer";

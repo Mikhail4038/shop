@@ -19,5 +19,5 @@ public class ReviewData extends BaseDto {
 
     private Long userId;
     private String message;
-    private byte assessment;
+    private Integer assessment;
 }

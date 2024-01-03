@@ -47,10 +47,10 @@ class JwtTokenHelperUnitTest {
     @BeforeAll
     static void setUp () {
         jwtTokenHelper = new DefaultJwtTokenHelper ();
-        jwtRefreshRequest = createTestJwtRefreshRequest ();
-        claims = createTestClaims ();
-        jwtRefreshToken = createTestRefreshToken ();
-        user = createTestUser ();
+        jwtRefreshRequest = testJwtRefreshRequest ();
+        claims = testClaims ();
+        jwtRefreshToken = testRefreshToken ();
+        user = testUser ();
     }
 
     @Test

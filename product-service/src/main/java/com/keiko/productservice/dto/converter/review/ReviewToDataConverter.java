@@ -14,6 +14,5 @@ public class ReviewToDataConverter extends AbstractToDtoConverter<Review, Review
 
     @Override
     public void mapSpecificFields (Review entity, ReviewData dto) {
-
     }
 }

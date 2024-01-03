@@ -21,6 +21,7 @@ import static com.keiko.authservice.util.TestData.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,18 +52,18 @@ class AuthControllerTest {
 
     @BeforeAll
     static void setUp () {
-        user = createTestUser ();
-        loginRequest = createTestLoginRequest ();
-        loginResponse = createTestLoginResponse ();
-        jwtRefreshRequest = createTestJwtRefreshRequest ();
-        jwtRefreshResponse = createTestJwtRefreshResponse ();
+        user = testUser ();
+        loginRequest = testLoginRequest ();
+        loginResponse = testLoginResponse ();
+        jwtRefreshRequest = testJwtRefreshRequest ();
+        jwtRefreshResponse = testJwtRefreshResponse ();
     }
 
     @Test
     void registration_should_successfully () throws Exception {
         mockMvc.perform (post (AUTH_BASE + REGISTRATION_USER)
                 .content (objectMapper.writeValueAsString (user))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (authService, times (1)).registration (any (User.class));
@@ -73,7 +74,7 @@ class AuthControllerTest {
     void confirm_registration_should_successfully () throws Exception {
         mockMvc.perform (get (AUTH_BASE + CONFIRM_REGISTRATION)
                 .queryParam ("token", "25922")
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (authService, times (1)).confirmRegistration (anyString ());
@@ -86,7 +87,7 @@ class AuthControllerTest {
 
         mockMvc.perform (post (AUTH_BASE + LOGIN_USER)
                 .content (objectMapper.writeValueAsString (loginRequest))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$.type", is (loginResponse.getType ())))
                 .andExpect (jsonPath ("$.accessToken", is (loginResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (loginResponse.getRefreshToken ())))
@@ -100,7 +101,7 @@ class AuthControllerTest {
     void block_user_should_successfully () throws Exception {
         mockMvc.perform (get (AUTH_BASE + BLOCK_USER)
                 .queryParam ("email", user.getEmail ())
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
         verify (authService, times (1)).blockUser (anyString ());
@@ -113,7 +114,7 @@ class AuthControllerTest {
 
         mockMvc.perform (post (AUTH_BASE + GENERATE_NEW_ACCESS_TOKEN)
                 .content (objectMapper.writeValueAsString (jwtRefreshRequest))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$.accessToken", is (jwtRefreshResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (jwtRefreshResponse.getRefreshToken ())))
                 .andExpect (status ().isOk ());
@@ -128,7 +129,7 @@ class AuthControllerTest {
 
         mockMvc.perform (post (AUTH_BASE + GENERATE_NEW_REFRESH_TOKEN)
                 .content (objectMapper.writeValueAsString (jwtRefreshRequest))
-                .contentType ("application/json"))
+                .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$.accessToken", is (jwtRefreshResponse.getAccessToken ())))
                 .andExpect (jsonPath ("$.refreshToken", is (jwtRefreshResponse.getRefreshToken ())))
                 .andExpect (status ().isOk ());

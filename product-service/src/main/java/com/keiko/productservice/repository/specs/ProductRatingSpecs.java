@@ -19,7 +19,7 @@ public class ProductRatingSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByRatingValue (query, builder, sortByAscend, productRating);
             }
-            return builder.lessThan (productRating.get (Rating_.AVERAGE_ASSESSMENT), averageAssessment);
+            return builder.lessThan (productRating.get (Rating_.VALUE), averageAssessment);
         };
     }
 
@@ -30,7 +30,7 @@ public class ProductRatingSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByRatingValue (query, builder, sortByAscend, productRating);
             }
-            return builder.greaterThan (productRating.get (Rating_.AVERAGE_ASSESSMENT), averageAssessment);
+            return builder.greaterThan (productRating.get (Rating_.VALUE), averageAssessment);
         };
     }
 
@@ -42,17 +42,17 @@ public class ProductRatingSpecs {
             if (nonNull (sortByAscend)) {
                 setUpSortByRatingValue (query, builder, sortByAscend, productRating);
             }
-            return builder.between (productRating.get (Rating_.AVERAGE_ASSESSMENT), minAverageAssessment, maxAverageAssessment);
+            return builder.between (productRating.get (Rating_.VALUE), minAverageAssessment, maxAverageAssessment);
         };
     }
 
     private static void setUpSortByRatingValue (CriteriaQuery<?> query, CriteriaBuilder builder,
                                                 boolean sortByAscend, Join<Product, Rating> productRating) {
         if (sortByAscend) {
-            query.orderBy (builder.asc (productRating.get (Rating_.AVERAGE_ASSESSMENT)));
+            query.orderBy (builder.asc (productRating.get (Rating_.VALUE)));
         }
         if (!sortByAscend) {
-            query.orderBy (builder.desc (productRating.get (Rating_.AVERAGE_ASSESSMENT)));
+            query.orderBy (builder.desc (productRating.get (Rating_.VALUE)));
         }
     }
 }

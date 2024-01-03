@@ -38,7 +38,7 @@ public class TestData {
     private static final String NEW_REFRESH_TOKEN_VALUE = "newRefreshToken";
 
 
-    public static User createTestUser () {
+    public static User testUser () {
         User user = new User ();
         user.setEmail (USER_EMAIL);
         user.setPassword (USER_PASSWORD);
@@ -46,60 +46,60 @@ public class TestData {
         return user;
     }
 
-    public static Role createTestRole () {
+    public static Role testRole () {
         Role role = new Role ();
         role.setName (ROLE_NAME);
         return role;
     }
 
-    public static VerificationToken createTestVerificationToken () {
+    public static VerificationToken testVerificationToken () {
         VerificationToken verificationToken = new VerificationToken ();
         verificationToken.setToken (VERIFICATION_TOKEN_VALUE);
         return verificationToken;
     }
 
-    public static JwtRefreshToken createTestRefreshToken () {
+    public static JwtRefreshToken testRefreshToken () {
         JwtRefreshToken token = new JwtRefreshToken ();
         token.setEmail (USER_EMAIL);
         token.setRefreshToken (REFRESH_TOKEN_VALUE);
         return token;
     }
 
-    public static LoginRequest createTestLoginRequest () {
+    public static LoginRequest testLoginRequest () {
         LoginRequest request = new LoginRequest ();
         request.setEmail (USER_EMAIL);
         return request;
     }
 
-    public static LoginResponse createTestLoginResponse () {
+    public static LoginResponse testLoginResponse () {
         LoginResponse response = new LoginResponse ();
         response.setAccessToken (ACCESS_TOKEN);
         response.setRefreshToken (REFRESH_TOKEN);
         return response;
     }
 
-    public static JwtRefreshRequest createTestJwtRefreshRequest () {
+    public static JwtRefreshRequest testJwtRefreshRequest () {
         JwtRefreshRequest jwtRefreshRequest = new JwtRefreshRequest ();
         jwtRefreshRequest.setRefreshToken (REFRESH_TOKEN_VALUE);
         return jwtRefreshRequest;
     }
 
-    public static JwtRefreshResponse createTestJwtRefreshResponse () {
+    public static JwtRefreshResponse testJwtRefreshResponse () {
         JwtRefreshResponse response = new JwtRefreshResponse ();
         response.setAccessToken (NEW_ACCESS_TOKEN_VALUE);
         response.setRefreshToken (NEW_REFRESH_TOKEN_VALUE);
         return new JwtRefreshResponse ();
     }
 
-    public static Claims createTestClaims () {
+    public static Claims testClaims () {
         Claims claims = new DefaultClaims ();
         claims.setSubject (USER_EMAIL);
         return claims;
     }
 
-    public static OnRegistrationCompleteEvent createTestEvent () {
+    public static OnRegistrationCompleteEvent registrationCompleteEvent () {
         OnRegistrationCompleteEvent event
-                = new OnRegistrationCompleteEvent (createTestUser ());
+                = new OnRegistrationCompleteEvent (testUser ());
         return event;
     }
 }

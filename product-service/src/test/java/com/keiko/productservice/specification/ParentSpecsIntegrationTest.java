@@ -13,8 +13,6 @@ public class ParentSpecsIntegrationTest {
 
     @Autowired
     protected ProductRepository productRepository;
-    protected Product jersey;
-    protected Product shorts;
 
     protected Product getJersey () {
         return productRepository.findByEan (JERSEY_EAN).get ();

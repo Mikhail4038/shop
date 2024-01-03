@@ -26,6 +26,7 @@ public abstract class AbstractToDtoConverter<E, D> implements Function<E, D> {
         return modelMapper.map (e, dtoClass);
     }
 
+    // have opportunity add converter during set up mapping
     public Converter<E, D> converter = (context) -> {
         E entity = context.getSource ();
         D dto = context.getDestination ();

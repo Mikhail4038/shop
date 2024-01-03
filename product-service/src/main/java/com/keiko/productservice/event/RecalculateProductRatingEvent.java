@@ -7,10 +7,10 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 @Setter
-public class AfterDeletedReviewEvent extends ApplicationEvent {
+public class RecalculateProductRatingEvent extends ApplicationEvent {
     private Review review;
 
-    public AfterDeletedReviewEvent (Review review) {
+    public RecalculateProductRatingEvent (Review review) {
         super (review);
         this.review = review;
     }

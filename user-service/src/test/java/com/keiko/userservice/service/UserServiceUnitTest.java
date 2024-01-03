@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.keiko.userservice.util.TestData.createTestRole;
-import static com.keiko.userservice.util.TestData.createTestUser;
+import static com.keiko.userservice.util.TestData.testRole;
+import static com.keiko.userservice.util.TestData.testUser;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -36,8 +36,8 @@ class UserServiceUnitTest {
     @BeforeAll
     static void setUp () {
         userService = new DefaultUserService ();
-        user = createTestUser ();
-        role = createTestRole ();
+        user = testUser ();
+        role = testRole ();
         user.setRoles (Set.of (role));
     }
 
