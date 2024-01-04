@@ -1,5 +1,6 @@
 package com.keiko.productservice.util;
 
+import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
@@ -19,6 +20,9 @@ public class TestData {
     private static final String PRODUCER_NAME = "Conte";
 
     private static final Long USER_ID = 1L;
+    private static final String USER_EMAIL = "user@gmail.com";
+    private static final String USER_NAME = "user";
+
     private static final String REVIEW_MESSAGE = "Good product";
     private static final Integer REVIEW_ASSESSMENT = 5;
 
@@ -41,6 +45,15 @@ public class TestData {
         product.setName (PRODUCT_NAME);
         product.setExpirationDate (PRODUCT_EXPIRATION_DATE);
         return product;
+    }
+
+    public static ProductData testProductData () {
+        ProductData data = new ProductData ();
+        data.setId (PRODUCT_ID);
+        data.setEan (PRODUCT_EAN);
+        data.setName (PRODUCT_NAME);
+        data.setExpirationDate (PRODUCT_EXPIRATION_DATE);
+        return data;
     }
 
     public static ProductDto testProductDto () {
@@ -69,7 +82,6 @@ public class TestData {
 
     public static ReviewDto testReviewDto () {
         ReviewDto dto = new ReviewDto ();
-        dto.setUserId (USER_ID);
         dto.setMessage (REVIEW_MESSAGE);
         dto.setAssessment (REVIEW_ASSESSMENT);
         return dto;
@@ -77,7 +89,6 @@ public class TestData {
 
     public static ReviewData testReviewData () {
         ReviewData data = new ReviewData ();
-        data.setUserId (USER_ID);
         data.setMessage (REVIEW_MESSAGE);
         data.setAssessment (REVIEW_ASSESSMENT);
         return data;
@@ -114,5 +125,13 @@ public class TestData {
         review.setProduct (product);
         RecalculateProductRatingEvent event = new RecalculateProductRatingEvent (review);
         return event;
+    }
+
+    public static User testUser () {
+        User user = new User ();
+        user.setId (USER_ID);
+        user.setEmail (USER_EMAIL);
+        user.setName (USER_NAME);
+        return user;
     }
 }

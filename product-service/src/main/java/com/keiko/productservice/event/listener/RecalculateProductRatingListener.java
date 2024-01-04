@@ -36,7 +36,7 @@ public class RecalculateProductRatingListener
         productService.save (product);
     }
 
-    private Rating  recalculateProductRating (Long productId) {
+    private Rating recalculateProductRating (Long productId) {
         List<Review> reviews = reviewService.getProductReviews (productId);
         if (reviews.isEmpty ()) {
             return new Rating (0f, 0);

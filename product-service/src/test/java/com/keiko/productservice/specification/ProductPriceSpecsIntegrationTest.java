@@ -18,8 +18,8 @@ class ProductPriceSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByPriceLessThan_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasPriceOfLessThan (70.0, true));
@@ -32,8 +32,8 @@ class ProductPriceSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByPriceMoreThan_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasPriceOfMoreThan (40.0, true));
@@ -45,8 +45,8 @@ class ProductPriceSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByPriceBetween_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasPriceBetween (30.0, 80.0, false));

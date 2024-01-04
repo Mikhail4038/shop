@@ -18,8 +18,8 @@ class ProductExpirationSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindExpiredProduct_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (isExpired ());
 

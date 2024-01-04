@@ -16,7 +16,7 @@ class ProductPromoSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindPromoProducts_thenReturnProducts () {
-        jersey = getJersey ();
+        jersey = jersey ();
 
         List<Product> products = productRepository.findAll (
                 isPromotionalPrice (true));

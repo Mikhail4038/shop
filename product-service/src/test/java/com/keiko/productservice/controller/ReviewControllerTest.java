@@ -1,9 +1,11 @@
 package com.keiko.productservice.controller;
 
+import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Review;
+import com.keiko.productservice.entity.User;
 import com.keiko.productservice.service.impl.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -44,17 +46,25 @@ class ReviewControllerTest {
     private Function<ReviewDto, Review> toEntityConverter;
 
     private static Review review;
+    private static User user;
     private static Product product;
+    private static ProductData productData;
     private static ReviewDto reviewDto;
     private static ReviewData reviewData;
 
     @BeforeAll
     static void setUp () {
         review = testReview ();
-        product = testProduct ();
-        review.setProduct (product);
         reviewDto = testReviewDto ();
         reviewData = testReviewData ();
+        product = testProduct ();
+        productData = testProductData ();
+        user = testUser ();
+
+        review.setProduct (product);
+        reviewDto.setUser (user);
+        reviewDto.setProduct (productData);
+        reviewData.setUser (user);
     }
 
     @Test
@@ -67,9 +77,18 @@ class ReviewControllerTest {
                 .queryParam ("userId", userId.toString ())
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
-                .andExpect (jsonPath ("$[0].userId", is (review.getUserId ()), Long.class))
+
+                .andExpect (jsonPath ("$[0].user.id", is (reviewDto.getUser ().getId ()), Long.class))
+                .andExpect (jsonPath ("$[0].user.email", is (reviewDto.getUser ().getEmail ())))
+                .andExpect (jsonPath ("$[0].user.name", is (reviewDto.getUser ().getName ())))
+
                 .andExpect (jsonPath ("$[0].message", is (review.getMessage ())))
                 .andExpect (jsonPath ("$[0].assessment", is (review.getAssessment ()), Integer.class))
+
+                .andExpect (jsonPath ("$[0].product.id", is (reviewDto.getProduct ().getId ()), Long.class))
+                .andExpect (jsonPath ("$[0].product.ean", is (reviewDto.getProduct ().getEan ())))
+                .andExpect (jsonPath ("$[0].product.name", is (reviewDto.getProduct ().getName ())))
+
                 .andExpect (status ().isOk ());
 
         verify (reviewService, times (1)).getUserReviews (anyLong ());
@@ -86,7 +105,11 @@ class ReviewControllerTest {
                 .contentType (APPLICATION_JSON_VALUE)
                 .queryParam ("productId", productId.toString ()))
                 .andExpect (jsonPath ("$", hasSize (1)))
-                .andExpect (jsonPath ("$[0].userId", is (review.getUserId ()), Long.class))
+
+                .andExpect (jsonPath ("$[0].user.id", is (reviewData.getUser ().getId ()), Long.class))
+                .andExpect (jsonPath ("$[0].user.email", is (reviewData.getUser ().getEmail ())))
+                .andExpect (jsonPath ("$[0].user.name", is (reviewData.getUser ().getName ())))
+
                 .andExpect (jsonPath ("$[0].message", is (review.getMessage ())))
                 .andExpect (jsonPath ("$[0].assessment", is (review.getAssessment ()), Integer.class))
                 .andExpect (status ().isOk ());

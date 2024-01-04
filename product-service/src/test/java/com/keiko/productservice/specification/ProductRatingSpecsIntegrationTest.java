@@ -17,8 +17,8 @@ class ProductRatingSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByRatingLess_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasRatingOfLessThan (6.0F, null));
@@ -30,8 +30,8 @@ class ProductRatingSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByRatingMore_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasRatingOfMoreThan (6.0F, null));
@@ -43,8 +43,8 @@ class ProductRatingSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByRatingBetween_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 hasRatingBetween (4.0F, 11.0F, true));

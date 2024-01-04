@@ -18,8 +18,8 @@ class ProductProducerSpecsIntegrationTest extends ParentSpecsIntegrationTest {
 
     @Test
     void whenFindProductsByProducer_thenReturnProducts () {
-        jersey = getJersey ();
-        shorts = getShorts ();
+        jersey = jersey ();
+        shorts = shorts ();
 
         List<Product> products = productRepository.findAll (
                 equalsProducer (1L, false));

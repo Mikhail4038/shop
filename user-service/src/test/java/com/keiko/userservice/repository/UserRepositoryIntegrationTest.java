@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class UserRepositoryIntegrationTest {
-    private static final String SAVED_USER_EMAIL = "admin@gmail.com";
+    private static final String SAVED_USER_EMAIL = "test@gmail.com";
     private static final String NOT_SAVED_USER_EMAIL = "unknown@gmail.com";
     private static final String INCORRECT_USER_EMAIL = "unknowngmail.com";
     private static final String USER_PASSWORD = "500290";
@@ -34,6 +34,8 @@ class UserRepositoryIntegrationTest {
     @Test
     void whenFindByEmail_thenReturnUser () {
         User user = userRepository.findByEmail (SAVED_USER_EMAIL).get ();
+        List<User> users = userRepository.findAll ();
+        assertNotNull (users);
         assertNotNull (user);
         assertEquals (SAVED_USER_EMAIL, user.getEmail ());
     }

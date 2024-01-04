@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataJpaTest
 class ProductRepositoryIntegrationTest {
 
-    private static final String PRODUCT_EAN = "1234";
+    private static final String PRODUCT_EAN = "123";
     private static final String NOT_SAVED_PRODUCT_EAN = "unknown";
     private static final String EXPECTED_EXCEPTION_MESSAGE = "No value present";
 

@@ -1,7 +1,6 @@
 package com.keiko.productservice.listener;
 
 import com.keiko.productservice.entity.Product;
-import com.keiko.productservice.entity.Rating;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.event.RecalculateProductRatingEvent;
 import com.keiko.productservice.event.listener.RecalculateProductRatingListener;
@@ -22,9 +21,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith (MockitoExtension.class)
 class RecalculateProductRatingListenerUnitTest {
-
-    @Mock
-    private CrudService<Rating> ratingService;
 
     @Mock
     private ReviewService reviewService;
