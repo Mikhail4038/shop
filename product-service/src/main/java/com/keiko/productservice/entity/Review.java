@@ -18,6 +18,8 @@ import static jakarta.persistence.FetchType.LAZY;
 @Setter
 @EntityListeners (TimeEntityListener.class)
 public class Review extends BaseEntity {
+
+    @Column (nullable = false)
     private Long userId;
 
     @Column (nullable = false)
@@ -28,7 +30,7 @@ public class Review extends BaseEntity {
     @Max (value = 10, message = "assessment should be no more than 10")
     private Integer assessment;
 
-    @ManyToOne (fetch = LAZY)
+    @ManyToOne (fetch = LAZY, optional = false)
     private Product product;
 
     @Override
