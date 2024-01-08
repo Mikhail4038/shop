@@ -39,6 +39,7 @@ class RecalculateProductRatingListenerUnitTest {
         final Long productId = product.getId ();
 
         when (reviewService.getProductReviews (productId)).thenReturn (Arrays.asList (review));
+        when (productService.fetchBy (productId)).thenReturn (product);
 
         recalculateProductRatingListener.onApplicationEvent (event);
 
@@ -46,6 +47,7 @@ class RecalculateProductRatingListenerUnitTest {
         assertEquals (product.getRating ().getCountReviews (), 1);
 
         verify (reviewService, times (1)).getProductReviews (anyLong ());
+        verify (productService, times (1)).fetchBy (anyLong ());
         verify (productService, times (1)).save (any (Product.class));
     }
 
@@ -56,6 +58,7 @@ class RecalculateProductRatingListenerUnitTest {
         final Long productId = product.getId ();
 
         when (reviewService.getProductReviews (productId)).thenReturn (Collections.EMPTY_LIST);
+        when (productService.fetchBy (productId)).thenReturn (product);
 
         recalculateProductRatingListener.onApplicationEvent (event);
 
@@ -63,6 +66,7 @@ class RecalculateProductRatingListenerUnitTest {
         assertEquals (product.getRating ().getCountReviews (), 0);
 
         verify (reviewService, times (1)).getProductReviews (anyLong ());
+        verify (productService, times (1)).fetchBy (anyLong ());
         verify (productService, times (1)).save (any (Product.class));
     }
 }

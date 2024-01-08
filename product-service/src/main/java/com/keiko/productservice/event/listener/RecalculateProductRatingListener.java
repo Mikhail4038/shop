@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Component
 public class RecalculateProductRatingListener
         implements ApplicationListener<RecalculateProductRatingEvent> {
@@ -25,11 +27,14 @@ public class RecalculateProductRatingListener
     @Override
     public void onApplicationEvent (RecalculateProductRatingEvent event) {
         final Review review = event.getReview ();
-        final Product product = review.getProduct ();
-        final Long productId = product.getId ();
+        final Long productId = review.getProduct ().getId ();
+        final Product product = productService.fetchBy (productId);
 
         Rating newRating = recalculateProductRating (productId);
         Rating actualRating = product.getRating ();
+        if (isNull (actualRating)) {
+            actualRating = new Rating ();
+        }
         actualRating.setValue (newRating.getValue ());
         actualRating.setCountReviews (newRating.getCountReviews ());
         product.setRating (actualRating);
