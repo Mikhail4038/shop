@@ -20,7 +20,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @EntityListeners (TimeEntityListener.class)
 public class Product extends BaseEntity {
 
-    @Column (unique = true)
+    @Column (unique = true, nullable = false)
     private String ean;
     private String name;
     private Timestamp expirationDate;
