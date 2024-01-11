@@ -11,6 +11,7 @@ import com.keiko.authservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import static com.keiko.authservice.constants.WebResourceKeyConstants.*;
@@ -29,6 +30,7 @@ public class AuthController {
     private JwtTokenHelper jwtTokenHelper;
 
     @PostMapping (value = REGISTRATION_USER)
+    @Transactional
     public ResponseEntity registration (@RequestBody User user) {
         authService.registration (user);
         eventPublisher.publishEvent (new OnRegistrationCompleteEvent (user));

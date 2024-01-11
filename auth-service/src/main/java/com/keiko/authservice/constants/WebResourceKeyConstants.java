@@ -11,4 +11,8 @@ public class WebResourceKeyConstants {
     public static final String BLOCK_USER = "/block";
     public static final String GENERATE_NEW_ACCESS_TOKEN = "/accessToken";
     public static final String GENERATE_NEW_REFRESH_TOKEN = "/refreshToken";
+
+    // notification
+    public static final String EMAIL_NOTIFICATION_BASE = "/email";
+    public static final String SIMPLE_EMAIL = "/simple";
 }

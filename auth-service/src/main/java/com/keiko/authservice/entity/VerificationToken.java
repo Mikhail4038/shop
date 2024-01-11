@@ -23,7 +23,7 @@ public class VerificationToken extends BaseEntity {
     @Column (nullable = false)
     private String token;
 
-    @OneToOne (fetch = LAZY)
+    @OneToOne (fetch = LAZY, optional = false)
     private User user;
     private Timestamp expiryDate;
 

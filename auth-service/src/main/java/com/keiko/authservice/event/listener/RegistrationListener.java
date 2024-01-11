@@ -1,14 +1,13 @@
 package com.keiko.authservice.event.listener;
 
+import com.keiko.authservice.entity.EmailNotificationData;
 import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
-import com.keiko.authservice.properties.MailProperties;
+import com.keiko.authservice.service.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -21,17 +20,18 @@ public class RegistrationListener
     private VerificationTokenService verificationTokenService;
 
     @Autowired
-    private JavaMailSender javaMailSender;
-
-    @Autowired
-    private MailProperties mailProperties;
+    private NotificationService notificationService;
 
     @Override
     public void onApplicationEvent (OnRegistrationCompleteEvent event) {
         User user = event.getUser ();
 
         VerificationToken verificationToken = createVerificationToken (user);
-        sendEmail (user, verificationToken);
+
+        String userEmail = user.getEmail ();
+        String token = verificationToken.getToken ();
+
+        sendEmail (userEmail, token);
     }
 
     private VerificationToken createVerificationToken (User user) {
@@ -41,19 +41,17 @@ public class RegistrationListener
         return verificationToken;
     }
 
-    private void sendEmail (User user, VerificationToken verificationToken) {
-        String recipientAddress = user.getEmail ();
+    private void sendEmail (String userEmail, String token) {
+        String toAddress = userEmail;
         String subject = "Registration Confirmation";
-        String token = verificationToken.getToken ();
-        final String message = String.format (
+        String message = String.format (
                 "You registered successfully. To confirm your registration, please use token: %s", token);
 
-        final SimpleMailMessage email = new SimpleMailMessage ();
-        email.setTo (recipientAddress);
-        email.setSubject (subject);
-        email.setText (message);
-        email.setFrom (mailProperties.getSupportEmail ());
+        EmailNotificationData data = EmailNotificationData.builder ()
+                .toAddress (toAddress)
+                .subject (subject)
+                .message (message).build ();
 
-        javaMailSender.send (email);
+        notificationService.sendEmail (data);
     }
 }

@@ -1,9 +1,10 @@
 package com.keiko.authservice.listener;
 
+import com.keiko.authservice.entity.EmailNotificationData;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
 import com.keiko.authservice.event.listener.RegistrationListener;
-import com.keiko.authservice.properties.MailProperties;
+import com.keiko.authservice.service.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,32 +14,27 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import static com.keiko.authservice.util.TestData.registrationCompleteEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith (MockitoExtension.class)
 public class RegistrationListenerUnitTest {
-    private static final String SUPPORT_EMAIL = "admin@gmail.com";
 
     @Mock
     private VerificationTokenService verificationTokenService;
 
     @Mock
-    private JavaMailSender javaMailSender;
-
-    @Mock
-    private MailProperties mailProperties;
+    private NotificationService notificationService;
 
     @InjectMocks
     private RegistrationListener registrationListener;
 
     @Captor
-    ArgumentCaptor<SimpleMailMessage> emailCaptor;
+    ArgumentCaptor<EmailNotificationData> notificationDataArgumentCaptor;
     private static OnRegistrationCompleteEvent event;
 
     @BeforeAll
@@ -48,15 +44,12 @@ public class RegistrationListenerUnitTest {
 
     @Test
     void should_successfully_send_email () {
-        when (mailProperties.getSupportEmail ()).thenReturn (SUPPORT_EMAIL);
         registrationListener.onApplicationEvent (event);
 
         verify (verificationTokenService, times (1)).save (any (VerificationToken.class));
-        verify (javaMailSender, times (1)).send (any (SimpleMailMessage.class));
-        verify (javaMailSender).send (emailCaptor.capture ());
-        SimpleMailMessage mailMessage = emailCaptor.getValue ();
+        verify (notificationService, times (1)).sendEmail (notificationDataArgumentCaptor.capture ());
 
-        assertEquals (mailMessage.getTo ()[0], event.getUser ().getEmail ());
-        assertEquals (mailMessage.getFrom (), SUPPORT_EMAIL);
+        EmailNotificationData emailNotificationData = notificationDataArgumentCaptor.getValue ();
+        assertEquals (emailNotificationData.getToAddress (), event.getUser ().getEmail ());
     }
 }
