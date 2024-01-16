@@ -21,11 +21,6 @@ public class ProductStockServiceImpl implements ProductStockService {
     }
 
     @Override
-    public void saveAll (Collection<ProductStock> productsStock) {
-        productStockRepository.saveAll (productsStock);
-    }
-
-    @Override
     public ProductStock fetchById (Long id) {
         return productStockRepository.findById (id).orElseThrow ();
     }
@@ -43,10 +38,5 @@ public class ProductStockServiceImpl implements ProductStockService {
     @Override
     public void delete (Long id) {
         productStockRepository.deleteById (id);
-    }
-
-    @Override
-    public boolean hasStock (String ean) {
-        return false;
     }
 }
