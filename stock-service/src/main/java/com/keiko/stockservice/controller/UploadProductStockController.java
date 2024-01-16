@@ -20,7 +20,7 @@ public class UploadProductStockController {
     private UploadProductStockService uploadProductStockService;
 
     @PostMapping (value = UPLOAD)
-    public ResponseEntity importExcelFile (@RequestParam MultipartFile file) {
+    public ResponseEntity uploading (@RequestParam MultipartFile file) {
         uploadProductStockService.upload (file);
         return ResponseEntity.ok ().build ();
     }

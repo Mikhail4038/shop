@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmailNotificationData {
+public class SimpleEmail {
     private String toAddress;
     private String subject;
     private String message;

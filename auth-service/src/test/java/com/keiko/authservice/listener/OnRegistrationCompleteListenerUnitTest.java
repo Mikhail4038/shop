@@ -3,7 +3,7 @@ package com.keiko.authservice.listener;
 import com.keiko.authservice.entity.EmailNotificationData;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
-import com.keiko.authservice.event.listener.RegistrationListener;
+import com.keiko.authservice.event.listener.OnRegistrationCompleteListener;
 import com.keiko.authservice.service.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith (MockitoExtension.class)
-public class RegistrationListenerUnitTest {
+public class OnRegistrationCompleteListenerUnitTest {
 
     @Mock
     private VerificationTokenService verificationTokenService;
@@ -31,7 +31,7 @@ public class RegistrationListenerUnitTest {
     private NotificationService notificationService;
 
     @InjectMocks
-    private RegistrationListener registrationListener;
+    private OnRegistrationCompleteListener onRegistrationCompleteListener;
 
     @Captor
     ArgumentCaptor<EmailNotificationData> notificationDataArgumentCaptor;
@@ -44,7 +44,7 @@ public class RegistrationListenerUnitTest {
 
     @Test
     void should_successfully_send_email () {
-        registrationListener.onApplicationEvent (event);
+        onRegistrationCompleteListener.onApplicationEvent (event);
 
         verify (verificationTokenService, times (1)).save (any (VerificationToken.class));
         verify (notificationService, times (1)).sendEmail (notificationDataArgumentCaptor.capture ());

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.keiko.productservice.repository.specs.ProductExpirationSpecs.isExpirationDateSoon;
 import static com.keiko.productservice.repository.specs.ProductExpirationSpecs.isExpired;
@@ -115,5 +116,15 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
             return new ProductNotFoundException (message);
         });
 
+    }
+
+    @Override
+    public Boolean isExist (String ean) {
+        try {
+            productRepository.findByEan (ean).orElseThrow ();
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 }

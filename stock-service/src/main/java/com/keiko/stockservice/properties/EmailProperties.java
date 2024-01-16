@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties
 @Getter
 @Setter
-public class MailProperties {
-    private String supportEmail;
+public class EmailProperties {
     private String adminEmail;
 }

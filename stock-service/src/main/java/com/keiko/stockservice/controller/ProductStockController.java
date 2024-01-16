@@ -32,7 +32,7 @@ public class ProductStockController {
 
     @GetMapping (value = FETCH_BY)
     public ResponseEntity<ProductStockDto> fetchBy (@RequestParam Long id) {
-        ProductStock productStock = productStockService.fetchBy (id);
+        ProductStock productStock = productStockService.fetchById (id);
         ProductStockDto dto = toDtoConverter.apply (productStock);
         return ResponseEntity.ok (dto);
     }

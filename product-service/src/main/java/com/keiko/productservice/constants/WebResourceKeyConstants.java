@@ -11,6 +11,7 @@ public class WebResourceKeyConstants {
     public static final String PRODUCT_BASE = "/product";
     public static final String SEARCH = "/search";
     public static final String BY_EAN = "/ean";
+    public static final String IS_EXIST = "/isExist";
 
     //product.price
     public static final String PRICE_BASE = "/price";

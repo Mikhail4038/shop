@@ -44,6 +44,11 @@ public class ProductController extends CrudController<Product, ProductDto> {
         return ResponseEntity.ok (dto);
     }
 
+    @GetMapping (value = IS_EXIST)
+    public Boolean isExist (@RequestParam String ean) {
+        return productService.isExist(ean);
+    }
+
     protected List<ProductDto> convertToDto (List<Product> products) {
         return products.stream ()
                 .map (getToDtoConverter ()::apply)

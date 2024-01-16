@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class RegistrationListener
+public class OnRegistrationCompleteListener
         implements ApplicationListener<OnRegistrationCompleteEvent> {
 
     @Autowired

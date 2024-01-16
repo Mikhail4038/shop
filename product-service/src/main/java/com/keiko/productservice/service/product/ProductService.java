@@ -10,4 +10,6 @@ public interface ProductService {
                                   Float minRating, Float maxRating);
 
     Product findByEan (String ean);
+
+    Boolean isExist (String ean);
 }

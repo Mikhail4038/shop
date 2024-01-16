@@ -1,11 +1,10 @@
 package com.keiko.notificationservice.service.email;
 
-import com.keiko.notificationservice.entity.EmailNotificationData;
-
-import java.io.File;
+import com.keiko.notificationservice.entity.ProductsStockEmail;
+import com.keiko.notificationservice.entity.SimpleEmail;
 
 public interface EmailNotificationService {
-    void sendEmail (EmailNotificationData notificationData);
+    void sendEmail (SimpleEmail simpleEmail);
 
-    void sendEmailWithAttachment (EmailNotificationData notificationData, File attachment);
+    void sendProductsStock (ProductsStockEmail productsStockEmail);
 }
