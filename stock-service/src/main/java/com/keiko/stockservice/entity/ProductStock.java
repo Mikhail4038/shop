@@ -1,9 +1,9 @@
 package com.keiko.stockservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDate;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -12,13 +12,23 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductStock {
 
     @Id
     @GeneratedValue (strategy = IDENTITY)
     private Long id;
 
-    @Column (unique = true)
+    @Column (nullable = false)
     private String ean;
+
+    @Column (nullable = false)
     private Double balance;
+
+    @Column (nullable = false)
+    private LocalDate expirationDate;
+
+    @Enumerated (EnumType.STRING)
+    private StopList stopList = StopList.NONE;
 }

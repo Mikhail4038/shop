@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.keiko.productservice.repository.specs.ProductExpirationSpecs.isExpirationDateSoon;
-import static com.keiko.productservice.repository.specs.ProductExpirationSpecs.isExpired;
 import static com.keiko.productservice.repository.specs.ProductPriceSpecs.*;
 import static com.keiko.productservice.repository.specs.ProductProducerSpecs.equalsProducer;
 import static com.keiko.productservice.repository.specs.ProductPromoSpecs.isPromotionalPrice;
@@ -23,7 +21,7 @@ import static java.util.Objects.nonNull;
 @Service
 public class ProductServiceImpl extends CrudServiceImpl<Product>
         implements ProductService, ProductPriceService, ProductRatingService,
-        ProductPromoService, ProductProducerService, ProductExpirationService {
+        ProductPromoService, ProductProducerService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -75,17 +73,6 @@ public class ProductServiceImpl extends CrudServiceImpl<Product>
     @Override
     public List<Product> findPromoProductByProducer (Long producerId, Boolean sortByAscend) {
         return productRepository.findAll (isPromotionalPrice (null).and (equalsProducer (producerId, sortByAscend)));
-    }
-
-    @Override
-    public List<Product> findProductExpirationDateSoon (byte daysForPromo) {
-        return productRepository.findAll (isExpirationDateSoon (daysForPromo));
-    }
-
-    @Override
-    public void deleteExpiredProduct () {
-        List<Product> products = productRepository.findAll (isExpired ());
-        productRepository.deleteAll (products);
     }
 
     @Override

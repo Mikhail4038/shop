@@ -9,7 +9,7 @@ public interface ProductStockService {
 
     ProductStock fetchById (Long id);
 
-    ProductStock fetchByEan (String ean);
+    List<ProductStock> fetchByEan (String ean);
 
     List<ProductStock> fetchAll ();
 

@@ -14,11 +14,13 @@
         <tr>
             <td>ean</td>
             <td>balance</td>
+            <td>expiration date</td>
         </tr>
         <#foreach productStock in productsStock>
         <tr>
             <td>${productStock.ean}</td>
             <td>${productStock.balance}</td>
+            <td>${(productStock.expirationDate).format("yyyy-MM-dd")}</td>
         </tr>
         </#foreach>
     </table>

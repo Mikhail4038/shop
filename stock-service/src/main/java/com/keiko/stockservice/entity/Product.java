@@ -17,9 +17,6 @@ public class Product {
     private Rating rating;
     private Producer producer;
 
-    @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp expirationDate;
-
     @Getter
     @Setter
     @NoArgsConstructor

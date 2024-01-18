@@ -14,7 +14,6 @@ public class TestData {
     private static final Long PRODUCT_ID = 1L;
     private static final String PRODUCT_EAN = "1234";
     private static final String PRODUCT_NAME = "jersey";
-    private static final Timestamp PRODUCT_EXPIRATION_DATE = Timestamp.valueOf (LocalDate.now ().plusDays (10).atStartOfDay ());
 
     private static final Long PRODUCER_ID = 1L;
     private static final String PRODUCER_NAME = "Conte";
@@ -43,7 +42,6 @@ public class TestData {
         product.setId (PRODUCT_ID);
         product.setEan (PRODUCT_EAN);
         product.setName (PRODUCT_NAME);
-        product.setExpirationDate (PRODUCT_EXPIRATION_DATE);
         return product;
     }
 
@@ -52,7 +50,6 @@ public class TestData {
         data.setId (PRODUCT_ID);
         data.setEan (PRODUCT_EAN);
         data.setName (PRODUCT_NAME);
-        data.setExpirationDate (PRODUCT_EXPIRATION_DATE);
         return data;
     }
 
@@ -61,7 +58,6 @@ public class TestData {
         dto.setId (PRODUCT_ID);
         dto.setEan (PRODUCT_EAN);
         dto.setName (PRODUCT_NAME);
-        dto.setExpirationDate (PRODUCT_EXPIRATION_DATE);
         return dto;
     }
 

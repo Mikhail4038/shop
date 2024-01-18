@@ -5,8 +5,8 @@ insert into t_producer (created,modified,name,address_id) values(now(),now(),'Co
 insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'45.0',1);
 insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'30.0',1);
 
-insert into t_product(created,modified,ean,name,price_id,expiration_date,producer_id) values(now(),now(),'1234','sweater',1,'2023-12-10',1);
-insert into t_product(created,modified,ean,name,price_id,expiration_date,producer_id) values(now(),now(),'5678','dress',2,'2024-11-04',1);
+insert into t_product(created,modified,ean,name,price_id,producer_id) values(now(),now(),'1234','sweater',1,1);
+insert into t_product(created,modified,ean,name,price_id,producer_id) values(now(),now(),'5678','dress',2,1);
 
 insert into t_review(created,modified,user_id,message,assessment,product_id) values(now(),now(),1,'A good product',9,1);
 insert into t_review(created,modified,user_id,message,assessment,product_id) values(now(),now(),1,'A very nice product',10,2);

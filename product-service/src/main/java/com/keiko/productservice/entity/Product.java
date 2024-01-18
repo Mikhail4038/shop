@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
@@ -23,7 +22,6 @@ public class Product extends BaseEntity {
     @Column (unique = true, nullable = false)
     private String ean;
     private String name;
-    private Timestamp expirationDate;
 
     @OneToOne (fetch = LAZY, cascade = {PERSIST, MERGE, REMOVE})
     private Price price;
@@ -48,7 +46,6 @@ public class Product extends BaseEntity {
         return new EqualsBuilder ()
                 .append (ean, product.ean)
                 .append (name, product.name)
-                .append (expirationDate, product.expirationDate)
                 .append (price, product.price)
                 .append (rating, product.rating)
                 .isEquals ();
@@ -59,7 +56,6 @@ public class Product extends BaseEntity {
         return new HashCodeBuilder (17, 37)
                 .append (ean)
                 .append (name)
-                .append (expirationDate)
                 .append (price)
                 .append (rating)
                 .toHashCode ();

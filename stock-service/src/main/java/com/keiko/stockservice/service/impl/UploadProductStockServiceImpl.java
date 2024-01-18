@@ -1,7 +1,7 @@
 package com.keiko.stockservice.service.impl;
 
 import com.keiko.stockservice.entity.ProductStock;
-import com.keiko.stockservice.entity.ProductsStockEmail;
+import com.keiko.stockservice.entity.notification.ProductsStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
 import com.keiko.stockservice.service.NotificationService;
 import com.keiko.stockservice.service.ProductService;
@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -41,8 +43,8 @@ public class UploadProductStockServiceImpl
 
     @Override
     public void upload (MultipartFile file) {
-        List<ProductStock> productStocks = uploadData (file);
-        verifyData (productStocks);
+        List<ProductStock> uploadProductsStock = uploadData (file);
+        verifyData (uploadProductsStock);
     }
 
     private List<ProductStock> uploadData (MultipartFile file) {
@@ -63,9 +65,12 @@ public class UploadProductStockServiceImpl
 
                 Integer ean = (int) row.getCell (0).getNumericCellValue ();
                 Double balance = row.getCell (1).getNumericCellValue ();
+                LocalDate expirationDate = row.getCell (2).getDateCellValue ()
+                        .toInstant ().atZone (ZoneId.systemDefault ()).toLocalDate ();
 
                 productStock.setEan (ean.toString ());
                 productStock.setBalance (balance);
+                productStock.setExpirationDate (expirationDate);
                 productStocks.add (productStock);
             }
         } catch (IOException ex) {
@@ -74,26 +79,26 @@ public class UploadProductStockServiceImpl
         return productStocks;
     }
 
-    private void verifyData (List<ProductStock> productStocks) {
+    private void verifyData (List<ProductStock> uploadProductsStock) {
         List<ProductStock> notExistProducts = new ArrayList<> ();
-        List<ProductStock> toSaveProductsStock = new ArrayList<> ();
+        List<ProductStock> existProducts = new ArrayList<> ();
 
-        for (ProductStock productStock : productStocks) {
 
-            if (isExistsProduct (productStock.getEan ())) {
-                toSaveProductsStock.add (productStock);
-                addProductStock (productStock);
+        for (ProductStock stock : uploadProductsStock) {
+            if (isExistsProduct (stock.getEan ())) {
+                addProductStock (stock);
+                existProducts.add (stock);
             } else {
-                notExistProducts.add (productStock);
+                notExistProducts.add (stock);
             }
         }
 
-        if (!toSaveProductsStock.isEmpty ()) {
+        if (!existProducts.isEmpty ()) {
             ProductsStockEmail data = ProductsStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock was completely")
                     .message ("Stock next products uploaded successful.")
-                    .productsStock (toSaveProductsStock)
+                    .productsStock (existProducts)
                     .build ();
             sendNotification (data);
         }
@@ -110,19 +115,35 @@ public class UploadProductStockServiceImpl
     }
 
     private void addProductStock (ProductStock productStock) {
-        try {
-            ProductStock savedProductStock = productStockService.fetchByEan (productStock.getEan ());
-            Double balance = savedProductStock.getBalance ();
-            balance += productStock.getBalance ();
-            savedProductStock.setBalance (balance);
-            productStockService.save (savedProductStock);
-        } catch (NoSuchElementException ex) {
+        List<ProductStock> productsStock
+                = productStockService.fetchByEan (productStock.getEan ());
+
+        if (productsStock.isEmpty ()) {
             productStockService.save (productStock);
+        } else {
+            addStockByExpirationDate (productsStock, productStock);
         }
     }
 
     private boolean isExistsProduct (String ean) {
         return productService.isExist (ean);
+    }
+
+    private void addStockByExpirationDate (List<ProductStock> productsStock, ProductStock productStock) {
+
+        Optional<ProductStock> theSameExpirationDate = productsStock.stream ()
+                .filter (s -> s.getExpirationDate ().equals (productStock.getExpirationDate ()))
+                .findFirst ();
+
+        if (theSameExpirationDate.isPresent ()) {
+            ProductStock stock = theSameExpirationDate.get ();
+            Double balance = stock.getBalance ();
+            balance += productStock.getBalance ();
+            stock.setBalance (balance);
+            productStockService.save (stock);
+        } else {
+            productStockService.save (productStock);
+        }
     }
 
     private void sendNotification (ProductsStockEmail productsStockEmail) {

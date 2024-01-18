@@ -1,5 +1,6 @@
-package com.keiko.stockservice.entity;
+package com.keiko.stockservice.entity.notification;
 
+import com.keiko.stockservice.entity.ProductStock;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

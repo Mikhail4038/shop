@@ -1,6 +1,6 @@
 package com.keiko.stockservice.service;
 
-import com.keiko.stockservice.entity.ProductsStockEmail;
+import com.keiko.stockservice.entity.notification.ProductsStockEmail;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;

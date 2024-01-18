@@ -1,7 +1,6 @@
 package com.keiko.productservice.controller.product;
 
 import com.keiko.productservice.controller.CrudController;
-import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
@@ -46,7 +44,7 @@ public class ProductController extends CrudController<Product, ProductDto> {
 
     @GetMapping (value = IS_EXIST)
     public Boolean isExist (@RequestParam String ean) {
-        return productService.isExist(ean);
+        return productService.isExist (ean);
     }
 
     protected List<ProductDto> convertToDto (List<Product> products) {
