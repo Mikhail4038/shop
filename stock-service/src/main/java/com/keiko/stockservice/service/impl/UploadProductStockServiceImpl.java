@@ -1,7 +1,7 @@
 package com.keiko.stockservice.service.impl;
 
 import com.keiko.stockservice.entity.ProductStock;
-import com.keiko.stockservice.entity.notification.ProductsStockEmail;
+import com.keiko.stockservice.entity.notification.ProductStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
 import com.keiko.stockservice.service.NotificationService;
 import com.keiko.stockservice.service.ProductService;
@@ -43,8 +43,8 @@ public class UploadProductStockServiceImpl
 
     @Override
     public void upload (MultipartFile file) {
-        List<ProductStock> uploadProductsStock = uploadData (file);
-        verifyData (uploadProductsStock);
+        List<ProductStock> uploadProductStocks = uploadData (file);
+        verifyData (uploadProductStocks);
     }
 
     private List<ProductStock> uploadData (MultipartFile file) {
@@ -79,12 +79,12 @@ public class UploadProductStockServiceImpl
         return productStocks;
     }
 
-    private void verifyData (List<ProductStock> uploadProductsStock) {
+    private void verifyData (List<ProductStock> uploadProductStocks) {
         List<ProductStock> notExistProducts = new ArrayList<> ();
         List<ProductStock> existProducts = new ArrayList<> ();
 
 
-        for (ProductStock stock : uploadProductsStock) {
+        for (ProductStock stock : uploadProductStocks) {
             if (isExistsProduct (stock.getEan ())) {
                 addProductStock (stock);
                 existProducts.add (stock);
@@ -94,34 +94,34 @@ public class UploadProductStockServiceImpl
         }
 
         if (!existProducts.isEmpty ()) {
-            ProductsStockEmail data = ProductsStockEmail.builder ()
+            ProductStockEmail data = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock was completely")
                     .message ("Stock next products uploaded successful.")
-                    .productsStock (existProducts)
+                    .productStocks (existProducts)
                     .build ();
             sendNotification (data);
         }
 
         if (!notExistProducts.isEmpty ()) {
-            ProductsStockEmail data = ProductsStockEmail.builder ()
+            ProductStockEmail data = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock wasn't completely")
                     .message ("Stock next products didn't upload, because ean product not found.")
-                    .productsStock (notExistProducts)
+                    .productStocks (notExistProducts)
                     .build ();
             sendNotification (data);
         }
     }
 
     private void addProductStock (ProductStock productStock) {
-        List<ProductStock> productsStock
+        List<ProductStock> productStocks
                 = productStockService.fetchByEan (productStock.getEan ());
 
-        if (productsStock.isEmpty ()) {
+        if (productStocks.isEmpty ()) {
             productStockService.save (productStock);
         } else {
-            addStockByExpirationDate (productsStock, productStock);
+            addStockByExpirationDate (productStocks, productStock);
         }
     }
 
@@ -129,9 +129,9 @@ public class UploadProductStockServiceImpl
         return productService.isExist (ean);
     }
 
-    private void addStockByExpirationDate (List<ProductStock> productsStock, ProductStock productStock) {
+    private void addStockByExpirationDate (List<ProductStock> productStocks, ProductStock productStock) {
 
-        Optional<ProductStock> theSameExpirationDate = productsStock.stream ()
+        Optional<ProductStock> theSameExpirationDate = productStocks.stream ()
                 .filter (s -> s.getExpirationDate ().equals (productStock.getExpirationDate ()))
                 .findFirst ();
 
@@ -146,7 +146,7 @@ public class UploadProductStockServiceImpl
         }
     }
 
-    private void sendNotification (ProductsStockEmail productsStockEmail) {
-        notificationService.sendProductsStock (productsStockEmail);
+    private void sendNotification (ProductStockEmail productStockEmail) {
+        notificationService.sendProductStocks (productStockEmail);
     }
 }

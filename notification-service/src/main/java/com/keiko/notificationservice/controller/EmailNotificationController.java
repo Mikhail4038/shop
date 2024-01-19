@@ -25,8 +25,8 @@ public class EmailNotificationController {
         return ResponseEntity.ok ().build ();
     }
 
-    @PostMapping (value = PRODUCTS_STOCK)
-    public ResponseEntity productsStock (@RequestBody ProductsStockEmail productsStockEmail) {
+    @PostMapping (value = PRODUCT_STOCKS)
+    public ResponseEntity productStocks (@RequestBody ProductsStockEmail productsStockEmail) {
         emailNotificationService.sendProductsStock (productsStockEmail);
         return ResponseEntity.ok ().build ();
     }

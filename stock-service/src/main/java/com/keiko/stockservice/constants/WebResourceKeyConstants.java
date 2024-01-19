@@ -15,5 +15,5 @@ public class WebResourceKeyConstants {
 
     //notification
     public static final String EMAIL_NOTIFICATION_BASE = "/email";
-    public static final String PRODUCTS_STOCK = "/productsStock";
+    public static final String PRODUCT_STOCKS = "/productStocks";
 }

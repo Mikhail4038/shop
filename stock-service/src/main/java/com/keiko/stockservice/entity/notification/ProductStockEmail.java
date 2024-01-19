@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ProductsStockEmail {
+public class ProductStockEmail {
     private String toAddress;
     private String subject;
     private String message;
-    private List<ProductStock> productsStock;
+    private List<ProductStock> productStocks;
 }

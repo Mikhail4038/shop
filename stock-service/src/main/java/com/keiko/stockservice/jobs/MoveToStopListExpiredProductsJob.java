@@ -2,7 +2,7 @@ package com.keiko.stockservice.jobs;
 
 import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.entity.StopList;
-import com.keiko.stockservice.entity.notification.ProductsStockEmail;
+import com.keiko.stockservice.entity.notification.ProductStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
 import com.keiko.stockservice.service.NotificationService;
 import com.keiko.stockservice.service.ProductStockService;
@@ -30,23 +30,23 @@ public class MoveToStopListExpiredProductsJob {
     @Scheduled (cron = "0 0 0 * * *")
     public void execute () {
         Callable callable = () -> {
-            List<ProductStock> expiredProductsStock = findExpiredProductStocks ();
-            addToStopList (expiredProductsStock);
-            return expiredProductsStock;
+            List<ProductStock> expiredProductStocks = findExpiredProductStocks ();
+            addToStopList (expiredProductStocks);
+            return expiredProductStocks;
         };
 
         ExecutorService executorService = Executors.newSingleThreadExecutor ();
         Future<List<ProductStock>> future = executorService.submit (callable);
 
         try {
-            List<ProductStock> productsStock = future.get ();
-            ProductsStockEmail data = ProductsStockEmail.builder ()
+            List<ProductStock> productStocks = future.get ();
+            ProductStockEmail data = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Move products stock to Stop list")
                     .message ("Stock next products moved to Stop list, because they're expired.")
-                    .productsStock (productsStock)
+                    .productStocks (productStocks)
                     .build ();
-            notificationService.sendProductsStock (data);
+            notificationService.sendProductStocks (data);
         } catch (InterruptedException ex) {
             log.error (ex.getMessage ());
         } catch (ExecutionException ex) {
@@ -58,8 +58,8 @@ public class MoveToStopListExpiredProductsJob {
         return productStockService.findProductStocksToMoveExpiredStopList ();
     }
 
-    private void addToStopList (List<ProductStock> expiredProductsStock) {
-        expiredProductsStock.forEach (stock -> stock.setStopList (StopList.EXPIRED));
-        productStockService.saveAll (expiredProductsStock);
+    private void addToStopList (List<ProductStock> expiredProductStocks) {
+        expiredProductStocks.forEach (stock -> stock.setStopList (StopList.EXPIRED));
+        productStockService.saveAll (expiredProductStocks);
     }
 }
