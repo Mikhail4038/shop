@@ -40,13 +40,15 @@ public class MoveToStopListExpiredProductsJob {
 
         try {
             List<ProductStock> productStocks = future.get ();
-            ProductStockEmail data = ProductStockEmail.builder ()
-                    .toAddress (emailProperties.getAdminEmail ())
-                    .subject ("Move products stock to Stop list")
-                    .message ("Stock next products moved to Stop list, because they're expired.")
-                    .productStocks (productStocks)
-                    .build ();
-            notificationService.sendProductStocks (data);
+            if (!productStocks.isEmpty ()) {
+                ProductStockEmail data = ProductStockEmail.builder ()
+                        .toAddress (emailProperties.getAdminEmail ())
+                        .subject ("Move products stock to Stop list")
+                        .message ("Stock next products moved to Stop list, because they're expired.")
+                        .productStocks (productStocks)
+                        .build ();
+                notificationService.sendProductStocks (data);
+            }
         } catch (InterruptedException ex) {
             log.error (ex.getMessage ());
         } catch (ExecutionException ex) {
