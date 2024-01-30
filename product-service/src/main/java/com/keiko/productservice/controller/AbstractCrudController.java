@@ -1,7 +1,8 @@
-package com.keiko.userservice.controller;
+package com.keiko.productservice.controller;
 
-import com.keiko.userservice.service.AbstractCrudService;
-import jakarta.validation.Valid;
+import com.keiko.productservice.dto.model.BaseDto;
+import com.keiko.productservice.entity.BaseEntity;
+import com.keiko.productservice.service.AbstractCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.keiko.userservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
-public class DefaultCrudController<E, D> {
+public class AbstractCrudController<E extends BaseEntity, D extends BaseDto> {
 
     @Autowired
-    private AbstractCrudService<E> crudService;
+    private AbstractCrudService<E> abstractCrudService;
 
     @Autowired
     private Function<E, D> toDtoConverter;
@@ -25,32 +26,32 @@ public class DefaultCrudController<E, D> {
     private Function<D, E> toEntityConverter;
 
     @PostMapping (value = SAVE)
-    public ResponseEntity save (@RequestBody @Valid D dto) {
+    public ResponseEntity save (@RequestBody D dto) {
         E entity = toEntityConverter.apply (dto);
-        crudService.save (entity);
+        abstractCrudService.save (entity);
         return ResponseEntity.status (CREATED).build ();
     }
 
     @GetMapping (value = FETCH_BY)
     public ResponseEntity<D> fetchBy (@RequestParam Long id) {
-        E entity = crudService.fetchBy (id);
+        E entity = abstractCrudService.fetchBy (id);
         D dto = toDtoConverter.apply (entity);
-        return ResponseEntity.status (OK).body (dto);
+        return ResponseEntity.ok (dto);
     }
 
     @GetMapping (value = FETCH_ALL)
     public ResponseEntity<List<D>> fetchAll () {
-        List<E> entities = crudService.fetchAll ();
+        List<E> entities = abstractCrudService.fetchAll ();
         List<D> dto = entities.stream ()
                 .map (toDtoConverter::apply)
-                .toList ();
-        return ResponseEntity.status (OK).body (dto);
+                .collect (toList ());
+        return ResponseEntity.ok (dto);
     }
 
     @DeleteMapping (value = DELETE)
     public ResponseEntity delete (@RequestParam Long id) {
-        crudService.delete (id);
-        return ResponseEntity.status (OK).build ();
+        abstractCrudService.delete (id);
+        return ResponseEntity.ok ().build ();
     }
 
     public Function<E, D> getToDtoConverter () {

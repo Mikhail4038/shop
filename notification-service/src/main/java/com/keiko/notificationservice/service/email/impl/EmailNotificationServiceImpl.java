@@ -1,8 +1,8 @@
 package com.keiko.notificationservice.service.email.impl;
 
 import com.keiko.notificationservice.entity.ProductStock;
-import com.keiko.notificationservice.entity.ProductsStockEmail;
 import com.keiko.notificationservice.entity.SimpleEmail;
+import com.keiko.notificationservice.entity.productStocksEmail;
 import com.keiko.notificationservice.properties.EmailProperties;
 import com.keiko.notificationservice.service.email.EmailNotificationService;
 import freemarker.template.Configuration;
@@ -48,15 +48,15 @@ public class EmailNotificationServiceImpl
 
 
     @Override
-    public void sendProductsStock (ProductsStockEmail productsStockEmail) {
-        List<ProductStock> productsStock = productsStockEmail.getProductsStock ();
+    public void sendProductsStock (productStocksEmail productStocksEmail) {
+        List<ProductStock> productStocks = productStocksEmail.getProductStocks ();
         MimeMessage mimeMessage = javaMailSender.createMimeMessage ();
         MimeMessageHelper helper = new MimeMessageHelper (mimeMessage);
         try {
-            helper.setSubject (productsStockEmail.getSubject ());
-            helper.setTo (productsStockEmail.getToAddress ());
+            helper.setSubject (productStocksEmail.getSubject ());
+            helper.setTo (productStocksEmail.getToAddress ());
             helper.setFrom (emailProperties.getSupportEmail ());
-            String emailContent = getEmailContent ("productsStock.ftlh", productsStock, productsStockEmail.getMessage ());
+            String emailContent = getEmailContent ("productsStock.ftlh", productStocks, productStocksEmail.getMessage ());
             helper.setText (emailContent, true);
         } catch (MessagingException ex) {
             log.error (ex.getMessage ());
@@ -64,10 +64,10 @@ public class EmailNotificationServiceImpl
         javaMailSender.send (mimeMessage);
     }
 
-    private String getEmailContent (String template, List<ProductStock> productsStock, String message) {
+    private String getEmailContent (String template, List<ProductStock> productStocks, String message) {
         StringWriter stringWriter = new StringWriter ();
         Map<String, Object> model = new HashMap<> ();
-        model.put ("productsStock", productsStock);
+        model.put ("productStocks", productStocks);
         model.put ("message", message);
         try {
             configuration.getTemplate (template).process (model, stringWriter);

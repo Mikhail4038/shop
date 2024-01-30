@@ -4,7 +4,7 @@ import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Rating;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.event.RecalculateProductRatingEvent;
-import com.keiko.productservice.service.CrudService;
+import com.keiko.productservice.service.AbstractCrudService;
 import com.keiko.productservice.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -22,7 +22,7 @@ public class RecalculateProductRatingListener
     private ReviewService reviewService;
 
     @Autowired
-    private CrudService<Product> productService;
+    private AbstractCrudService<Product> productService;
 
     @Override
     public void onApplicationEvent (RecalculateProductRatingEvent event) {

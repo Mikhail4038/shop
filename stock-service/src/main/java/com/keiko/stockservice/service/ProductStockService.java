@@ -6,15 +6,11 @@ import java.util.Collection;
 import java.util.List;
 
 public interface ProductStockService {
-    void save (ProductStock productStock);
-
-    ProductStock fetchById (Long id);
-
     List<ProductStock> fetchByEan (String ean);
 
-    List<ProductStock> fetchAll ();
+    Long countProductInStock (String ean);
 
-    void delete (Long id);
+    void reduceStockLevel (String ean, Long value);
 
     List<ProductStock> findProductStocksToMoveExpiredStopList ();
 

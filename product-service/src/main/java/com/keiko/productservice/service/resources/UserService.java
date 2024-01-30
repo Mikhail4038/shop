@@ -1,4 +1,4 @@
-package com.keiko.productservice.service;
+package com.keiko.productservice.service.resources;
 
 import com.keiko.productservice.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;

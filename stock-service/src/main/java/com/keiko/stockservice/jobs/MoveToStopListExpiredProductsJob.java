@@ -4,7 +4,7 @@ import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.entity.StopList;
 import com.keiko.stockservice.entity.notification.ProductStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
-import com.keiko.stockservice.service.NotificationService;
+import com.keiko.stockservice.service.resources.NotificationService;
 import com.keiko.stockservice.service.ProductStockService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

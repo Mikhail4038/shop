@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping (value = USER_BASE)
 public class UserController
-        extends DefaultCrudController<User, UserDto> {
+        extends AbstractCrudController<User, UserDto> {
 
     @Autowired
     private UserService userService;

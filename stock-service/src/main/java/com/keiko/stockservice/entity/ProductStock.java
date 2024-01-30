@@ -1,11 +1,10 @@
 package com.keiko.stockservice.entity;
 
+import com.keiko.stockservice.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table (name = "t_product_stock")
@@ -14,17 +13,14 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductStock {
-
-    @Id
-    @GeneratedValue (strategy = IDENTITY)
-    private Long id;
+@EntityListeners (TimeEntityListener.class)
+public class ProductStock extends BaseEntity {
 
     @Column (nullable = false)
     private String ean;
 
     @Column (nullable = false)
-    private Double balance;
+    private Long balance;
 
     @Column (nullable = false)
     private LocalDate expirationDate;

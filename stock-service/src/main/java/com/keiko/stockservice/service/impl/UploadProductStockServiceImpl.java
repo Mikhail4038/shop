@@ -3,10 +3,9 @@ package com.keiko.stockservice.service.impl;
 import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.entity.notification.ProductStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
-import com.keiko.stockservice.service.NotificationService;
-import com.keiko.stockservice.service.ProductService;
-import com.keiko.stockservice.service.ProductStockService;
 import com.keiko.stockservice.service.UploadProductStockService;
+import com.keiko.stockservice.service.resources.NotificationService;
+import com.keiko.stockservice.service.resources.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -30,7 +29,7 @@ public class UploadProductStockServiceImpl
         implements UploadProductStockService {
 
     @Autowired
-    private ProductStockService productStockService;
+    private ProductStockServiceImpl productStockService;
 
     @Autowired
     private ProductService productService;
@@ -69,7 +68,7 @@ public class UploadProductStockServiceImpl
                         .toInstant ().atZone (ZoneId.systemDefault ()).toLocalDate ();
 
                 productStock.setEan (ean.toString ());
-                productStock.setBalance (balance);
+                productStock.setBalance (balance.longValue ());
                 productStock.setExpirationDate (expirationDate);
                 productStocks.add (productStock);
             }
@@ -137,7 +136,7 @@ public class UploadProductStockServiceImpl
 
         if (theSameExpirationDate.isPresent ()) {
             ProductStock stock = theSameExpirationDate.get ();
-            Double balance = stock.getBalance ();
+            Long balance = stock.getBalance ();
             balance += productStock.getBalance ();
             stock.setBalance (balance);
             productStockService.save (stock);

@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping (value = ROLE_BASE)
 public class RoleController
-        extends DefaultCrudController<Role, RoleDto> {
+        extends AbstractCrudController<Role, RoleDto> {
 
     @Autowired
     private RoleService roleService;

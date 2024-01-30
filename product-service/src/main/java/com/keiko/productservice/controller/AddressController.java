@@ -9,5 +9,5 @@ import static com.keiko.productservice.constants.WebResourceKeyConstants.ADDRESS
 
 @RestController
 @RequestMapping (value = ADDRESS_BASE)
-public class AddressController extends CrudController<Address, AddressDto> {
+public class AddressController extends AbstractCrudController<Address, AddressDto> {
 }

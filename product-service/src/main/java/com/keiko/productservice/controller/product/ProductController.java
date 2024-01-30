@@ -1,6 +1,6 @@
 package com.keiko.productservice.controller.product;
 
-import com.keiko.productservice.controller.CrudController;
+import com.keiko.productservice.controller.AbstractCrudController;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductService;
@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE)
-public class ProductController extends CrudController<Product, ProductDto> {
+public class ProductController extends AbstractCrudController<Product, ProductDto> {
 
     @Autowired
     private ProductService productService;

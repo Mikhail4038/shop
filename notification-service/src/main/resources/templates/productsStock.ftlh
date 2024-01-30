@@ -16,7 +16,7 @@
             <td>balance</td>
             <td>expiration date</td>
         </tr>
-        <#foreach productStock in productsStock>
+        <#foreach productStock in productStocks>
         <tr>
             <td>${productStock.ean}</td>
             <td>${productStock.balance}</td>

@@ -1,4 +1,4 @@
-package com.keiko.stockservice.service;
+package com.keiko.stockservice.service.resources;
 
 import com.keiko.stockservice.entity.Product;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -2,7 +2,7 @@ package com.keiko.productservice.service;
 
 import java.util.List;
 
-public interface CrudService<E> {
+public interface AbstractCrudService<E> {
 
     void save (E entity);
 

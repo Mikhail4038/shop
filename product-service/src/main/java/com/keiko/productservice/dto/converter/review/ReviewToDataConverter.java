@@ -4,7 +4,7 @@ import com.keiko.productservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.entity.User;
-import com.keiko.productservice.service.UserService;
+import com.keiko.productservice.service.resources.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

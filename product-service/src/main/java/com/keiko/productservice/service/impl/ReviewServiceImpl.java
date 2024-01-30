@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReviewServiceImpl extends CrudServiceImpl<Review> implements ReviewService {
+public class ReviewServiceImpl extends AbstractCrudServiceImpl<Review> implements ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;

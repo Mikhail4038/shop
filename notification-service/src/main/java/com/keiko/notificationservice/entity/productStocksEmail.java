@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProductsStockEmail extends SimpleEmail {
-    private List<ProductStock> productsStock;
+public class productStocksEmail extends SimpleEmail {
+    private List<ProductStock> productStocks;
 }

@@ -1,6 +1,5 @@
 package com.keiko.productservice.dto.converter;
 
-import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,10 @@ public abstract class AbstractToDtoConverter<E, D> implements Function<E, D> {
     private ModelMapper modelMapper;
 
     @Override
-    public D apply (E e) {
-        modelMapper.getConfiguration ().setPropertyCondition (Conditions.isNotNull ());
-        return modelMapper.map (e, dtoClass);
+    public D apply (E entity) {
+        return modelMapper.map (entity, dtoClass);
     }
 
-    // have opportunity add converter during set up mapping
     public Converter<E, D> converter = (context) -> {
         E entity = context.getSource ();
         D dto = context.getDestination ();

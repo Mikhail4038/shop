@@ -10,24 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
-import static com.keiko.stockservice.repository.specs.ProductStockSpec.inStopList;
-import static com.keiko.stockservice.repository.specs.ProductStockSpec.isExpired;
+import static com.keiko.stockservice.repository.specs.ProductStockSpec.*;
+import static java.util.Comparator.comparing;
 
 @Service
-public class ProductStockServiceImpl implements ProductStockService {
+public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStock>
+        implements ProductStockService {
 
     @Autowired
     private ProductStockRepository productStockRepository;
-
-    @Override
-    public void save (ProductStock productStock) {
-        productStockRepository.save (productStock);
-    }
-
-    @Override
-    public ProductStock fetchById (Long id) {
-        return productStockRepository.findById (id).orElseThrow ();
-    }
 
     @Override
     public List<ProductStock> fetchByEan (String ean) {
@@ -35,13 +26,39 @@ public class ProductStockServiceImpl implements ProductStockService {
     }
 
     @Override
-    public List<ProductStock> fetchAll () {
-        return productStockRepository.findAll ();
+    public Long countProductInStock (String ean) {
+        List<ProductStock> productStocks = productStockRepository.findByEan (ean);
+        Long inStock =
+                productStocks.stream ()
+                        .mapToLong (ProductStock::getBalance)
+                        .summaryStatistics ().getSum ();
+        return inStock;
     }
 
     @Override
-    public void delete (Long id) {
-        productStockRepository.deleteById (id);
+    public void reduceStockLevel (String ean, Long value) {
+        List<ProductStock> productStocks = productStockRepository.findAll (byEan (ean).and (inStopList (StopList.NONE)));
+        productStocks.sort (comparing (ProductStock::getExpirationDate));
+
+        for (int i = 0; i < productStocks.size (); i++) {
+            ProductStock productStock = productStocks.get (i);
+            Long balance = productStock.getBalance ();
+
+            if (balance.equals (value)) {
+                soldOutProductStocks (productStock);
+                break;
+            }
+
+            if (balance < value) {
+                soldOutProductStocks (productStock);
+                value -= balance;
+            } else {
+                Long diff = balance - value;
+                productStock.setBalance (diff);
+                productStockRepository.save (productStock);
+                break;
+            }
+        }
     }
 
     @Override
@@ -52,5 +69,11 @@ public class ProductStockServiceImpl implements ProductStockService {
     @Override
     public void saveAll (Collection<ProductStock> productStocks) {
         productStockRepository.saveAll (productStocks);
+    }
+
+    private void soldOutProductStocks (ProductStock productStock) {
+        productStock.setBalance (0L);
+        productStock.setStopList (StopList.SOLD);
+        productStockRepository.save (productStock);
     }
 }
