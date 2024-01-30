@@ -2,6 +2,7 @@ package com.keiko.stockservice.service.impl;
 
 import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.entity.StopList;
+import com.keiko.stockservice.exception.model.ProductStockLevelException;
 import com.keiko.stockservice.repository.ProductStockRepository;
 import com.keiko.stockservice.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,18 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public Long countProductInStock (String ean) {
-        List<ProductStock> productStocks = productStockRepository.findByEan (ean);
-        Long inStock =
+    public Long countProductStockForSell (String ean) {
+        List<ProductStock> productStocks = productStockRepository.findAll (byEan (ean).and (inStopList (StopList.NONE)));
+        Long availableStock =
                 productStocks.stream ()
                         .mapToLong (ProductStock::getBalance)
                         .summaryStatistics ().getSum ();
-        return inStock;
+
+        if (availableStock.equals (0L)) {
+            String message = String.format ("Product with ean: %s out of stock.", ean);
+            throw new ProductStockLevelException (message);
+        }
+        return availableStock;
     }
 
     @Override

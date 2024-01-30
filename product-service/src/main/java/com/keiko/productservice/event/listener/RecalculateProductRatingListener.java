@@ -7,7 +7,7 @@ import com.keiko.productservice.event.RecalculateProductRatingEvent;
 import com.keiko.productservice.service.AbstractCrudService;
 import com.keiko.productservice.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,8 +15,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 
 @Component
-public class RecalculateProductRatingListener
-        implements ApplicationListener<RecalculateProductRatingEvent> {
+public class RecalculateProductRatingListener {
 
     @Autowired
     private ReviewService reviewService;
@@ -24,7 +23,7 @@ public class RecalculateProductRatingListener
     @Autowired
     private AbstractCrudService<Product> productService;
 
-    @Override
+    @EventListener
     public void onApplicationEvent (RecalculateProductRatingEvent event) {
         final Review review = event.getReview ();
         final Long productId = review.getProduct ().getId ();

@@ -1,4 +1,4 @@
-package com.keiko.orderservice.event;
+package com.keiko.orderservice.event.listener;
 
 import com.keiko.orderservice.entity.BaseEntity;
 import jakarta.persistence.PrePersist;

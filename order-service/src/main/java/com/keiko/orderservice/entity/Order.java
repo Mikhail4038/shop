@@ -1,6 +1,6 @@
 package com.keiko.orderservice.entity;
 
-import com.keiko.orderservice.event.TimeEntityListener;
+import com.keiko.orderservice.event.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +25,9 @@ public class Order extends BaseEntity {
 
     @OneToOne (cascade = {PERSIST, REMOVE})
     private DeliveryAddress deliveryAddress;
+
+    @Column (insertable = false)
+    private Double totalAmount;
 
     @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;

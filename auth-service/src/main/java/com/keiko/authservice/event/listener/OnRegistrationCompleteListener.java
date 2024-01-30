@@ -7,14 +7,13 @@ import com.keiko.authservice.event.OnRegistrationCompleteEvent;
 import com.keiko.authservice.service.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-public class OnRegistrationCompleteListener
-        implements ApplicationListener<OnRegistrationCompleteEvent> {
+public class OnRegistrationCompleteListener {
 
     @Autowired
     private VerificationTokenService verificationTokenService;
@@ -22,7 +21,7 @@ public class OnRegistrationCompleteListener
     @Autowired
     private NotificationService notificationService;
 
-    @Override
+    @EventListener
     public void onApplicationEvent (OnRegistrationCompleteEvent event) {
         User user = event.getUser ();
 

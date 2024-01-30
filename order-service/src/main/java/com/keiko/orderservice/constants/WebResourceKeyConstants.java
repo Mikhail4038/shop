@@ -16,6 +16,10 @@ public class WebResourceKeyConstants {
 
     // stock
     public static final String PRODUCT_STOCK_BASE = "/stock";
-    public static final String COUNT_PRODUCT_IN_STOCK = "/inStock";
+    public static final String COUNT_PRODUCT_STOCK_FOR_SELL = "/stockForSell";
     public static final String REDUCE_STOCK_LEVEL = "/reduceStock";
+
+    //product
+    public static final String PRODUCT_BASE = "/product";
+    public static final String BY_EAN = "/ean";
 }

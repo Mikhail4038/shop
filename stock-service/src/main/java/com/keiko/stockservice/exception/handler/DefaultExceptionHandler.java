@@ -1,4 +1,4 @@
-package com.keiko.stockservice.exception;
+package com.keiko.stockservice.exception.handler;
 
 import com.keiko.stockservice.exception.response.ErrorResponse;
 import org.springframework.http.HttpStatus;

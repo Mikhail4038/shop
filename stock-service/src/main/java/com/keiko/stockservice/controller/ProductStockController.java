@@ -20,11 +20,12 @@ public class ProductStockController
     @Autowired
     private ProductStockService productStockService;
 
-    @GetMapping (value = COUNT_PRODUCT_IN_STOCK)
-    public ResponseEntity<Long> inStock (@RequestParam String ean) {
-        Long inStock = productStockService.countProductInStock (ean);
-        return ResponseEntity.ok (inStock);
+    @GetMapping (value = COUNT_PRODUCT_STOCK_FOR_SELL)
+    public ResponseEntity<Long> stockForSell (@RequestParam String ean) {
+        Long availableStock = productStockService.countProductStockForSell (ean);
+        return ResponseEntity.ok (availableStock);
     }
+
 
     @GetMapping (value = REDUCE_STOCK_LEVEL)
     public ResponseEntity reduceStock (@RequestParam String ean,

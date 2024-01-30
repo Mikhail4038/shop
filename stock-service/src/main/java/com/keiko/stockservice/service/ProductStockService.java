@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductStockService {
     List<ProductStock> fetchByEan (String ean);
 
-    Long countProductInStock (String ean);
+    Long countProductStockForSell (String ean);
 
     void reduceStockLevel (String ean, Long value);
 

@@ -13,8 +13,8 @@ import static com.keiko.orderservice.constants.WebResourceKeyConstants.*;
 @FeignClient (name = STOCK_SERVICE)
 public interface StockService {
 
-    @GetMapping (value = PRODUCT_STOCK_BASE + COUNT_PRODUCT_IN_STOCK)
-    Long countProductInStock (@RequestParam String ean);
+    @GetMapping (value = PRODUCT_STOCK_BASE + COUNT_PRODUCT_STOCK_FOR_SELL)
+    Long countProductForSell (@RequestParam String ean);
 
     @GetMapping (value = PRODUCT_STOCK_BASE + REDUCE_STOCK_LEVEL)
     public ResponseEntity reduceStock (@RequestParam String ean,
