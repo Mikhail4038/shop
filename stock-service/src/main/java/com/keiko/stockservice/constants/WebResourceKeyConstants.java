@@ -5,7 +5,8 @@ public class WebResourceKeyConstants {
     public static final String SAVE = "/save";
     public static final String FETCH_BY = "/fetchBy";
     public static final String COUNT_PRODUCT_STOCK_FOR_SELL = "/stockForSell";
-    public static final String REDUCE_STOCK_LEVEL = "/reduceStock";
+    public static final String BOOKED_STOCK = "/booked";
+    public static final String CANCEL_BOOKED_STOCK = "/cancelBooked";
     public static final String FETCH_ALL = "/fetchAll";
     public static final String DELETE = "/delete";
     public static final String UPLOAD = "/upload";

@@ -1,4 +1,4 @@
-package com.keiko.stockservice.entity;
+package com.keiko.stockservice.entity.resources;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

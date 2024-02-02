@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.entity.User;
-import com.keiko.userservice.request.ModifyUserRolesRequest;
+import com.keiko.userservice.request.UpgradeUserRolesRequest;
 import com.keiko.userservice.service.impl.DefaultUserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -105,25 +105,25 @@ class UserControllerTest {
 
     @Test
     void addUserRoles_should_successfully () throws Exception {
-        ModifyUserRolesRequest request = new ModifyUserRolesRequest (1L, Set.of (1L));
+        UpgradeUserRolesRequest request = new UpgradeUserRolesRequest (1L, Set.of (1L));
         mockMvc.perform (post (USER_BASE + ADD_ROLES)
                 .content (objectMapper.writeValueAsString (request))
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
-        verify (userService, times (1)).addRoles (any (ModifyUserRolesRequest.class));
+        verify (userService, times (1)).addRoles (any (UpgradeUserRolesRequest.class));
         verifyNoMoreInteractions (userService);
     }
 
     @Test
     void deleteUserRoles_should_successfully () throws Exception {
-        ModifyUserRolesRequest request = new ModifyUserRolesRequest (1L, Set.of (1L));
+        UpgradeUserRolesRequest request = new UpgradeUserRolesRequest (1L, Set.of (1L));
         mockMvc.perform (post (USER_BASE + DELETE_ROLES)
                 .content (objectMapper.writeValueAsString (request))
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
-        verify (userService, times (1)).deleteRoles (any (ModifyUserRolesRequest.class));
+        verify (userService, times (1)).deleteRoles (any (UpgradeUserRolesRequest.class));
         verifyNoMoreInteractions (userService);
     }
 }

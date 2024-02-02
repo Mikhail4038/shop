@@ -2,7 +2,7 @@ package com.keiko.userservice.controller;
 
 import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.User;
-import com.keiko.userservice.request.ModifyUserRolesRequest;
+import com.keiko.userservice.request.UpgradeUserRolesRequest;
 import com.keiko.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +44,13 @@ public class UserController
     }
 
     @PostMapping (value = ADD_ROLES)
-    public ResponseEntity addRoles (@RequestBody ModifyUserRolesRequest request) {
+    public ResponseEntity addRoles (@RequestBody UpgradeUserRolesRequest request) {
         userService.addRoles (request);
         return ResponseEntity.ok ().build ();
     }
 
     @PostMapping (value = DELETE_ROLES)
-    public ResponseEntity deleteRoles (@RequestBody ModifyUserRolesRequest request) {
+    public ResponseEntity deleteRoles (@RequestBody UpgradeUserRolesRequest request) {
         userService.deleteRoles (request);
         return ResponseEntity.ok ().build ();
     }

@@ -1,7 +1,7 @@
 package com.keiko.userservice.service;
 
 import com.keiko.userservice.entity.User;
-import com.keiko.userservice.request.ModifyUserRolesRequest;
+import com.keiko.userservice.request.UpgradeUserRolesRequest;
 import lombok.NonNull;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface UserService {
 
     List<User> findByRole (String role);
 
-    void addRoles (@NonNull ModifyUserRolesRequest request);
+    void addRoles (@NonNull UpgradeUserRolesRequest request);
 
-    void deleteRoles (@NonNull ModifyUserRolesRequest request);
+    void deleteRoles (@NonNull UpgradeUserRolesRequest request);
 }

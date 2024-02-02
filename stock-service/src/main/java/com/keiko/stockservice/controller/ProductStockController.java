@@ -2,13 +2,11 @@ package com.keiko.stockservice.controller;
 
 import com.keiko.stockservice.dto.productStock.ProductStockDto;
 import com.keiko.stockservice.entity.ProductStock;
+import com.keiko.stockservice.request.BookingStockRequest;
 import com.keiko.stockservice.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.keiko.stockservice.constants.WebResourceKeyConstants.*;
 
@@ -27,10 +25,15 @@ public class ProductStockController
     }
 
 
-    @GetMapping (value = REDUCE_STOCK_LEVEL)
-    public ResponseEntity reduceStock (@RequestParam String ean,
-                                       @RequestParam Long value) {
-        productStockService.reduceStockLevel (ean, value);
+    @PostMapping (value = BOOKED_STOCK)
+    public ResponseEntity booked (@RequestBody BookingStockRequest request) {
+        productStockService.bookedStock (request);
+        return ResponseEntity.ok ().build ();
+    }
+
+    @PostMapping (value = CANCEL_BOOKED_STOCK)
+    public ResponseEntity cancelBooked (@RequestBody BookingStockRequest request) {
+        productStockService.cancelBookedStock (request);
         return ResponseEntity.ok ().build ();
     }
 }

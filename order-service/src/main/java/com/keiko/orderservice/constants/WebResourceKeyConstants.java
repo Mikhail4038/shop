@@ -12,12 +12,14 @@ public class WebResourceKeyConstants {
 
     // order
     public static final String ORDER_BASE = "/order";
-    public static final String ADD_ENTRY_TO_ORDER = "/addEntry";
+    public static final String SAVE_ORDER_ENTRY = "/saveEntry";
+    public static final String REMOVE_ORDER_ENTRY = "/removeEntry";
 
     // stock
     public static final String PRODUCT_STOCK_BASE = "/stock";
     public static final String COUNT_PRODUCT_STOCK_FOR_SELL = "/stockForSell";
-    public static final String REDUCE_STOCK_LEVEL = "/reduceStock";
+    public static final String BOOKED_STOCK = "/booked";
+    public static final String CANCEL_BOOKED_STOCK = "/cancelBooked";
 
     //product
     public static final String PRODUCT_BASE = "/product";

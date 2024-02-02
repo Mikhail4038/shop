@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
@@ -19,9 +20,9 @@ public class Order extends BaseEntity {
 
     private Long userId;
 
-    @OneToMany (fetch = LAZY, cascade = {PERSIST, MERGE, REMOVE})
+    @OneToMany (fetch = LAZY, cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     @JoinColumn (name = "order_id")
-    private List<OrderEntry> entries;
+    private List<OrderEntry> entries = new ArrayList<> ();
 
     @OneToOne (cascade = {PERSIST, REMOVE})
     private DeliveryAddress deliveryAddress;

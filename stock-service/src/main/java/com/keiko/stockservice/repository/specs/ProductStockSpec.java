@@ -27,4 +27,10 @@ public class ProductStockSpec {
             return builder.equal (root.get (ProductStock_.EAN), ean);
         };
     }
+
+    public static Specification<ProductStock> hasBookedStock () {
+        return (root, query, builder) -> {
+            return builder.greaterThan (root.get (ProductStock_.BOOKED), 0);
+        };
+    }
 }

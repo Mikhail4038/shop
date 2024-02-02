@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddEntryToOrderRequest {
+public class UpgradeOrderRequest {
     private String productEan;
     private Long quantity;
     private Long orderId;

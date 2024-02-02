@@ -22,6 +22,8 @@ public class ProductStock extends BaseEntity {
     @Column (nullable = false)
     private Long balance;
 
+    private Long booked = 0L;
+
     @Column (nullable = false)
     private LocalDate expirationDate;
 

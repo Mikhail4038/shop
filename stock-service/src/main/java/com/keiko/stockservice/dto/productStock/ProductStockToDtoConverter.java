@@ -1,7 +1,7 @@
 package com.keiko.stockservice.dto.productStock;
 
 import com.keiko.stockservice.dto.AbstractToDtoConverter;
-import com.keiko.stockservice.entity.Product;
+import com.keiko.stockservice.entity.resources.Product;
 import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.service.resources.ProductService;
 import jakarta.annotation.PostConstruct;

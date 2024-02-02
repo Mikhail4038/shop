@@ -6,7 +6,7 @@ import com.keiko.userservice.exception.model.RoleNotFoundException;
 import com.keiko.userservice.exception.model.UserNotFoundException;
 import com.keiko.userservice.repository.RoleRepository;
 import com.keiko.userservice.repository.UserRepository;
-import com.keiko.userservice.request.ModifyUserRolesRequest;
+import com.keiko.userservice.request.UpgradeUserRolesRequest;
 import com.keiko.userservice.service.UserService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class DefaultUserService extends DefaultCrudService<User>
     }
 
     @Override
-    public void addRoles (@NonNull ModifyUserRolesRequest request) {
+    public void addRoles (@NonNull UpgradeUserRolesRequest request) {
         Set<Role> rolesForAdd = getRolesFromRequest (request);
 
         if (isNotEmpty (rolesForAdd)) {
@@ -67,7 +67,7 @@ public class DefaultUserService extends DefaultCrudService<User>
     }
 
     @Override
-    public void deleteRoles (@NonNull ModifyUserRolesRequest request) {
+    public void deleteRoles (@NonNull UpgradeUserRolesRequest request) {
         User user = getUserFromRequest (request);
         Set<Role> actualRoles = user.getRoles ();
 
@@ -87,7 +87,7 @@ public class DefaultUserService extends DefaultCrudService<User>
         super.save (user);
     }
 
-    private User getUserFromRequest (ModifyUserRolesRequest request) {
+    private User getUserFromRequest (UpgradeUserRolesRequest request) {
         final Long userId = request.getUserId ();
         User user = userRepository.findById (userId)
                 .orElseThrow (() -> new UserNotFoundException (
@@ -95,7 +95,7 @@ public class DefaultUserService extends DefaultCrudService<User>
         return user;
     }
 
-    private Set<Role> getRolesFromRequest (ModifyUserRolesRequest request) {
+    private Set<Role> getRolesFromRequest (UpgradeUserRolesRequest request) {
         Set<Long> rolesName = request.getRolesId ();
         if (nonNull (rolesName)) {
             Set<Role> roles = rolesName.stream ()

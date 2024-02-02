@@ -1,6 +1,7 @@
 package com.keiko.stockservice.service;
 
 import com.keiko.stockservice.entity.ProductStock;
+import com.keiko.stockservice.request.BookingStockRequest;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,7 +11,9 @@ public interface ProductStockService {
 
     Long countProductStockForSell (String ean);
 
-    void reduceStockLevel (String ean, Long value);
+    void bookedStock (BookingStockRequest request);
+
+    void cancelBookedStock (BookingStockRequest request);
 
     List<ProductStock> findProductStocksToMoveExpiredStopList ();
 

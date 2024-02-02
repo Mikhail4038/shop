@@ -1,17 +1,15 @@
-package com.keiko.userservice.request;
+package com.keiko.orderservice.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModifyUserRolesRequest {
-    private Long userId;
-    private Set<Long> rolesId;
+public class BookingStockRequest {
+    private String ean;
+    private Long value;
 }

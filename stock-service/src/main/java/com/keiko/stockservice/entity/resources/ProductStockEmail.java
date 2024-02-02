@@ -1,4 +1,4 @@
-package com.keiko.stockservice.entity.notification;
+package com.keiko.stockservice.entity.resources;
 
 import com.keiko.stockservice.entity.ProductStock;
 import lombok.Builder;
