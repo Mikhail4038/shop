@@ -1,4 +1,4 @@
-insert into t_address (created,modified,street,house,city,country,locale) values(now(),now(),'Kupaly','12','Hrodno','Belarus','BY');
+insert into t_producer_address (created,modified,street,house,city,country,locale) values(now(),now(),'Kupaly','12','Hrodno','Belarus','BY');
 
 insert into t_producer (created,modified,name,address_id) values(now(),now(),'Conte',1);
 

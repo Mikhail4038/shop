@@ -1,6 +1,7 @@
 package com.keiko.stockservice.service.impl;
 
 import com.keiko.stockservice.entity.ProductStock;
+import com.keiko.stockservice.entity.StopList;
 import com.keiko.stockservice.entity.resources.ProductStockEmail;
 import com.keiko.stockservice.properties.EmailProperties;
 import com.keiko.stockservice.service.UploadProductStockService;
@@ -82,7 +83,6 @@ public class UploadProductStockServiceImpl
         List<ProductStock> notExistProducts = new ArrayList<> ();
         List<ProductStock> existProducts = new ArrayList<> ();
 
-
         for (ProductStock stock : uploadProductStocks) {
             if (isExistsProduct (stock.getEan ())) {
                 addProductStock (stock);
@@ -139,6 +139,9 @@ public class UploadProductStockServiceImpl
             Long balance = stock.getBalance ();
             balance += productStock.getBalance ();
             stock.setBalance (balance);
+            if (!stock.getStopList ().equals (StopList.NONE)) {
+                stock.setStopList (StopList.NONE);
+            }
             productStockService.save (stock);
         } else {
             productStockService.save (productStock);

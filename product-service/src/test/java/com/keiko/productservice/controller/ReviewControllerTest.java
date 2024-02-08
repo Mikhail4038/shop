@@ -5,7 +5,7 @@ import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Review;
-import com.keiko.productservice.entity.User;
+import com.keiko.productservice.entity.resources.User;
 import com.keiko.productservice.service.impl.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

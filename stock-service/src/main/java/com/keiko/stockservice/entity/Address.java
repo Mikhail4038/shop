@@ -1,6 +1,6 @@
-package com.keiko.orderservice.entity;
+package com.keiko.stockservice.entity;
 
-import com.keiko.orderservice.event.listener.TimeEntityListener;
+import com.keiko.stockservice.listener.TimeEntityListener;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table (name = "t_delivery_address")
+@Table (name = "t_shop_address")
 @EntityListeners (TimeEntityListener.class)
-public class DeliveryAddress extends BaseEntity {
+public class Address extends BaseEntity {
     private String street;
     private String house;
     private String city;

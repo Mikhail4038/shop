@@ -2,8 +2,10 @@ package com.keiko.addressservice.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.keiko.addressservice.entity.Address;
 import com.keiko.addressservice.exception.model.GeocodingProcessException;
 import com.keiko.addressservice.properties.GraphhopperProperties;
+import com.keiko.addressservice.request.CalculatingRouteRequest;
 import com.keiko.addressservice.request.GeocodeRequest;
 import com.keiko.addressservice.request.ReverseGeocodeRequest;
 import com.keiko.addressservice.response.GeocodeResponse;
@@ -80,12 +82,30 @@ public class GraphhopperAddressService implements AddressService {
         return reverseGeocodeResponse;
     }
 
-    private String buildGeocodeUrl (GeocodeRequest geocodingRequest) {
-        final String street = geocodingRequest.getStreet ();
-        final String house = geocodingRequest.getHouse ();
-        final String city = geocodingRequest.getCity ();
-        final String country = geocodingRequest.getCountry ();
-        final String locale = geocodingRequest.getLocale ();
+    @Override
+    public Double calculateRoute (CalculatingRouteRequest calculatingRouteRequest) {
+        OkHttpClient client = new OkHttpClient ();
+        Request request = new Request.Builder ()
+                .url ("https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&profile=car&locale=de&calc_points=false&key=" + "84fe3816-116e-4992-af87-165c20b2f2c4")
+                .get ()
+                .build ();
+
+        try {
+            Response response = client.newCall (request).execute ();
+        } catch (IOException e) {
+            throw new RuntimeException (e.getMessage ());
+        }
+        return 5.0;
+    }
+
+
+    private String buildGeocodeUrl (GeocodeRequest geocodeRequest) {
+        Address address = geocodeRequest.getAddress ();
+        final String street = address.getStreet ();
+        final String house = address.getHouse ();
+        final String city = address.getCity ();
+        final String country = address.getCountry ();
+        final String locale = address.getLocale ();
         final String addressData = street + " " + house + ", " + city + ", " + country;
         final String url = String.format ("%s?q=%s&locale=%s&key=%s", resource, addressData, locale, key);
         return url;
@@ -116,7 +136,6 @@ public class GraphhopperAddressService implements AddressService {
     }
 
     private ReverseGeocodeResponse buildReverseGeocodeResponse (Response response) throws IOException {
-
         JsonNode json = objectMapper.readTree (response.body ().string ());
         JsonNode hits = json.get ("hits").get (0);
         final String street = hits.get ("name").asText ();

@@ -1,8 +1,10 @@
 package com.keiko.notificationservice.service.email.impl;
 
-import com.keiko.notificationservice.entity.ProductStock;
+import com.keiko.notificationservice.entity.OrderDetailsEmail;
+import com.keiko.notificationservice.entity.ProductStocksEmail;
 import com.keiko.notificationservice.entity.SimpleEmail;
-import com.keiko.notificationservice.entity.productStocksEmail;
+import com.keiko.notificationservice.entity.resources.Order;
+import com.keiko.notificationservice.entity.resources.ProductStock;
 import com.keiko.notificationservice.properties.EmailProperties;
 import com.keiko.notificationservice.service.email.EmailNotificationService;
 import freemarker.template.Configuration;
@@ -46,29 +48,40 @@ public class EmailNotificationServiceImpl
         javaMailSender.send (simpleMailMessage);
     }
 
-
     @Override
-    public void sendProductsStock (productStocksEmail productStocksEmail) {
-        List<ProductStock> productStocks = productStocksEmail.getProductStocks ();
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage ();
-        MimeMessageHelper helper = new MimeMessageHelper (mimeMessage);
+    public void sendProductsStock (ProductStocksEmail productStocksEmail) {
+        MimeMessageHelper helper = generateMimeMessageHelper (productStocksEmail);
         try {
-            helper.setSubject (productStocksEmail.getSubject ());
-            helper.setTo (productStocksEmail.getToAddress ());
-            helper.setFrom (emailProperties.getSupportEmail ());
-            String emailContent = getEmailContent ("productsStock.ftlh", productStocks, productStocksEmail.getMessage ());
+            List<ProductStock> productStocks = productStocksEmail.getProductStocks ();
+            String message = productStocksEmail.getMessage ();
+            String emailContent = getProductStocksEmailContent (productStocks, message);
             helper.setText (emailContent, true);
         } catch (MessagingException ex) {
             log.error (ex.getMessage ());
         }
-        javaMailSender.send (mimeMessage);
+        javaMailSender.send (helper.getMimeMessage ());
     }
 
-    private String getEmailContent (String template, List<ProductStock> productStocks, String message) {
+    @Override
+    public void sendOrderDetails (OrderDetailsEmail orderDetailsEmail) {
+        MimeMessageHelper helper = generateMimeMessageHelper (orderDetailsEmail);
+        try {
+            Order order = orderDetailsEmail.getOrder ();
+            String message = orderDetailsEmail.getMessage ();
+            String emailContent = getOrderDetailsEmailContent (order, message);
+            helper.setText (emailContent, true);
+        } catch (MessagingException ex) {
+            log.error (ex.getMessage ());
+        }
+        javaMailSender.send (helper.getMimeMessage ());
+    }
+
+    private String getOrderDetailsEmailContent (Order order, String message) {
         StringWriter stringWriter = new StringWriter ();
         Map<String, Object> model = new HashMap<> ();
-        model.put ("productStocks", productStocks);
+        model.put ("order", order);
         model.put ("message", message);
+        String template = "orderDetails.ftlh";
         try {
             configuration.getTemplate (template).process (model, stringWriter);
         } catch (TemplateException ex) {
@@ -77,5 +90,34 @@ public class EmailNotificationServiceImpl
             log.error (ex.getMessage ());
         }
         return stringWriter.getBuffer ().toString ();
+    }
+
+    private String getProductStocksEmailContent (List<ProductStock> productStocks, String message) {
+        StringWriter stringWriter = new StringWriter ();
+        Map<String, Object> model = new HashMap<> ();
+        model.put ("productStocks", productStocks);
+        model.put ("message", message);
+        String template = "productsStock.ftlh";
+        try {
+            configuration.getTemplate (template).process (model, stringWriter);
+        } catch (TemplateException ex) {
+            log.error (ex.getMessage ());
+        } catch (IOException ex) {
+            log.error (ex.getMessage ());
+        }
+        return stringWriter.getBuffer ().toString ();
+    }
+
+    private MimeMessageHelper generateMimeMessageHelper (SimpleEmail simpleEmail) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage ();
+        MimeMessageHelper helper = new MimeMessageHelper (mimeMessage);
+        try {
+            helper.setSubject (simpleEmail.getSubject ());
+            helper.setTo (simpleEmail.getToAddress ());
+            helper.setFrom (emailProperties.getSupportEmail ());
+        } catch (MessagingException ex) {
+            log.error (ex.getMessage ());
+        }
+        return helper;
     }
 }

@@ -24,8 +24,14 @@ public class Order extends BaseEntity {
     @JoinColumn (name = "order_id")
     private List<OrderEntry> entries = new ArrayList<> ();
 
-    @OneToOne (cascade = {PERSIST, REMOVE})
-    private DeliveryAddress deliveryAddress;
+    @OneToOne (cascade = {MERGE, REMOVE})
+    private Address deliveryAddress;
+
+    @Column (insertable = false)
+    private Double deliveryCost;
+
+    @Column (insertable = false)
+    private Double totalPrice;
 
     @Column (insertable = false)
     private Double totalAmount;

@@ -1,14 +1,14 @@
-package com.keiko.productservice.entity;
+package com.keiko.orderservice.entity.resources;
 
+import com.keiko.orderservice.entity.Address;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class User {
-    private Long id;
     private String email;
     private String name;
+    private Address address;
+
 }

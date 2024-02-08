@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -20,7 +21,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Producer extends BaseEntity {
     private String name;
 
-    @OneToOne (fetch = LAZY, cascade = PERSIST, orphanRemoval = true)
+    @OneToOne (fetch = LAZY, cascade = {PERSIST, REMOVE})
     private Address address;
 
     @OneToMany (fetch = LAZY, mappedBy = "producer")

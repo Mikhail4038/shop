@@ -2,9 +2,9 @@ package com.keiko.stockservice.service.impl;
 
 import com.keiko.stockservice.entity.ProductStock;
 import com.keiko.stockservice.entity.StopList;
+import com.keiko.stockservice.entity.resources.OrderEntry;
 import com.keiko.stockservice.exception.model.ProductStockLevelException;
 import com.keiko.stockservice.repository.ProductStockRepository;
-import com.keiko.stockservice.request.BookingStockRequest;
 import com.keiko.stockservice.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,9 +44,9 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void bookedStock (BookingStockRequest request) {
-        String ean = request.getEan ();
-        Long value = request.getValue ();
+    public void bookedStock (OrderEntry orderEntry) {
+        String ean = orderEntry.getProductEan ();
+        Long quantity = orderEntry.getQuantity ();
 
         List<ProductStock> productStocks =
                 productStockRepository.findAll (byEan (ean).and (inStopList (StopList.NONE)));
@@ -58,31 +58,31 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
             Long balance = stock.getBalance ();
             Long booked = stock.getBooked ();
 
-            if (balance.equals (value)) {
-                stock.setBalance (balance - value);
-                stock.setBooked (booked + value);
+            if (balance.equals (quantity)) {
+                stock.setBalance (balance - quantity);
+                stock.setBooked (booked + quantity);
                 stock.setStopList (StopList.BOOKED);
                 super.save (stock);
                 break;
             }
-            if (balance > value) {
-                stock.setBalance (balance - value);
-                stock.setBooked (booked + value);
+            if (balance > quantity) {
+                stock.setBalance (balance - quantity);
+                stock.setBooked (booked + quantity);
                 super.save (stock);
                 break;
             } else {
                 stock.setBalance (0L);
                 stock.setBooked (booked + balance);
                 stock.setStopList (StopList.BOOKED);
-                value -= balance;
+                quantity -= balance;
             }
         }
     }
 
     @Override
-    public void cancelBookedStock (BookingStockRequest request) {
-        String ean = request.getEan ();
-        Long value = request.getValue ();
+    public void cancelBookedStock (OrderEntry orderEntry) {
+        String ean = orderEntry.getProductEan ();
+        Long quantity = orderEntry.getQuantity ();
 
         List<ProductStock> productStocks =
                 productStockRepository.findAll (byEan (ean).and (hasBookedStock ()));
@@ -94,32 +94,62 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
             Long booked = stock.getBooked ();
             Long balance = stock.getBalance ();
 
-            if (booked.equals (value)) {
+            if (booked.equals (quantity)) {
                 stock.setBooked (0L);
-                stock.setBalance (balance + value);
-                if (!stock.getStopList ().equals (StopList.NONE)) {
-                    stock.setStopList (StopList.NONE);
-                }
+                stock.setBalance (balance + quantity);
+                checkStopListStatus (stock);
                 super.save (stock);
                 break;
             }
 
-            if (booked > value) {
-                stock.setBooked (booked - value);
-                stock.setBalance (balance + value);
-                if (!stock.getStopList ().equals (StopList.NONE)) {
-                    stock.setStopList (StopList.NONE);
-                }
+            if (booked > quantity) {
+                stock.setBooked (booked - quantity);
+                stock.setBalance (balance + quantity);
+                checkStopListStatus (stock);
                 super.save (stock);
                 break;
             } else {
                 stock.setBooked (0L);
                 stock.setBalance (booked + balance);
-                if (!stock.getStopList ().equals (StopList.NONE)) {
-                    stock.setStopList (StopList.NONE);
-                }
+                checkStopListStatus (stock);
                 super.save (stock);
-                value -= booked;
+                quantity -= booked;
+            }
+        }
+    }
+
+    @Override
+    public void sellStock (List<OrderEntry> entries) {
+        for (OrderEntry entry : entries) {
+            String ean = entry.getProductEan ();
+            Long quantity = entry.getQuantity ();
+
+            List<ProductStock> productStocks =
+                    productStockRepository.findAll (byEan (ean).and (hasBookedStock ()));
+            productStocks.sort (comparing (ProductStock::getExpirationDate));
+
+            ProductStock stock;
+            for (int i = 0; i < productStocks.size (); i++) {
+                stock = productStocks.get (i);
+                Long booked = stock.getBooked ();
+
+                if (booked.equals (quantity)) {
+                    stock.setBooked (0L);
+                    checkStockBalance (stock);
+                    super.save (stock);
+                    break;
+                }
+
+                if (booked > quantity) {
+                    stock.setBooked (booked - quantity);
+                    super.save (stock);
+                    break;
+                } else {
+                    stock.setBooked (0L);
+                    checkStockBalance (stock);
+                    super.save (stock);
+                    quantity -= booked;
+                }
             }
         }
     }
@@ -134,10 +164,15 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
         productStockRepository.saveAll (productStocks);
     }
 
-    private void bookedProductStocks (ProductStock productStock, Long value) {
-        productStock.setBalance (0L);
-        productStock.setBooked (value);
-        productStock.setStopList (StopList.BOOKED);
-        productStockRepository.save (productStock);
+    private void checkStopListStatus (ProductStock stock) {
+        if (!stock.getStopList ().equals (StopList.NONE)) {
+            stock.setStopList (StopList.NONE);
+        }
+    }
+
+    private void checkStockBalance (ProductStock stock) {
+        if (stock.getBalance ().equals (0L)) {
+            stock.setStopList (StopList.SOLD);
+        }
     }
 }

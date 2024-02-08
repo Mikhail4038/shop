@@ -1,6 +1,7 @@
 package com.keiko.notificationservice.controller;
 
-import com.keiko.notificationservice.entity.productStocksEmail;
+import com.keiko.notificationservice.entity.OrderDetailsEmail;
+import com.keiko.notificationservice.entity.ProductStocksEmail;
 import com.keiko.notificationservice.entity.SimpleEmail;
 import com.keiko.notificationservice.service.email.EmailNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,14 @@ public class EmailNotificationController {
     }
 
     @PostMapping (value = PRODUCT_STOCKS)
-    public ResponseEntity productStocks (@RequestBody productStocksEmail productStocksEmail) {
+    public ResponseEntity productStocks (@RequestBody ProductStocksEmail productStocksEmail) {
         emailNotificationService.sendProductsStock (productStocksEmail);
+        return ResponseEntity.ok ().build ();
+    }
+
+    @PostMapping (value = ORDER_DETAILS)
+    public ResponseEntity orderDetails (@RequestBody OrderDetailsEmail orderDetailsEmail) {
+        emailNotificationService.sendOrderDetails (orderDetailsEmail);
         return ResponseEntity.ok ().build ();
     }
 }

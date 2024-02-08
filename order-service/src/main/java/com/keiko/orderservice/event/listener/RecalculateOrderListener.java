@@ -19,13 +19,12 @@ public class RecalculateOrderListener {
     public void onApplicationEvent (RecalculateOrderEvent event) {
         Order order = event.getOrder ();
 
-        Double totalAmount = 0.0;
+        Double totalPrice = 0.0;
         for (OrderEntry entry : order.getEntries ()) {
-            Product product = productService.findByEan (entry.getProductEan ());
-            Double price = product.getPrice ().getValue ();
-            totalAmount += price * entry.getQuantity ();
+            String ean = entry.getProductEan ();
+            Product product = productService.findByEan (ean);
+            totalPrice += product.getPrice ().getValue () * entry.getQuantity ();
         }
-
-        order.setTotalAmount (totalAmount);
+        order.setTotalPrice (totalPrice);
     }
 }

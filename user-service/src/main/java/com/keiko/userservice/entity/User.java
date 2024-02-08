@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     @ManyToMany (fetch = LAZY, cascade = {MERGE})
     private Set<Role> roles;
 
-    @OneToOne (fetch = LAZY)
+    @OneToOne
     private Address address;
 
     public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, Address address) {

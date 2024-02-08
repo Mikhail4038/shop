@@ -5,10 +5,8 @@ import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.*;
+import com.keiko.productservice.entity.resources.User;
 import com.keiko.productservice.event.RecalculateProductRatingEvent;
-
-import java.sql.Timestamp;
-import java.time.LocalDate;
 
 public class TestData {
     private static final Long PRODUCT_ID = 1L;

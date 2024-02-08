@@ -6,6 +6,10 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table (name = "t_product_stock")
 @Getter
@@ -29,4 +33,7 @@ public class ProductStock extends BaseEntity {
 
     @Enumerated (EnumType.STRING)
     private StopList stopList = StopList.NONE;
+
+    @OneToOne (fetch = LAZY, cascade = {PERSIST, REMOVE})
+    private Address address;
 }

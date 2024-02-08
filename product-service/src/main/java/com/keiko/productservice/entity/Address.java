@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table (name = "t_address")
+@Table (name = "t_producer_address")
 @Getter
 @Setter
 @EntityListeners (TimeEntityListener.class)

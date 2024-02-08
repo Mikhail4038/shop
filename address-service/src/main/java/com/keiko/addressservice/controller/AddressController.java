@@ -1,5 +1,6 @@
 package com.keiko.addressservice.controller;
 
+import com.keiko.addressservice.request.CalculatingRouteRequest;
 import com.keiko.addressservice.request.GeocodeRequest;
 import com.keiko.addressservice.request.ReverseGeocodeRequest;
 import com.keiko.addressservice.response.GeocodeResponse;
@@ -35,5 +36,11 @@ public class AddressController {
     public ResponseEntity<ReverseGeocodeResponse> reverseGeocode (@RequestBody ReverseGeocodeRequest request) {
         ReverseGeocodeResponse response = addressService.reverseGeocode (request);
         return ResponseEntity.ok (response);
+    }
+
+    @PostMapping (value = CALCULATE_ROUTE)
+    public ResponseEntity<Double> calculateRoute (@RequestBody CalculatingRouteRequest calculatingRouteRequest) {
+        Double route = addressService.calculateRoute (calculatingRouteRequest);
+        return ResponseEntity.ok (1.0);
     }
 }

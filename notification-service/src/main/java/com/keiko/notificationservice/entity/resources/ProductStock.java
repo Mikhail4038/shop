@@ -1,4 +1,4 @@
-package com.keiko.notificationservice.entity;
+package com.keiko.notificationservice.entity.resources;
 
 import lombok.Getter;
 import lombok.Setter;
