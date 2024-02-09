@@ -1,6 +1,6 @@
 package com.keiko.shopservice.controller;
 
-import com.keiko.shopservice.dto.productStock.ProductStockDto;
+import com.keiko.shopservice.dto.model.productStock.ProductStockDto;
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.resources.OrderEntry;
 import com.keiko.shopservice.service.ProductStockService;
@@ -15,7 +15,8 @@ import static com.keiko.shopservice.constants.WebResourceKeyConstants.*;
 @RestController
 @RequestMapping (value = PRODUCT_STOCK_BASE)
 public class ProductStockController
-        extends AbstractCrudController<ProductStock, ProductStockDto> {
+        //extends AbstractCrudController<ProductStock, ProductStockDto>
+{
 
     @Autowired
     private ProductStockService productStockService;

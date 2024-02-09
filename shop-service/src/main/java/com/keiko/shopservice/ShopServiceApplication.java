@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableFeignClients
 @EnableScheduling
-public class StockServiceApplication {
+public class ShopServiceApplication {
 
     public static void main (String[] args) {
-        SpringApplication.run (StockServiceApplication.class, args);
+        SpringApplication.run (ShopServiceApplication.class, args);
     }
 
 }

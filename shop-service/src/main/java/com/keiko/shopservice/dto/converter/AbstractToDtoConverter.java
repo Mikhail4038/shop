@@ -1,4 +1,4 @@
-package com.keiko.shopservice.dto;
+package com.keiko.shopservice.dto.converter;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;

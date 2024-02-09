@@ -1,7 +1,9 @@
 package com.keiko.shopservice.constants;
 
 public class WebResourceKeyConstants {
+    //TODO
     public static final String PRODUCT_STOCK_BASE = "/stock";
+    public static final String SHOP_BASE = "/shop";
     public static final String SAVE = "/save";
     public static final String FETCH_BY = "/fetchBy";
     public static final String FETCH_ALL = "/fetchAll";

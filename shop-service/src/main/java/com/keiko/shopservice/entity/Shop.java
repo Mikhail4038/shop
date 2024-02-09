@@ -9,6 +9,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table (name = "t_shop")
 @Getter
@@ -18,10 +22,9 @@ import java.util.List;
 @EntityListeners (TimeEntityListener.class)
 public class Shop extends BaseEntity {
 
-    @OneToMany
-    @JoinColumn (name = "shop_id")
+    @OneToMany (fetch = LAZY, mappedBy = "shop")
     private List<ProductStock> productStock;
 
-    @OneToOne
+    @OneToOne (cascade = {PERSIST, REMOVE})
     private Address address;
 }

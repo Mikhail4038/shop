@@ -1,4 +1,4 @@
-package com.keiko.shopservice.dto;
+package com.keiko.shopservice.dto.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

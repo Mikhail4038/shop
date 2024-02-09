@@ -1,7 +1,7 @@
-package com.keiko.shopservice.dto.productStock;
+package com.keiko.shopservice.dto.model.productStock;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.keiko.shopservice.dto.BaseDto;
+import com.keiko.shopservice.dto.model.BaseDto;
 import com.keiko.shopservice.entity.resources.Product;
 import com.keiko.shopservice.entity.StopList;
 import lombok.Getter;

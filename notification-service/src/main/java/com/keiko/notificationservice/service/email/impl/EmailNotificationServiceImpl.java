@@ -4,7 +4,7 @@ import com.keiko.notificationservice.entity.OrderDetailsEmail;
 import com.keiko.notificationservice.entity.ProductStocksEmail;
 import com.keiko.notificationservice.entity.SimpleEmail;
 import com.keiko.notificationservice.entity.resources.Order;
-import com.keiko.notificationservice.entity.resources.ProductStock;
+import com.keiko.notificationservice.entity.resources.ProductStockData;
 import com.keiko.notificationservice.properties.EmailProperties;
 import com.keiko.notificationservice.service.email.EmailNotificationService;
 import freemarker.template.Configuration;
@@ -52,7 +52,7 @@ public class EmailNotificationServiceImpl
     public void sendProductsStock (ProductStocksEmail productStocksEmail) {
         MimeMessageHelper helper = generateMimeMessageHelper (productStocksEmail);
         try {
-            List<ProductStock> productStocks = productStocksEmail.getProductStocks ();
+            List<ProductStockData> productStocks = productStocksEmail.getProductStocks ();
             String message = productStocksEmail.getMessage ();
             String emailContent = getProductStocksEmailContent (productStocks, message);
             helper.setText (emailContent, true);
@@ -92,7 +92,7 @@ public class EmailNotificationServiceImpl
         return stringWriter.getBuffer ().toString ();
     }
 
-    private String getProductStocksEmailContent (List<ProductStock> productStocks, String message) {
+    private String getProductStocksEmailContent (List<ProductStockData> productStocks, String message) {
         StringWriter stringWriter = new StringWriter ();
         Map<String, Object> model = new HashMap<> ();
         model.put ("productStocks", productStocks);

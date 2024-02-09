@@ -2,17 +2,21 @@ package com.keiko.shopservice.jobs;
 
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.StopList;
+import com.keiko.shopservice.entity.resources.ProductStockData;
 import com.keiko.shopservice.entity.resources.ProductStockEmail;
 import com.keiko.shopservice.properties.EmailProperties;
-import com.keiko.shopservice.service.resources.NotificationService;
 import com.keiko.shopservice.service.ProductStockService;
+import com.keiko.shopservice.service.resources.NotificationService;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.*;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 @Log4j2
@@ -23,6 +27,9 @@ public class MoveToStopListExpiredProductsJob {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private EmailProperties emailProperties;
@@ -45,7 +52,7 @@ public class MoveToStopListExpiredProductsJob {
                         .toAddress (emailProperties.getAdminEmail ())
                         .subject ("Move products stock to Stop list")
                         .message ("Stock next products moved to Stop list, because they're expired.")
-                        .productStocks (productStocks)
+                        .productStocks (convertToData (productStocks))
                         .build ();
                 notificationService.sendProductStocks (data);
             }
@@ -63,5 +70,11 @@ public class MoveToStopListExpiredProductsJob {
     private void addToStopList (List<ProductStock> expiredProductStocks) {
         expiredProductStocks.forEach (stock -> stock.setStopList (StopList.EXPIRED));
         productStockService.saveAll (expiredProductStocks);
+    }
+
+    private List<ProductStockData> convertToData (List<ProductStock> productStocks) {
+        return productStocks.stream ()
+                .map (stock -> modelMapper.map (stock, ProductStockData.class))
+                .collect (toList ());
     }
 }

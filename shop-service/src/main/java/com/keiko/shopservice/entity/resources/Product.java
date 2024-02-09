@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Product {
     private String ean;
     private String name;
-    private Price price;
+    /*private Price price;
     private Rating rating;
     private Producer producer;
 
@@ -35,5 +35,5 @@ public class Product {
     @NoArgsConstructor
     private class Producer {
         private String name;
-    }
+    }*/
 }
