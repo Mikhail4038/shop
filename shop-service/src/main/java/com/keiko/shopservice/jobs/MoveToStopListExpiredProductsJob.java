@@ -1,10 +1,12 @@
 package com.keiko.shopservice.jobs;
 
 import com.keiko.shopservice.entity.ProductStock;
+import com.keiko.shopservice.entity.Shop;
 import com.keiko.shopservice.entity.StopList;
 import com.keiko.shopservice.entity.resources.ProductStockData;
 import com.keiko.shopservice.entity.resources.ProductStockEmail;
 import com.keiko.shopservice.properties.EmailProperties;
+import com.keiko.shopservice.service.AbstractCrudService;
 import com.keiko.shopservice.service.ProductStockService;
 import com.keiko.shopservice.service.resources.NotificationService;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -21,6 +24,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 @Log4j2
 public class MoveToStopListExpiredProductsJob {
+
+    @Autowired
+    private AbstractCrudService<Shop> shopService;
 
     @Autowired
     private ProductStockService productStockService;
@@ -37,9 +43,15 @@ public class MoveToStopListExpiredProductsJob {
     @Scheduled (cron = "0 0 0 * * *")
     public void execute () {
         Callable callable = () -> {
-            List<ProductStock> expiredProductStocks = findExpiredProductStocks ();
-            addToStopList (expiredProductStocks);
-            return expiredProductStocks;
+            List<Shop> shops = shopService.fetchAll ();
+            List<ProductStock> productStocks = new ArrayList<> ();
+            for (Shop shop : shops) {
+                Long shopId = shop.getId ();
+                List<ProductStock> expiredProductStocks = findExpiredProductStocks (shopId);
+                addToStopList (expiredProductStocks);
+                productStocks.addAll (expiredProductStocks);
+            }
+            return productStocks;
         };
 
         ExecutorService executorService = Executors.newSingleThreadExecutor ();
@@ -63,8 +75,8 @@ public class MoveToStopListExpiredProductsJob {
         }
     }
 
-    private List<ProductStock> findExpiredProductStocks () {
-        return productStockService.findProductStocksToMoveExpiredStopList ();
+    private List<ProductStock> findExpiredProductStocks (Long shopId) {
+        return productStockService.findProductStocksToMoveExpiredStopList (shopId);
     }
 
     private void addToStopList (List<ProductStock> expiredProductStocks) {

@@ -26,5 +26,5 @@ public class Shop extends BaseEntity {
     private List<ProductStock> productStock;
 
     @OneToOne (cascade = {PERSIST, REMOVE})
-    private Address address;
+    private ShopAddress shopAddress;
 }

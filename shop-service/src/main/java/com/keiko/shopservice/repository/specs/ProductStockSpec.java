@@ -1,22 +1,24 @@
 package com.keiko.shopservice.repository.specs;
 
-import com.keiko.shopservice.entity.ProductStock;
-import com.keiko.shopservice.entity.ProductStock_;
-import com.keiko.shopservice.entity.Shop;
-import com.keiko.shopservice.entity.StopList;
-import jakarta.persistence.criteria.Predicate;
+import com.keiko.shopservice.entity.*;
+import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 
 public class ProductStockSpec {
 
-    public static Specification<ProductStock> hasShopStock (String ean, Shop shop) {
-        return (root, query, builder) -> {
-            Predicate byEan = builder.equal (root.get (ProductStock_.EAN), ean);
-            Predicate byShop = builder.equal (root.get (ProductStock_.SHOP), shop);
-            return builder.and (byEan, byShop);
+    public static Specification<ProductStock> byShop (Long shopId) {
+        return (root, query, builder) ->
+        {
+            Join<ProductStock, Shop> shopProductStock = root.join (ProductStock_.SHOP);
+            return builder.equal (shopProductStock.get (Shop_.ID), shopId);
         };
+    }
+
+    public static Specification<ProductStock> byEan (String ean) {
+        return (root, query, builder) ->
+                builder.equal (root.get (ProductStock_.EAN), ean);
     }
 
     public static Specification<ProductStock> isExpired () {
@@ -29,12 +31,6 @@ public class ProductStockSpec {
     public static Specification<ProductStock> inStopList (StopList stopList) {
         return (root, query, builder) -> {
             return builder.equal (root.get (ProductStock_.STOP_LIST), stopList);
-        };
-    }
-
-    public static Specification<ProductStock> byEan (String ean) {
-        return (root, query, builder) -> {
-            return builder.equal (root.get (ProductStock_.EAN), ean);
         };
     }
 

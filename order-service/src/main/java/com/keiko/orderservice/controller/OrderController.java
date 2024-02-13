@@ -1,9 +1,9 @@
 package com.keiko.orderservice.controller;
 
 import com.keiko.orderservice.dto.model.order.OrderDto;
-import com.keiko.orderservice.entity.Address;
+import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
-import com.keiko.orderservice.request.UpgradeOrderRequest;
+import com.keiko.orderservice.request.ModificationOrderRequest;
 import com.keiko.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,26 +19,27 @@ public class OrderController extends AbstractCrudController<Order, OrderDto> {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping (value = CREATE_ORDER + "/{userId}")
-    public ResponseEntity createOrder (@PathVariable Long userId) {
-        orderService.createOrder (userId);
+    @GetMapping (value = CREATE_ORDER + "/{userId}/{shopId}")
+    public ResponseEntity createOrder (@PathVariable Long userId,
+                                       @PathVariable Long shopId) {
+        orderService.createOrder (userId, shopId);
         return ResponseEntity.status (CREATED).build ();
     }
 
     @PostMapping (value = SAVE_ORDER_ENTRY)
-    public ResponseEntity saveOrderEntry (@RequestBody UpgradeOrderRequest request) {
-        orderService.saveOrderEntry (request);
+    public ResponseEntity saveOrderEntry (@RequestBody ModificationOrderRequest saveOrderEntryRequest) {
+        orderService.saveOrderEntry (saveOrderEntryRequest);
         return ResponseEntity.ok ().build ();
     }
 
     @PostMapping (value = REMOVE_ORDER_ENTRY)
-    public ResponseEntity removeOrderEntry (@RequestBody UpgradeOrderRequest request) {
-        orderService.removeOrderEntry (request);
+    public ResponseEntity removeOrderEntry (@RequestBody ModificationOrderRequest removeOrderEntryRequest) {
+        orderService.removeOrderEntry (removeOrderEntryRequest);
         return ResponseEntity.ok ().build ();
     }
 
     @PostMapping (value = SAVE_DELIVERY_ADDRESS + "/{orderId}")
-    public ResponseEntity saveDeliveryAddress (@RequestBody Address deliveryAddress,
+    public ResponseEntity saveDeliveryAddress (@RequestBody DeliveryAddress deliveryAddress,
                                                @PathVariable Long orderId) {
         orderService.saveDeliveryAddress (deliveryAddress, orderId);
         return ResponseEntity.ok ().build ();

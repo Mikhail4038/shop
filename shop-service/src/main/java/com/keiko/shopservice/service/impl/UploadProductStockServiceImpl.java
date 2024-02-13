@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -54,10 +55,11 @@ public class UploadProductStockServiceImpl
     private EmailProperties emailProperties;
 
     @Override
+    @Transactional
     public void upload (MultipartFile file, Long shopId) {
         Shop shop = shopService.fetchById (shopId);
         List<ProductStock> uploadProductStocks = uploadProductStocks (file, shop);
-        saveProductStocks (uploadProductStocks, shop);
+        saveProductStocks (uploadProductStocks, shopId);
     }
 
     private List<ProductStock> uploadProductStocks (MultipartFile file, Shop shop) {
@@ -93,13 +95,13 @@ public class UploadProductStockServiceImpl
         return productStocks;
     }
 
-    private void saveProductStocks (List<ProductStock> uploadProductStocks, Shop shop) {
+    private void saveProductStocks (List<ProductStock> uploadProductStocks, Long shopId) {
         List<ProductStock> notExistProducts = new ArrayList<> ();
         List<ProductStock> existProducts = new ArrayList<> ();
 
         for (ProductStock stock : uploadProductStocks) {
             if (isExistsProduct (stock.getEan ())) {
-                addProductStock (stock, shop);
+                addProductStock (stock, shopId);
                 existProducts.add (stock);
             } else {
                 notExistProducts.add (stock);
@@ -110,7 +112,7 @@ public class UploadProductStockServiceImpl
             ProductStockEmail data = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock was completely")
-                    .message ("Stock next products uploaded successful.")
+                    .message ("Stock next products uploaded successful")
                     .productStocks (convertToData (existProducts))
                     .build ();
             sendNotification (data);
@@ -133,10 +135,10 @@ public class UploadProductStockServiceImpl
                 .collect (toList ());
     }
 
-    private void addProductStock (ProductStock productStock, Shop shop) {
+    private void addProductStock (ProductStock productStock, Long shopId) {
         String ean = productStock.getEan ();
         List<ProductStock> productStocks
-                = shopService.fetchStocksByEan (ean, shop);
+                = shopService.fetchStocksByEan (shopId, ean);
 
         if (productStocks.isEmpty ()) {
             productStockService.save (productStock);

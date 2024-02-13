@@ -1,12 +1,14 @@
 package com.keiko.orderservice.request;
 
-import com.keiko.orderservice.entity.Address;
+import com.keiko.orderservice.entity.DeliveryAddress;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class CalculatingRouteRequest {
-    private Address from;
-    private Address to;
+    private DeliveryAddress from;
+    private DeliveryAddress to;
 }

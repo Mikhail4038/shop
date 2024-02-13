@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 public class Order {
     private Long userId;
+    private Long shopId;
     private List<OrderEntry> entries;
     private DeliveryAddress deliveryAddress;
     private Double totalPrice;

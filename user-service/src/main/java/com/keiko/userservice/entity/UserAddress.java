@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Getter
 @Setter
 @EntityListeners (TimeEntityListener.class)
-public class Address extends BaseEntity {
+public class UserAddress extends BaseEntity {
     private String street;
     private String house;
     private String city;
@@ -27,7 +27,7 @@ public class Address extends BaseEntity {
 
         if (o == null || getClass () != o.getClass ()) return false;
 
-        Address address = (Address) o;
+        UserAddress address = (UserAddress) o;
 
         return new EqualsBuilder ()
                 .append (street, address.street)

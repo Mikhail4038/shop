@@ -19,13 +19,14 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Order extends BaseEntity {
 
     private Long userId;
+    private Long shopId;
 
     @OneToMany (fetch = LAZY, cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     @JoinColumn (name = "order_id")
     private List<OrderEntry> entries = new ArrayList<> ();
 
     @OneToOne (cascade = {MERGE, REMOVE})
-    private Address deliveryAddress;
+    private DeliveryAddress deliveryAddress;
 
     @Column (insertable = false)
     private Double deliveryCost;

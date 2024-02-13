@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.keiko.shopservice.repository.specs.ProductStockSpec.hasShopStock;
+import static com.keiko.shopservice.repository.specs.ProductStockSpec.byEan;
+import static com.keiko.shopservice.repository.specs.ProductStockSpec.byShop;
 
 @Service
 public class ShopServiceImpl extends AbstractCrudServiceImpl<Shop>
@@ -19,7 +20,7 @@ public class ShopServiceImpl extends AbstractCrudServiceImpl<Shop>
     private ProductStockRepository productStockRepository;
 
     @Override
-    public List<ProductStock> fetchStocksByEan (String ean, Shop shop) {
-        return productStockRepository.findAll (hasShopStock (ean, shop));
+    public List<ProductStock> fetchStocksByEan (Long shopId, String ean) {
+        return productStockRepository.findAll (byShop (shopId).and (byEan (ean)));
     }
 }

@@ -6,15 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class User {
-    private String email;
-    private String name;
-    private UserAddress userAddress;
+public class Shop {
+    private Long id;
+    private ShopAddress shopAddress;
 
     @Getter
     @Setter
     @NoArgsConstructor
-    private class UserAddress {
+    private class ShopAddress {
         private String street;
         private String house;
         private String city;

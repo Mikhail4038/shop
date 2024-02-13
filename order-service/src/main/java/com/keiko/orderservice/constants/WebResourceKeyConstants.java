@@ -19,11 +19,13 @@ public class WebResourceKeyConstants {
     public static final String PLACE_ORDER = "/place";
 
     // stock
+    public static final String SHOP_BASE = "/shop";
     public static final String PRODUCT_STOCK_BASE = "/stock";
     public static final String COUNT_PRODUCT_STOCK_FOR_SELL = "/stockForSell";
     public static final String BOOKED_STOCK = "/booked";
     public static final String CANCEL_BOOKED_STOCK = "/cancelBooked";
     public static final String SELL_STOCK = "/sell";
+    public static final String FETCH_SHOP_BY_ID = "/fetchBy";
 
     //product
     public static final String PRODUCT_BASE = "/product";

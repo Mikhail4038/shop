@@ -35,15 +35,15 @@ public class User extends BaseEntity {
     private Set<Role> roles;
 
     @OneToOne
-    private Address address;
+    private UserAddress userAddress;
 
-    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, Address address) {
+    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, UserAddress userAddress) {
         super (id, created, modified);
         this.email = email;
         this.password = password;
         this.name = name;
         this.roles = roles;
-        this.address = address;
+        this.userAddress = userAddress;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class User extends BaseEntity {
                 .append (email, user.email)
                 .append (password, user.password)
                 .append (name, user.name)
-                .append (address, user.getAddress ())
+                .append (userAddress, user.getUserAddress ())
                 .isEquals ();
     }
 
@@ -69,7 +69,7 @@ public class User extends BaseEntity {
                 .append (email)
                 .append (password)
                 .append (name)
-                .append (address)
+                .append (userAddress)
                 .toHashCode ();
     }
 }

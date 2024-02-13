@@ -2,7 +2,9 @@ package com.keiko.shopservice.service.impl;
 
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.StopList;
+import com.keiko.shopservice.entity.resources.BookingOrderEntryRequest;
 import com.keiko.shopservice.entity.resources.OrderEntry;
+import com.keiko.shopservice.entity.resources.SellingOrderEntryRequest;
 import com.keiko.shopservice.exception.model.ProductStockLevelException;
 import com.keiko.shopservice.repository.ProductStockRepository;
 import com.keiko.shopservice.service.ProductStockService;
@@ -23,14 +25,9 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     private ProductStockRepository productStockRepository;
 
     @Override
-    public List<ProductStock> fetchByEan (String ean) {
-        return productStockRepository.findByEan (ean);
-    }
-
-    @Override
-    public Long countProductStockForSell (String ean) {
+    public Long countProductStockForSell (String ean, Long shopId) {
         List<ProductStock> productStocks =
-                productStockRepository.findAll (byEan (ean).and (inStopList (StopList.NONE)));
+                productStockRepository.findAll (byShop (shopId).and (byEan (ean)).and (inStopList (StopList.NONE)));
         Long availableStock =
                 productStocks.stream ()
                         .mapToLong (ProductStock::getBalance)
@@ -44,12 +41,13 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void bookedStock (OrderEntry orderEntry) {
-        String ean = orderEntry.getProductEan ();
-        Long quantity = orderEntry.getQuantity ();
+    public void bookedStock (BookingOrderEntryRequest bookedRequest) {
+        String ean = bookedRequest.getEan ();
+        Long quantity = bookedRequest.getQuantity ();
+        Long shopId = bookedRequest.getShopId ();
 
         List<ProductStock> productStocks =
-                productStockRepository.findAll (byEan (ean).and (inStopList (StopList.NONE)));
+                productStockRepository.findAll (byShop (shopId).and (byEan (ean)).and (inStopList (StopList.NONE)));
         productStocks.sort (comparing (ProductStock::getExpirationDate));
 
         ProductStock stock;
@@ -80,12 +78,13 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void cancelBookedStock (OrderEntry orderEntry) {
-        String ean = orderEntry.getProductEan ();
-        Long quantity = orderEntry.getQuantity ();
+    public void cancelBookedStock (BookingOrderEntryRequest cancelBookedRequest) {
+        String ean = cancelBookedRequest.getEan ();
+        Long quantity = cancelBookedRequest.getQuantity ();
+        Long shopId = cancelBookedRequest.getShopId ();
 
         List<ProductStock> productStocks =
-                productStockRepository.findAll (byEan (ean).and (hasBookedStock ()));
+                productStockRepository.findAll (byShop (shopId).and (byEan (ean)).and (hasBookedStock ()));
         productStocks.sort (comparing (ProductStock::getExpirationDate).reversed ());
 
         ProductStock stock;
@@ -119,13 +118,16 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void sellStock (List<OrderEntry> entries) {
+    public void sellStock (SellingOrderEntryRequest sellingRequest) {
+        List<OrderEntry> entries = sellingRequest.getEntries ();
+        Long shopId = sellingRequest.getShopId ();
+
         for (OrderEntry entry : entries) {
             String ean = entry.getProductEan ();
             Long quantity = entry.getQuantity ();
 
             List<ProductStock> productStocks =
-                    productStockRepository.findAll (byEan (ean).and (hasBookedStock ()));
+                    productStockRepository.findAll (byShop (shopId).and (byEan (ean).and (hasBookedStock ())));
             productStocks.sort (comparing (ProductStock::getExpirationDate));
 
             ProductStock stock;
@@ -155,8 +157,8 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public List<ProductStock> findProductStocksToMoveExpiredStopList () {
-        return productStockRepository.findAll (inStopList (StopList.NONE).and (isExpired ()));
+    public List<ProductStock> findProductStocksToMoveExpiredStopList (Long shopId) {
+        return productStockRepository.findAll (byShop (shopId).and (inStopList (StopList.NONE).and (isExpired ())));
     }
 
     @Override

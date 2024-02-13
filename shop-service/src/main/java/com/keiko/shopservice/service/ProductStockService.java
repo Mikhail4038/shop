@@ -1,23 +1,22 @@
 package com.keiko.shopservice.service;
 
 import com.keiko.shopservice.entity.ProductStock;
-import com.keiko.shopservice.entity.resources.OrderEntry;
+import com.keiko.shopservice.entity.resources.BookingOrderEntryRequest;
+import com.keiko.shopservice.entity.resources.SellingOrderEntryRequest;
 
 import java.util.Collection;
 import java.util.List;
 
 public interface ProductStockService {
-    List<ProductStock> fetchByEan (String ean);
+    Long countProductStockForSell (String ean, Long shopId);
 
-    Long countProductStockForSell (String ean);
+    void bookedStock (BookingOrderEntryRequest bookedRequest);
 
-    void bookedStock (OrderEntry orderEntry);
+    void cancelBookedStock (BookingOrderEntryRequest cancelBookedRequest);
 
-    void cancelBookedStock (OrderEntry orderEntry);
+    void sellStock (SellingOrderEntryRequest sellingRequest);
 
-    void sellStock (List<OrderEntry> entries);
-
-    List<ProductStock> findProductStocksToMoveExpiredStopList ();
+    List<ProductStock> findProductStocksToMoveExpiredStopList (Long shopId);
 
     void saveAll (Collection<ProductStock> productStocks);
 }

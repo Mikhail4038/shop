@@ -1,16 +1,16 @@
 package com.keiko.orderservice.service;
 
-import com.keiko.orderservice.entity.Address;
-import com.keiko.orderservice.request.UpgradeOrderRequest;
+import com.keiko.orderservice.entity.DeliveryAddress;
+import com.keiko.orderservice.request.ModificationOrderRequest;
 
 public interface OrderService {
-    void createOrder (Long userId);
+    void createOrder (Long userId, Long shopId);
 
-    void saveOrderEntry (UpgradeOrderRequest request);
+    void saveOrderEntry (ModificationOrderRequest saveOrderEntryRequest);
 
-    void removeOrderEntry (UpgradeOrderRequest request);
+    void removeOrderEntry (ModificationOrderRequest removeOrderEntryRequest);
 
-    void saveDeliveryAddress (Address deliveryAddress, Long orderId);
+    void saveDeliveryAddress (DeliveryAddress deliveryAddress, Long orderId);
 
     void placeOrder (Long orderId);
 }
