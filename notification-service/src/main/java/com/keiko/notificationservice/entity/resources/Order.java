@@ -8,10 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class Order {
-    private Long userId;
-    private Long shopId;
+    private Shop shop;
     private List<OrderEntry> entries;
-    private DeliveryAddress deliveryAddress;
+    private Address deliveryAddress;
     private Double totalPrice;
     private Double deliveryCost;
     private Double totalAmount;

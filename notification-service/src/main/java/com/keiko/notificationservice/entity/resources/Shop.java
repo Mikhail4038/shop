@@ -1,4 +1,4 @@
-package com.keiko.orderservice.entity.resources;
+package com.keiko.notificationservice.entity.resources;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Shop {
-    private Long id;
     private Address shopAddress;
 }

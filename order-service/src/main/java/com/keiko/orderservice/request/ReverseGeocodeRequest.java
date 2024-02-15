@@ -1,13 +1,11 @@
-package com.keiko.addressservice.response;
+package com.keiko.orderservice.request;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
-public class GeocodeResponse {
+public class ReverseGeocodeRequest {
     private String lat;
     private String lng;
 }

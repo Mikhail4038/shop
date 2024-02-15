@@ -4,6 +4,7 @@ import com.keiko.orderservice.dto.model.order.OrderDto;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.request.ModificationOrderRequest;
+import com.keiko.orderservice.request.ReverseGeocodeRequest;
 import com.keiko.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,19 @@ public class OrderController extends AbstractCrudController<Order, OrderDto> {
     public ResponseEntity saveDeliveryAddress (@RequestBody DeliveryAddress deliveryAddress,
                                                @PathVariable Long orderId) {
         orderService.saveDeliveryAddress (deliveryAddress, orderId);
+        return ResponseEntity.ok ().build ();
+    }
+
+    @GetMapping (value = SAVE_DELIVERY_ADDRESS + "/{orderId}")
+    public ResponseEntity userAddressToDeliveryAddress (@PathVariable Long orderId) {
+        orderService.saveDeliveryAddress (orderId);
+        return ResponseEntity.ok ().build ();
+    }
+
+    @PostMapping (value = POINT_DELIVERY_ADDRESS + "/{orderId}")
+    public ResponseEntity pointAtMap (@RequestBody ReverseGeocodeRequest reverseGeocodeRequest,
+                                      @PathVariable Long orderId) {
+        orderService.saveDeliveryAddress (reverseGeocodeRequest, orderId);
         return ResponseEntity.ok ().build ();
     }
 

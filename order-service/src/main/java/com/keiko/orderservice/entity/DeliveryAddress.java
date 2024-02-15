@@ -17,5 +17,5 @@ public class DeliveryAddress extends BaseEntity {
     private String house;
     private String city;
     private String country;
-    private String zipCode;
+    private String postcode;
 }

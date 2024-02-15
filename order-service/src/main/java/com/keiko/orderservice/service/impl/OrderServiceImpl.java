@@ -1,18 +1,20 @@
 package com.keiko.orderservice.service.impl;
 
+import com.keiko.orderservice.dto.model.order.OrderDto;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
 import com.keiko.orderservice.entity.OrderStatus;
+import com.keiko.orderservice.entity.resources.Address;
 import com.keiko.orderservice.entity.resources.OrderDetailsEmail;
+import com.keiko.orderservice.entity.resources.Shop;
 import com.keiko.orderservice.entity.resources.User;
 import com.keiko.orderservice.event.RecalculateOrderEvent;
-import com.keiko.orderservice.request.BookingOrderEntryRequest;
-import com.keiko.orderservice.request.CalculatingRouteRequest;
-import com.keiko.orderservice.request.ModificationOrderRequest;
-import com.keiko.orderservice.request.SellingOrderEntryRequest;
+import com.keiko.orderservice.request.*;
+import com.keiko.orderservice.response.RouteDetailsResponse;
 import com.keiko.orderservice.service.OrderService;
 import com.keiko.orderservice.service.resources.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static java.util.Objects.isNull;
 
 @Service
 public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
         implements OrderService {
+
+    private static final Integer KILOMETER_BASE_RATE = 3;
 
     @Autowired
     private ShopService shopService;
@@ -38,6 +43,12 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private Function<Order, OrderDto> toDtoConverter;
 
     @Autowired
     private NotificationService notificationService;
@@ -93,18 +104,28 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
     }
 
     @Override
+    public void saveDeliveryAddress (ReverseGeocodeRequest reverseGeocodeRequest, Long orderId) {
+        DeliveryAddress deliveryAddress = addressService.reverseGeocode (reverseGeocodeRequest);
+        this.saveDeliveryAddress (deliveryAddress, orderId);
+
+
+    }
+
+    @Override
+    public void saveDeliveryAddress (Long orderId) {
+        Order order = this.fetchBy (orderId);
+        Long userId = order.getUserId ();
+        User user = userService.fetchBy (userId);
+        DeliveryAddress deliveryAddress = modelMapper.map (user.getUserAddress (), DeliveryAddress.class);
+        this.saveDeliveryAddress (deliveryAddress, orderId);
+    }
+
+    @Override
     @Transactional
     public void placeOrder (Long orderId) {
         Order order = super.fetchBy (orderId);
-        List<OrderEntry> entries = order.getEntries ();
-        Long shopId = order.getShopId ();
-        //1. entry (booked->sold):
-        sellProductStocks (entries, shopId);
-
-        //2.calculate
+        sellProductStocks (order);
         calculateFinalSumOrder (order);
-
-        //3. send notification
         sendOrderDetailsEmail (order);
         //4.payment
         //5.order status
@@ -184,7 +205,10 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
         shopService.cancelBookedStock (cancelBookedRequest);
     }
 
-    private void sellProductStocks (List<OrderEntry> entries, Long shopId) {
+    //place
+    private void sellProductStocks (Order order) {
+        List<OrderEntry> entries = order.getEntries ();
+        Long shopId = order.getShopId ();
         SellingOrderEntryRequest sellingRequest =
                 SellingOrderEntryRequest.builder ()
                         .entries (entries)
@@ -194,28 +218,41 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
     }
 
     private void calculateFinalSumOrder (Order order) {
-        //1.calculate delivery cost
-        //1.a calculate route
-        Long userId = order.getUserId ();
-        User user = userService.fetchBy (userId);
+        calculateDeliveryCost (order);
+        calculateTotalAmount (order);
+    }
 
-        CalculatingRouteRequest calculatingRouteRequest = CalculatingRouteRequest
+    private void calculateDeliveryCost (Order order) {
+        Shop shop = shopService.fetchBy (order.getShopId ());
+        Address shopAddress = shop.getShopAddress ();
+        Address deliveryAddress = modelMapper.map (order.getDeliveryAddress (), Address.class);
+
+        RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest
                 .builder ()
-                //.from (user.getUserAddress ())
-                .to (order.getDeliveryAddress ())
+                .from (shopAddress)
+                .to (deliveryAddress)
                 .build ();
 
-        addressService.calculateRoute (calculatingRouteRequest);
-        //2.calculate total amount
+        RouteDetailsResponse routeDetailsResponse = addressService.calculateRoute (routeDetailsRequest);
+        Double deliveryDistance = routeDetailsResponse.getDistance ();
+        order.setDeliveryCost (deliveryDistance * KILOMETER_BASE_RATE);
     }
+
+    private void calculateTotalAmount (Order order) {
+        Double totalPrice = order.getTotalPrice ();
+        Double deliveryCost = order.getDeliveryCost ();
+        order.setTotalAmount (totalPrice + deliveryCost);
+    }
+
 
     private void sendOrderDetailsEmail (Order order) {
         String email = userService.fetchBy (order.getUserId ()).getEmail ();
+        OrderDto dto = toDtoConverter.apply (order);
         OrderDetailsEmail orderDetailsEmail = OrderDetailsEmail.builder ()
                 .toAddress (email)
                 .subject ("Thank you for placing the order")
                 .message ("Order details: ")
-                .order (order)
+                .order (dto)
                 .build ();
         notificationService.sendOrderDetails (orderDetailsEmail);
     }

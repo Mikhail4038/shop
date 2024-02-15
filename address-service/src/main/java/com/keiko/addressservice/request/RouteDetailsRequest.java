@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CalculatingRouteRequest {
+public class RouteDetailsRequest {
     private Address from;
     private Address to;
 }

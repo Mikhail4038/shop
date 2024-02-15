@@ -14,15 +14,16 @@ public class TestData {
         address.setHouse ("house");
         address.setCity ("city");
         address.setCountry ("country");
-        address.setLocale ("locale");
         request.setAddress (address);
         return request;
     }
 
     public static GeocodeResponse createTestGeoCodeResponse () {
-        GeocodeResponse request = new GeocodeResponse ();
-        request.setLat ("lat");
-        request.setLng ("lng");
+        GeocodeResponse request
+                = GeocodeResponse.builder ()
+                .lat ("lat")
+                .lng ("lng")
+                .build ();
         return request;
     }
 
@@ -34,12 +35,14 @@ public class TestData {
     }
 
     public static ReverseGeocodeResponse createTestReverseGeocodeResponse () {
-        ReverseGeocodeResponse response = new ReverseGeocodeResponse ();
-        response.setStreet ("street");
-        response.setHouse ("house");
-        response.setCity ("city");
-        response.setCountry ("country");
-        response.setPostcode ("postcode");
+        ReverseGeocodeResponse response
+                = ReverseGeocodeResponse.builder ()
+                .street ("street")
+                .house ("house")
+                .city ("city")
+                .country ("country")
+                .postcode ("postcode")
+                .build ();
         return response;
     }
 }

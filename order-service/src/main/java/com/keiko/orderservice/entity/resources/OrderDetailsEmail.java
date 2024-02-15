@@ -1,6 +1,6 @@
 package com.keiko.orderservice.entity.resources;
 
-import com.keiko.orderservice.entity.Order;
+import com.keiko.orderservice.dto.model.order.OrderDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,5 @@ public class OrderDetailsEmail {
     private String toAddress;
     private String subject;
     private String message;
-    private Order order;
+    private OrderDto order;
 }
