@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ErrorResponse {
-    private String errorClass;
-    private String errorMessage;
+    private String error;
+    private String description;
 }

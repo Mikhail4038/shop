@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class RecalculateOrderListener {
 
@@ -19,11 +21,11 @@ public class RecalculateOrderListener {
     public void onApplicationEvent (RecalculateOrderEvent event) {
         Order order = event.getOrder ();
 
-        Double totalPrice = 0.0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (OrderEntry entry : order.getEntries ()) {
             String ean = entry.getProductEan ();
             Product product = productService.findByEan (ean);
-            totalPrice += product.getPrice ().getValue () * entry.getQuantity ();
+            totalPrice = totalPrice.add (product.getPrice ().getValue ().multiply (BigDecimal.valueOf (entry.getQuantity ())));
         }
         order.setTotalPrice (totalPrice);
     }

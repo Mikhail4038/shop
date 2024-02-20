@@ -43,4 +43,9 @@ public class WebResourceKeyConstants {
     public static final String ADDRESS_BASE = "/address";
     public static final String REVERSE_GEOCODE = "/reverseGeocode";
     public static final String CALCULATE_ROUTE = "/calculateRoute";
+
+    //payment
+    public static final String PAYPAL_BASE = "/paypal";
+    public static final String INIT_PAYMENT = "/init";
+    public static final String COMPLETE_PAYMENT = "/complete";
 }

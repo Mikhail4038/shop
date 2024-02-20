@@ -11,16 +11,14 @@ import com.keiko.orderservice.request.RouteDetailsRequest;
 import com.keiko.orderservice.request.SellingOrderEntryRequest;
 import com.keiko.orderservice.response.RouteDetailsResponse;
 import com.keiko.orderservice.service.OrderService;
-import com.keiko.orderservice.service.resources.AddressService;
-import com.keiko.orderservice.service.resources.NotificationService;
-import com.keiko.orderservice.service.resources.ShopService;
-import com.keiko.orderservice.service.resources.UserService;
+import com.keiko.orderservice.service.resources.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 
@@ -38,6 +36,9 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private PaypalService paymentService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -67,12 +68,10 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
         sellProductStocks (order);
         calculateFinalSumOrder (order);
         sendOrderDetailsEmail (order);
-        //4.payment
-        //5.order status
+        order.setOrderStatus (OrderStatus.PLACED);
+        super.save (order);
     }
 
-
-    //place
     private void sellProductStocks (Order order) {
         List<OrderEntry> entries = order.getEntries ();
         Long shopId = order.getShopId ();
@@ -102,15 +101,15 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
 
         RouteDetailsResponse routeDetailsResponse = addressService.calculateRoute (routeDetailsRequest);
         Double deliveryDistance = routeDetailsResponse.getDistance ();
-        order.setDeliveryCost (deliveryDistance * KILOMETER_BASE_RATE);
+        Double deliveryCost = deliveryDistance * KILOMETER_BASE_RATE;
+        order.setDeliveryCost (BigDecimal.valueOf (deliveryCost));
     }
 
     private void calculateTotalAmount (Order order) {
-        Double totalPrice = order.getTotalPrice ();
-        Double deliveryCost = order.getDeliveryCost ();
-        order.setTotalAmount (totalPrice + deliveryCost);
+        BigDecimal totalPrice = order.getTotalPrice ();
+        BigDecimal deliveryCost = order.getDeliveryCost ();
+        order.setTotalAmount (totalPrice.add (deliveryCost));
     }
-
 
     private void sendOrderDetailsEmail (Order order) {
         String email = userService.fetchBy (order.getUserId ()).getEmail ();

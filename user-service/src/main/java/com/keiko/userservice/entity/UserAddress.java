@@ -19,7 +19,7 @@ public class UserAddress extends BaseEntity {
     private String house;
     private String city;
     private String country;
-    private String locale;
+    private String postcode;
 
     @Override
     public boolean equals (Object o) {
@@ -34,7 +34,7 @@ public class UserAddress extends BaseEntity {
                 .append (house, address.house)
                 .append (city, address.city)
                 .append (country, address.country)
-                .append (locale, address.locale)
+                .append (postcode, address.postcode)
                 .isEquals ();
     }
 
@@ -45,7 +45,7 @@ public class UserAddress extends BaseEntity {
                 .append (house)
                 .append (city)
                 .append (country)
-                .append (locale)
+                .append (postcode)
                 .toHashCode ();
     }
 }

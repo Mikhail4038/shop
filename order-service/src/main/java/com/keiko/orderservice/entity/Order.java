@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +26,17 @@ public class Order extends BaseEntity {
     @JoinColumn (name = "order_id")
     private List<OrderEntry> entries = new ArrayList<> ();
 
-    @OneToOne (cascade = {MERGE, REMOVE})
+    @OneToOne (cascade = {MERGE, REMOVE}, orphanRemoval = true)
     private DeliveryAddress deliveryAddress;
 
     @Column (insertable = false)
-    private Double deliveryCost;
+    private BigDecimal deliveryCost;
 
     @Column (insertable = false)
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column (insertable = false)
-    private Double totalAmount;
+    private BigDecimal totalAmount;
 
     @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;
