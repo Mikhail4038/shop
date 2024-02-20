@@ -13,6 +13,7 @@ public class WebResourceKeyConstants {
     // order
     public static final String ORDER_BASE = "/order";
     public static final String CREATE_ORDER = "/create";
+    public static final String CANCEL_ORDER = "/create";
     public static final String SAVE_ORDER_ENTRY = "/saveEntry";
     public static final String REMOVE_ORDER_ENTRY = "/removeEntry";
     public static final String SAVE_DELIVERY_ADDRESS = "/saveDeliveryAddress";

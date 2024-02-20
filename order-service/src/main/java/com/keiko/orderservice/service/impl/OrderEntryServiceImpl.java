@@ -2,7 +2,9 @@ package com.keiko.orderservice.service.impl;
 
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
+import com.keiko.orderservice.entity.OrderStatus;
 import com.keiko.orderservice.event.RecalculateOrderEvent;
+import com.keiko.orderservice.exception.model.OrderProcessException;
 import com.keiko.orderservice.request.BookingOrderEntryRequest;
 import com.keiko.orderservice.request.ModificationOrderRequest;
 import com.keiko.orderservice.service.AbstractCrudService;
@@ -38,6 +40,7 @@ public class OrderEntryServiceImpl implements OrderEntryService {
         Long orderId = saveOrderEntryRequest.getOrderId ();
 
         Order order = orderService.fetchBy (orderId);
+        checkOrderStatus (order);
         Long shopId = order.getShopId ();
 
         qty = beforeSaveOrderEntry (ean, shopId, qty);
@@ -54,6 +57,7 @@ public class OrderEntryServiceImpl implements OrderEntryService {
         Long orderId = removeOrderEntryRequest.getOrderId ();
 
         Order order = orderService.fetchBy (orderId);
+        checkOrderStatus (order);
         Long shopId = order.getShopId ();
 
         OrderEntry orderEntry = getOrderEntry (ean, order);
@@ -131,5 +135,12 @@ public class OrderEntryServiceImpl implements OrderEntryService {
                 .quantity (qty)
                 .shopId (shopId)
                 .build ();
+    }
+
+    private void checkOrderStatus (Order order) {
+        OrderStatus orderStatus = order.getOrderStatus ();
+        if (!orderStatus.equals (OrderStatus.CREATED)) {
+            throw new OrderProcessException ("Please, check order status");
+        }
     }
 }

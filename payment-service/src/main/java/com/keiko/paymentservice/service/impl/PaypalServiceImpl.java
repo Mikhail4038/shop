@@ -3,6 +3,8 @@ package com.keiko.paymentservice.service.impl;
 import com.keiko.paymentservice.entity.CompletedOrder;
 import com.keiko.paymentservice.entity.PayerDetails;
 import com.keiko.paymentservice.entity.PaymentOrder;
+import com.keiko.paymentservice.exception.model.CompletedOrderException;
+import com.keiko.paymentservice.exception.model.PaymentOrderException;
 import com.keiko.paymentservice.service.PaypalService;
 import com.paypal.core.PayPalHttpClient;
 import com.paypal.http.HttpResponse;
@@ -57,11 +59,9 @@ public class PaypalServiceImpl implements PaypalService {
                     .approveUrl (approveUrl)
                     .build ();
         } catch (IOException ex) {
-            log.error (ex.getMessage ());
-            String status = String.format ("Error: %s", ex.getMessage ());
-            return PaymentOrder.builder ()
-                    .status (status)
-                    .build ();
+            String message = ex.getMessage ();
+            log.error (message);
+            throw new PaymentOrderException (message);
         }
     }
 
@@ -69,18 +69,23 @@ public class PaypalServiceImpl implements PaypalService {
     public CompletedOrder completePayment (String payId) {
         OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest (payId);
         String message = null;
+        String status = null;
         try {
             HttpResponse<Order> httpResponse = payPalHttpClient.execute (ordersCaptureRequest);
             Order order = httpResponse.result ();
             if ("COMPLETED".equals (order.status ())) {
                 message = String.format ("Payment complete, payId: %s", payId);
-                return new CompletedOrder (order.status (), message);
+                status = order.status ();
+            } else {
+                String warning = String.format ("Order status is: %s, must be completed", order.status ());
+                log.warn (warning);
             }
         } catch (IOException ex) {
-            log.error (ex.getMessage ());
             message = ex.getMessage ();
+            log.error (message);
+            throw new CompletedOrderException (message);
         }
-        return new CompletedOrder ("Error", message);
+        return new CompletedOrder (status, message);
     }
 
     @Override
@@ -98,12 +103,10 @@ public class PaypalServiceImpl implements PaypalService {
                     .build ();
             return paymentOrder;
         } catch (IOException ex) {
-            message = String.format ("Error: %s", ex.getMessage ());
+            message = ex.getMessage ();
             log.error (message);
+            throw new PaymentOrderException (message);
         }
-        return PaymentOrder.builder ()
-                .status (message)
-                .build ();
     }
 
     private String getApproveUrl (Order order) {

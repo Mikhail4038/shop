@@ -38,6 +38,9 @@ public class Order extends BaseEntity {
     @Column (insertable = false)
     private BigDecimal totalAmount;
 
+    @Column (insertable = false)
+    private String payId;
+
     @Enumerated (EnumType.STRING)
     private OrderStatus orderStatus;
 }

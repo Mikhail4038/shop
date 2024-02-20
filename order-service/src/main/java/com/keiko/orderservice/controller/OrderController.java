@@ -35,6 +35,12 @@ public class OrderController extends AbstractCrudController<Order, OrderDto> {
         return ResponseEntity.status (CREATED).build ();
     }
 
+    @GetMapping (value = CANCEL_ORDER)
+    public ResponseEntity cancelOrder (@RequestParam Long orderId) {
+        orderService.cancelOrder (orderId);
+        return ResponseEntity.status (CREATED).build ();
+    }
+
     @PostMapping (value = SAVE_ORDER_ENTRY)
     public ResponseEntity saveOrderEntry (@RequestBody ModificationOrderRequest saveOrderEntryRequest) {
         orderEntryService.saveOrderEntry (saveOrderEntryRequest);

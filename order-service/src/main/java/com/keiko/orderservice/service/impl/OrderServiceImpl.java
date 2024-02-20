@@ -7,6 +7,9 @@ import com.keiko.orderservice.entity.OrderStatus;
 import com.keiko.orderservice.entity.resources.Address;
 import com.keiko.orderservice.entity.resources.OrderDetailsEmail;
 import com.keiko.orderservice.entity.resources.Shop;
+import com.keiko.orderservice.exception.model.OrderProcessException;
+import com.keiko.orderservice.repository.OrderRepository;
+import com.keiko.orderservice.request.BookingOrderEntryRequest;
 import com.keiko.orderservice.request.RouteDetailsRequest;
 import com.keiko.orderservice.request.SellingOrderEntryRequest;
 import com.keiko.orderservice.response.RouteDetailsResponse;
@@ -14,7 +17,6 @@ import com.keiko.orderservice.service.OrderService;
 import com.keiko.orderservice.service.resources.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +52,7 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
     private NotificationService notificationService;
 
     @Autowired
-    private ApplicationEventPublisher eventPublisher;
+    private OrderRepository orderRepository;
 
     @Override
     public void createOrder (Long userId, Long shopId) {
@@ -62,14 +64,44 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
     }
 
     @Override
+    public void cancelOrder (Long orderId) {
+        Order order = super.fetchBy (orderId);
+        if (!isValidOrderStatus (order, OrderStatus.CREATED) ||
+                !isValidOrderStatus (order, OrderStatus.PLACED)) {
+            throw new OrderProcessException ("Order cannot be cancel, please check order status");
+        }
+
+        for (OrderEntry entry : order.getEntries ()) {
+            BookingOrderEntryRequest cancelBookingRequest = BookingOrderEntryRequest.builder ()
+                    .ean (entry.getProductEan ())
+                    .quantity (entry.getQuantity ())
+                    .shopId (order.getShopId ())
+                    .build ();
+            shopService.cancelBookedStock (cancelBookingRequest);
+
+        }
+        order.setOrderStatus (OrderStatus.CANCELLED);
+        super.save (order);
+    }
+
+    @Override
     @Transactional
     public void placeOrder (Long orderId) {
         Order order = super.fetchBy (orderId);
+        if (!isValidOrderStatus (order, OrderStatus.CREATED)) {
+            throw new OrderProcessException ("Order cannot be placed, please check order status");
+        }
+        ;
         sellProductStocks (order);
         calculateFinalSumOrder (order);
         sendOrderDetailsEmail (order);
         order.setOrderStatus (OrderStatus.PLACED);
         super.save (order);
+    }
+
+    @Override
+    public Order fetchByPayId (String payId) {
+        return orderRepository.findByPayId (payId).orElseThrow ();
     }
 
     private void sellProductStocks (Order order) {
@@ -121,5 +153,10 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
                 .order (dto)
                 .build ();
         notificationService.sendOrderDetails (orderDetailsEmail);
+    }
+
+    private boolean isValidOrderStatus (Order order, OrderStatus status) {
+        OrderStatus orderStatus = order.getOrderStatus ();
+        return orderStatus.equals (status);
     }
 }

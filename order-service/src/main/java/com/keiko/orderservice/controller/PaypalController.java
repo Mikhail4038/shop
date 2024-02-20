@@ -3,7 +3,6 @@ package com.keiko.orderservice.controller;
 import com.keiko.orderservice.entity.resources.payment.CompletedOrder;
 import com.keiko.orderservice.entity.resources.payment.PaymentOrder;
 import com.keiko.orderservice.service.PaymentService;
-import com.keiko.orderservice.service.resources.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
