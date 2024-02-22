@@ -66,7 +66,7 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
     @Override
     public void cancelOrder (Long orderId) {
         Order order = super.fetchBy (orderId);
-        if (!isValidOrderStatus (order, OrderStatus.CREATED) ||
+        if (!isValidOrderStatus (order, OrderStatus.CREATED) &&
                 !isValidOrderStatus (order, OrderStatus.PLACED)) {
             throw new OrderProcessException ("Order cannot be cancel, please check order status");
         }
@@ -102,6 +102,11 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
     @Override
     public Order fetchByPayId (String payId) {
         return orderRepository.findByPayId (payId).orElseThrow ();
+    }
+
+    @Override
+    public List<Order> fetchByStatus (OrderStatus orderStatus) {
+        return orderRepository.findByOrderStatus (orderStatus);
     }
 
     private void sellProductStocks (Order order) {

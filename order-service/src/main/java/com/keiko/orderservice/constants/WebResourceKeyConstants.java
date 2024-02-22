@@ -6,12 +6,13 @@ package com.keiko.orderservice.constants;
 public class WebResourceKeyConstants {
     // order
     public static final String CREATE_ORDER = "/create";
-    public static final String CANCEL_ORDER = "/create";
+    public static final String CANCEL_ORDER = "/cancel";
     public static final String SAVE_ORDER_ENTRY = "/saveEntry";
     public static final String REMOVE_ORDER_ENTRY = "/removeEntry";
     public static final String SAVE_DELIVERY_ADDRESS = "/saveDeliveryAddress";
     public static final String POINT_DELIVERY_ADDRESS = "/pointDeliveryAddress";
     public static final String PLACE_ORDER = "/place";
+    public static final String FETCH_BY_STATUS = "/byStatus";
 
     // stock
     public static final String COUNT_PRODUCT_STOCK_FOR_SELL = "/stockForSell";

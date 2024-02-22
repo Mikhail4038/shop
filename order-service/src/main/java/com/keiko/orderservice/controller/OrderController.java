@@ -5,6 +5,7 @@ import com.keiko.commonservice.request.ReverseGeocodeRequest;
 import com.keiko.orderservice.dto.model.OrderDto;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
+import com.keiko.orderservice.entity.OrderStatus;
 import com.keiko.orderservice.request.OrderEntryRequest;
 import com.keiko.orderservice.service.DeliveryAddressService;
 import com.keiko.orderservice.service.OrderEntryService;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.keiko.commonservice.constants.WebResourceKeyConstants.ORDER_BASE;
 import static com.keiko.orderservice.constants.WebResourceKeyConstants.*;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -40,7 +44,7 @@ public class OrderController extends DefaultCrudController<Order, OrderDto> {
     @GetMapping (value = CANCEL_ORDER)
     public ResponseEntity cancelOrder (@RequestParam Long orderId) {
         orderService.cancelOrder (orderId);
-        return ResponseEntity.status (CREATED).build ();
+        return ResponseEntity.ok ().build ();
     }
 
     @PostMapping (value = SAVE_ORDER_ENTRY)
@@ -79,6 +83,15 @@ public class OrderController extends DefaultCrudController<Order, OrderDto> {
     public ResponseEntity placeOrder (@RequestParam Long orderId) {
         orderService.placeOrder (orderId);
         return ResponseEntity.ok ().build ();
+    }
+
+    @GetMapping (value = FETCH_BY_STATUS)
+    public ResponseEntity<List<OrderDto>> fetchByStatus (@RequestParam OrderStatus status) {
+        List<Order> orders = orderService.fetchByStatus (status);
+        List<OrderDto> dto = orders.stream ()
+                .map (getToDtoConverter ()::apply)
+                .collect (toList ());
+        return ResponseEntity.ok (dto);
     }
 
     @Override
