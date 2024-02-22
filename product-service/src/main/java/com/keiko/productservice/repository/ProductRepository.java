@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository
-        extends AbstractCrudRepository<Product>, JpaSpecificationExecutor<Product> {
+        extends DefaultCrudRepository<Product>, JpaSpecificationExecutor<Product> {
 
     List<Product> findAll (Specification<Product> spec);
 

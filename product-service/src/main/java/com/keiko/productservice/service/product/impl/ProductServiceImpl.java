@@ -3,7 +3,7 @@ package com.keiko.productservice.service.product.impl;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.exception.model.ProductNotFoundException;
 import com.keiko.productservice.repository.ProductRepository;
-import com.keiko.productservice.service.impl.AbstractCrudServiceImpl;
+import com.keiko.productservice.service.impl.DefaultCrudServiceImpl;
 import com.keiko.productservice.service.product.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,7 +19,7 @@ import static com.keiko.productservice.repository.specs.ProductRatingSpecs.*;
 import static java.util.Objects.nonNull;
 
 @Service
-public class ProductServiceImpl extends AbstractCrudServiceImpl<Product>
+public class ProductServiceImpl extends DefaultCrudServiceImpl<Product>
         implements ProductService, ProductPriceService, ProductRatingService,
         ProductPromoService, ProductProducerService {
 

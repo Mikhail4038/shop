@@ -1,6 +1,7 @@
 package com.keiko.authservice.entity;
 
-import com.keiko.authservice.event.listener.TimeEntityListener;
+import com.keiko.commonservice.entity.BaseEntity;
+import com.keiko.commonservice.listener.TimeEntityListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.MERGE;
@@ -48,7 +49,7 @@ public class User extends BaseEntity {
     @OneToOne (fetch = LAZY, cascade = PERSIST)
     private Address address;
 
-    public User (Long id, Timestamp created, Timestamp modified, @Email String email, String password, String name, Set<Role> roles, Address address) {
+    public User (Long id, LocalDateTime created, LocalDateTime modified, @Email String email, String password, String name, Set<Role> roles, Address address) {
         super (id, created, modified);
         this.email = email;
         this.password = password;

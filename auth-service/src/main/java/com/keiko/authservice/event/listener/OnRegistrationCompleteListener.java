@@ -4,7 +4,7 @@ import com.keiko.authservice.entity.EmailNotificationData;
 import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
-import com.keiko.authservice.service.NotificationService;
+import com.keiko.authservice.service.resources.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;

@@ -1,12 +1,12 @@
 package com.keiko.shopservice.jobs;
 
+import com.keiko.commonservice.entity.resource.stock.ProductStockData;
+import com.keiko.commonservice.entity.resource.stock.ProductStockEmail;
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.Shop;
 import com.keiko.shopservice.entity.StopList;
-import com.keiko.shopservice.entity.resources.ProductStockData;
-import com.keiko.shopservice.entity.resources.ProductStockEmail;
 import com.keiko.shopservice.properties.EmailProperties;
-import com.keiko.shopservice.service.AbstractCrudService;
 import com.keiko.shopservice.service.ProductStockService;
 import com.keiko.shopservice.service.resources.NotificationService;
 import lombok.extern.log4j.Log4j2;
@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toList;
 public class MoveToStopListExpiredProductsJob {
 
     @Autowired
-    private AbstractCrudService<Shop> shopService;
+    private DefaultCrudService<Shop> shopService;
 
     @Autowired
     private ProductStockService productStockService;

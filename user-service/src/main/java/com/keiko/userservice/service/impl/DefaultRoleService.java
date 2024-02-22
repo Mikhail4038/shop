@@ -1,5 +1,6 @@
 package com.keiko.userservice.service.impl;
 
+import com.keiko.commonservice.service.impl.DefaultCrudServiceImpl;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.exception.model.RoleNotFoundException;
 import com.keiko.userservice.repository.RoleRepository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultRoleService extends DefaultCrudService<Role>
+public class DefaultRoleService extends DefaultCrudServiceImpl<Role>
         implements RoleService {
 
     @Autowired

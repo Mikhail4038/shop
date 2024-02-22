@@ -5,9 +5,9 @@ import com.keiko.shopservice.entity.Shop;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.keiko.shopservice.constants.WebResourceKeyConstants.SHOP_BASE;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.SHOP_BASE;
 
 @RestController
 @RequestMapping (value = SHOP_BASE)
-public class ShopController extends AbstractCrudController<Shop, ShopDto> {
+public class ShopController extends DefaultCrudController<Shop, ShopDto> {
 }

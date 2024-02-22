@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.converter.product;
 
-import com.keiko.productservice.dto.converter.AbstractToEntityConverter;
+import com.keiko.commonservice.dto.converter.AbstractToEntityConverter;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Rating;
@@ -25,7 +25,7 @@ public class DtoToProductConverter extends AbstractToEntityConverter<ProductDto,
     }
 
     @Override
-    protected void mapSpecificFields (ProductDto dto, Product product) {
+    public void mapSpecificFields (ProductDto dto, Product product) {
         if (isNull (dto.getId ())) {
             Rating rating = new Rating ();
             product.setRating (rating);

@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.model.address;
 
-import com.keiko.productservice.dto.model.BaseDto;
+import com.keiko.commonservice.dto.model.BaseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +11,5 @@ public class AddressDto extends BaseDto {
     private String house;
     private String city;
     private String country;
-    private String locale;
+    private String postcode;
 }

@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = REVIEW_BASE)
-public class ReviewController extends AbstractCrudController<Review, ReviewDto> {
+public class ReviewController extends DefaultCrudController<Review, ReviewDto> {
 
     @Autowired
     private ReviewService reviewService;

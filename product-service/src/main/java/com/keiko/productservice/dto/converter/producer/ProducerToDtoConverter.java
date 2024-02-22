@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.converter.producer;
 
-import com.keiko.productservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.productservice.dto.model.producer.ProducerDto;
 import com.keiko.productservice.entity.Producer;
 import org.springframework.stereotype.Component;

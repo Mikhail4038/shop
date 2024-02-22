@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -25,7 +25,7 @@ public class BaseEntity {
     private Long id;
 
     @Column (updatable = false)
-    private Timestamp created;
+    private LocalDateTime created;
 
-    private Timestamp modified;
+    private LocalDateTime modified;
 }

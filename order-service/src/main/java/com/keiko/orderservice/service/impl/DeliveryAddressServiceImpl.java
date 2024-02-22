@@ -1,10 +1,10 @@
 package com.keiko.orderservice.service.impl;
 
+import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.request.ReverseGeocodeRequest;
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
-import com.keiko.orderservice.entity.resources.User;
-import com.keiko.orderservice.request.ReverseGeocodeRequest;
-import com.keiko.orderservice.service.AbstractCrudService;
 import com.keiko.orderservice.service.DeliveryAddressService;
 import com.keiko.orderservice.service.resources.AddressService;
 import com.keiko.orderservice.service.resources.UserService;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class DeliveryAddressServiceImpl implements DeliveryAddressService {
 
     @Autowired
-    private AbstractCrudService<Order> orderService;
+    private DefaultCrudService<Order> orderService;
 
     @Autowired
     private AddressService addressService;

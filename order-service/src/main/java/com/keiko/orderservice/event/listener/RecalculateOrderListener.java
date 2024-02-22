@@ -1,8 +1,8 @@
 package com.keiko.orderservice.event.listener;
 
+import com.keiko.commonservice.entity.resource.product.Product;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
-import com.keiko.orderservice.entity.resources.Product;
 import com.keiko.orderservice.event.RecalculateOrderEvent;
 import com.keiko.orderservice.service.resources.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.keiko.shopservice.constants.WebResourceKeyConstants.PRODUCT_STOCK_BASE;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_STOCK_BASE;
 import static com.keiko.shopservice.constants.WebResourceKeyConstants.UPLOAD;
 
 @RestController

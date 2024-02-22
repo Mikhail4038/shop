@@ -1,6 +1,6 @@
 package com.keiko.userservice.dto.converter.role;
 
-import com.keiko.userservice.dto.converter.AbstractToEntityConverter;
+import com.keiko.commonservice.dto.converter.AbstractToEntityConverter;
 import com.keiko.userservice.dto.model.role.RoleDto;
 import com.keiko.userservice.entity.Role;
 import jakarta.annotation.PostConstruct;

@@ -1,6 +1,7 @@
 package com.keiko.orderservice.entity;
 
-import com.keiko.orderservice.event.listener.TimeEntityListener;
+import com.keiko.commonservice.entity.BaseEntity;
+import com.keiko.commonservice.listener.TimeEntityListener;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;

@@ -1,6 +1,6 @@
 package com.keiko.orderservice.entity.resources;
 
-import com.keiko.orderservice.dto.model.order.OrderDto;
+import com.keiko.orderservice.dto.model.OrderDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

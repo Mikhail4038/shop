@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.converter.producer;
 
-import com.keiko.productservice.dto.converter.AbstractToEntityConverter;
+import com.keiko.commonservice.dto.converter.AbstractToEntityConverter;
 import com.keiko.productservice.dto.model.producer.ProducerDto;
 import com.keiko.productservice.entity.Producer;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class DtoToProducerConverter extends AbstractToEntityConverter<ProducerDt
     }
 
     @Override
-    protected void mapSpecificFields (ProducerDto dto, Producer entity) {
+    public void mapSpecificFields (ProducerDto dto, Producer entity) {
 
     }
 }

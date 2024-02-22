@@ -1,6 +1,6 @@
 package com.keiko.shopservice.dto.model.shop;
 
-import com.keiko.shopservice.dto.model.BaseDto;
+import com.keiko.commonservice.dto.model.BaseDto;
 import com.keiko.shopservice.dto.model.productStock.ProductStockDto;
 import com.keiko.shopservice.entity.ShopAddress;
 import lombok.Getter;

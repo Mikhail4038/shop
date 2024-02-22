@@ -1,10 +1,11 @@
 package com.keiko.orderservice.controller;
 
-import com.keiko.orderservice.dto.model.order.OrderDto;
+import com.keiko.commonservice.controller.DefaultCrudController;
+import com.keiko.commonservice.request.ReverseGeocodeRequest;
+import com.keiko.orderservice.dto.model.OrderDto;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
-import com.keiko.orderservice.request.ModificationOrderRequest;
-import com.keiko.orderservice.request.ReverseGeocodeRequest;
+import com.keiko.orderservice.request.OrderEntryRequest;
 import com.keiko.orderservice.service.DeliveryAddressService;
 import com.keiko.orderservice.service.OrderEntryService;
 import com.keiko.orderservice.service.OrderService;
@@ -12,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.ORDER_BASE;
 import static com.keiko.orderservice.constants.WebResourceKeyConstants.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping (value = ORDER_BASE)
-public class OrderController extends AbstractCrudController<Order, OrderDto> {
+public class OrderController extends DefaultCrudController<Order, OrderDto> {
 
     @Autowired
     private OrderService orderService;
@@ -42,14 +44,14 @@ public class OrderController extends AbstractCrudController<Order, OrderDto> {
     }
 
     @PostMapping (value = SAVE_ORDER_ENTRY)
-    public ResponseEntity saveOrderEntry (@RequestBody ModificationOrderRequest saveOrderEntryRequest) {
-        orderEntryService.saveOrderEntry (saveOrderEntryRequest);
+    public ResponseEntity saveOrderEntry (@RequestBody OrderEntryRequest saveEntryRequest) {
+        orderEntryService.saveOrderEntry (saveEntryRequest);
         return ResponseEntity.ok ().build ();
     }
 
     @PostMapping (value = REMOVE_ORDER_ENTRY)
-    public ResponseEntity removeOrderEntry (@RequestBody ModificationOrderRequest removeOrderEntryRequest) {
-        orderEntryService.removeOrderEntry (removeOrderEntryRequest);
+    public ResponseEntity removeOrderEntry (@RequestBody OrderEntryRequest removeEntryRequest) {
+        orderEntryService.removeOrderEntry (removeEntryRequest);
         return ResponseEntity.ok ().build ();
     }
 

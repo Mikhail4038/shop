@@ -1,13 +1,13 @@
 package com.keiko.orderservice.service.impl;
 
+import com.keiko.commonservice.request.StockOrderEntryRequest;
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
 import com.keiko.orderservice.entity.OrderStatus;
 import com.keiko.orderservice.event.RecalculateOrderEvent;
 import com.keiko.orderservice.exception.model.OrderProcessException;
-import com.keiko.orderservice.request.BookingOrderEntryRequest;
-import com.keiko.orderservice.request.ModificationOrderRequest;
-import com.keiko.orderservice.service.AbstractCrudService;
+import com.keiko.orderservice.request.OrderEntryRequest;
 import com.keiko.orderservice.service.OrderEntryService;
 import com.keiko.orderservice.service.resources.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import static java.util.Objects.isNull;
 public class OrderEntryServiceImpl implements OrderEntryService {
 
     @Autowired
-    private AbstractCrudService<Order> orderService;
+    private DefaultCrudService<Order> orderService;
 
     @Autowired
     private ShopService shopService;
@@ -34,10 +34,10 @@ public class OrderEntryServiceImpl implements OrderEntryService {
 
     @Override
     @Transactional
-    public void saveOrderEntry (ModificationOrderRequest saveOrderEntryRequest) {
-        String ean = saveOrderEntryRequest.getProductEan ();
-        Long qty = saveOrderEntryRequest.getQuantity ();
-        Long orderId = saveOrderEntryRequest.getOrderId ();
+    public void saveOrderEntry (OrderEntryRequest saveEntryRequest) {
+        String ean = saveEntryRequest.getProductEan ();
+        Long qty = saveEntryRequest.getQuantity ();
+        Long orderId = saveEntryRequest.getOrderId ();
 
         Order order = orderService.fetchBy (orderId);
         checkOrderStatus (order);
@@ -46,15 +46,15 @@ public class OrderEntryServiceImpl implements OrderEntryService {
         qty = beforeSaveOrderEntry (ean, shopId, qty);
         OrderEntry orderEntry = createOrGetOrderEntry (ean, qty, order);
         saveOrderEntry (orderEntry, order);
-        afterSaveOrderEntry (buildBookedRequest (ean, qty, shopId));
+        afterSaveOrderEntry (buildBookEntryRequest (ean, qty, shopId));
     }
 
     @Override
     @Transactional
-    public void removeOrderEntry (ModificationOrderRequest removeOrderEntryRequest) {
-        String ean = removeOrderEntryRequest.getProductEan ();
-        Long qty = removeOrderEntryRequest.getQuantity ();
-        Long orderId = removeOrderEntryRequest.getOrderId ();
+    public void removeOrderEntry (OrderEntryRequest removeEntryRequest) {
+        String ean = removeEntryRequest.getProductEan ();
+        Long qty = removeEntryRequest.getQuantity ();
+        Long orderId = removeEntryRequest.getOrderId ();
 
         Order order = orderService.fetchBy (orderId);
         checkOrderStatus (order);
@@ -62,7 +62,7 @@ public class OrderEntryServiceImpl implements OrderEntryService {
 
         OrderEntry orderEntry = getOrderEntry (ean, order);
         removeOrChangeQtyOrderEntry (qty, orderEntry, order);
-        afterRemoveOrderEntry (buildBookedRequest (ean, qty, shopId));
+        afterRemoveOrderEntry (buildBookEntryRequest (ean, qty, shopId));
     }
 
     private OrderEntry createOrGetOrderEntry (String ean, Long qty, Order order) {
@@ -98,8 +98,8 @@ public class OrderEntryServiceImpl implements OrderEntryService {
         orderService.save (order);
     }
 
-    private void afterSaveOrderEntry (BookingOrderEntryRequest bookedRequest) {
-        shopService.bookedStock (bookedRequest);
+    private void afterSaveOrderEntry (StockOrderEntryRequest bookEntryRequest) {
+        shopService.bookStock (bookEntryRequest);
     }
 
     private OrderEntry getOrderEntry (String ean, Order order) {
@@ -125,12 +125,12 @@ public class OrderEntryServiceImpl implements OrderEntryService {
         orderService.save (order);
     }
 
-    private void afterRemoveOrderEntry (BookingOrderEntryRequest cancelBookedRequest) {
-        shopService.cancelBookedStock (cancelBookedRequest);
+    private void afterRemoveOrderEntry (StockOrderEntryRequest cancelBookEntryRequest) {
+        shopService.cancelBookStock (cancelBookEntryRequest);
     }
 
-    private BookingOrderEntryRequest buildBookedRequest (String ean, Long qty, Long shopId) {
-        return BookingOrderEntryRequest.builder ()
+    private StockOrderEntryRequest buildBookEntryRequest (String ean, Long qty, Long shopId) {
+        return StockOrderEntryRequest.builder ()
                 .ean (ean)
                 .quantity (qty)
                 .shopId (shopId)

@@ -11,6 +11,5 @@ import java.util.Set;
 @Setter
 public class UserDto extends UserData {
     private UserAddress userAddress;
-    private String password;
     private Set<RoleData> roles;
 }

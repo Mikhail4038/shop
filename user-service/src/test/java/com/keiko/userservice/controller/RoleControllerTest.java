@@ -15,7 +15,9 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Function;
 
-import static com.keiko.userservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.ROLE_BASE;
+import static com.keiko.userservice.constants.WebResourceKeyConstants.FIND_ROLE_BY_NAME;
+import static com.keiko.userservice.constants.WebResourceKeyConstants.GET_USER_ROLES;
 import static com.keiko.userservice.util.TestData.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;

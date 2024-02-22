@@ -1,5 +1,6 @@
 package com.keiko.productservice.dto.model.producer;
 
+import com.keiko.commonservice.entity.resource.Address;
 import com.keiko.productservice.dto.model.product.ProductData;
 import lombok.Getter;
 import lombok.Setter;

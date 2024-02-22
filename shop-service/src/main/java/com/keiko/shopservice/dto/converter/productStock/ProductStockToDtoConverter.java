@@ -1,9 +1,9 @@
 package com.keiko.shopservice.dto.converter.productStock;
 
-import com.keiko.shopservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.entity.resource.product.Product;
 import com.keiko.shopservice.dto.model.productStock.ProductStockDto;
 import com.keiko.shopservice.entity.ProductStock;
-import com.keiko.shopservice.entity.resources.Product;
 import com.keiko.shopservice.service.resources.ProductService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.keiko.userservice.dto.converter.user;
 
-import com.keiko.userservice.dto.converter.AbstractToEntityConverter;
+import com.keiko.commonservice.dto.converter.AbstractToEntityConverter;
 import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.User;
 import jakarta.annotation.PostConstruct;

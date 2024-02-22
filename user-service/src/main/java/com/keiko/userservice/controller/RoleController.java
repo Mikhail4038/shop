@@ -1,5 +1,6 @@
 package com.keiko.userservice.controller;
 
+import com.keiko.commonservice.controller.DefaultCrudController;
 import com.keiko.userservice.dto.model.role.RoleDto;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.service.RoleService;
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.keiko.userservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.ROLE_BASE;
+import static com.keiko.userservice.constants.WebResourceKeyConstants.FIND_ROLE_BY_NAME;
+import static com.keiko.userservice.constants.WebResourceKeyConstants.GET_USER_ROLES;
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = ROLE_BASE)
 public class RoleController
-        extends AbstractCrudController<Role, RoleDto> {
+        extends DefaultCrudController<Role, RoleDto> {
 
     @Autowired
     private RoleService roleService;

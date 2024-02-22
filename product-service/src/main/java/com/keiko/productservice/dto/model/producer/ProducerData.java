@@ -1,7 +1,7 @@
 package com.keiko.productservice.dto.model.producer;
 
-import com.keiko.productservice.dto.model.BaseDto;
-import com.keiko.productservice.dto.model.address.AddressDto;
+import com.keiko.commonservice.dto.model.BaseDto;
+import com.keiko.commonservice.entity.resource.Address;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class ProducerData extends BaseDto {
     private String name;
-    private AddressDto address;
+    private Address producerAddress;
 }

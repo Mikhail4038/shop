@@ -1,14 +1,14 @@
 package com.keiko.orderservice.service.resources;
 
-import com.keiko.orderservice.entity.resources.User;
+import com.keiko.commonservice.entity.resource.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static com.keiko.orderservice.constants.MicroServiceConstants.USER_SERVICE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.FETCH_BY;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.USER_BASE;
+import static com.keiko.commonservice.constants.MicroServiceConstants.USER_SERVICE;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.FETCH_BY;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.USER_BASE;
 
 @Service
 @FeignClient (name = USER_SERVICE)

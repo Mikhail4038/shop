@@ -1,10 +1,10 @@
 package com.keiko.orderservice.service;
 
-import com.keiko.orderservice.request.ModificationOrderRequest;
+import com.keiko.orderservice.request.OrderEntryRequest;
 
 public interface OrderEntryService {
-    void saveOrderEntry (ModificationOrderRequest saveOrderEntryRequest);
+    void saveOrderEntry (OrderEntryRequest saveEntryRequest);
 
-    void removeOrderEntry (ModificationOrderRequest removeOrderEntryRequest);
+    void removeOrderEntry (OrderEntryRequest removeEntryRequest);
 
 }

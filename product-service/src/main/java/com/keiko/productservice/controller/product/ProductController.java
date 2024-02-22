@@ -1,6 +1,6 @@
 package com.keiko.productservice.controller.product;
 
-import com.keiko.productservice.controller.AbstractCrudController;
+import com.keiko.productservice.controller.DefaultCrudController;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductService;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE)
-public class ProductController extends AbstractCrudController<Product, ProductDto> {
+public class ProductController extends DefaultCrudController<Product, ProductDto> {
 
     @Autowired
     private ProductService productService;

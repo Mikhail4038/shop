@@ -1,6 +1,6 @@
 package com.keiko.authservice.exception.handler;
 
-import com.keiko.authservice.exception.response.ErrorResponse;
+import com.keiko.commonservice.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,8 +12,8 @@ public class DefaultExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> exception (Exception ex) {
         ErrorResponse errorResponse = ErrorResponse.builder ()
-                .errorClass (ex.getClass ().toString ())
-                .errorMessage (ex.getMessage ())
+                .error (ex.getClass ().toString ())
+                .description (ex.getMessage ())
                 .build ();
         return ResponseEntity.status (HttpStatus.INTERNAL_SERVER_ERROR).body (errorResponse);
     }

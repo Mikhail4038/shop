@@ -1,5 +1,6 @@
 package com.keiko.userservice.service.impl;
 
+import com.keiko.commonservice.service.impl.DefaultCrudServiceImpl;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.entity.User;
 import com.keiko.userservice.exception.model.RoleNotFoundException;
@@ -22,7 +23,7 @@ import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
 @Service
-public class DefaultUserService extends DefaultCrudService<User>
+public class DefaultUserService extends DefaultCrudServiceImpl<User>
         implements UserService {
 
     @Autowired

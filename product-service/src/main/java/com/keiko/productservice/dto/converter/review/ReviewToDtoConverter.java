@@ -1,17 +1,16 @@
 package com.keiko.productservice.dto.converter.review;
 
-import com.keiko.productservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.entity.resource.User;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.Review;
-import com.keiko.productservice.entity.resources.User;
 import com.keiko.productservice.service.resources.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReviewToDtoConverter
-        extends AbstractToDtoConverter<Review, ReviewDto> {
+public class ReviewToDtoConverter extends AbstractToDtoConverter<Review, ReviewDto> {
 
     @Autowired
     private UserService userService;

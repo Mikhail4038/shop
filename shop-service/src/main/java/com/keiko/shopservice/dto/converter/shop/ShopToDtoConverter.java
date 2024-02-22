@@ -1,6 +1,6 @@
 package com.keiko.shopservice.dto.converter.shop;
 
-import com.keiko.shopservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.shopservice.dto.model.productStock.ProductStockDto;
 import com.keiko.shopservice.dto.model.shop.ShopDto;
 import com.keiko.shopservice.entity.ProductStock;

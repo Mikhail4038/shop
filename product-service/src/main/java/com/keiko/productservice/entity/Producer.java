@@ -21,8 +21,8 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Producer extends BaseEntity {
     private String name;
 
-    @OneToOne (fetch = LAZY, cascade = {PERSIST, REMOVE})
-    private Address address;
+    @OneToOne (fetch = LAZY, cascade = {PERSIST, REMOVE}, orphanRemoval = true)
+    private Address producerAddress;
 
     @OneToMany (fetch = LAZY, mappedBy = "producer")
     private List<Product> products;
@@ -37,7 +37,7 @@ public class Producer extends BaseEntity {
 
         return new EqualsBuilder ()
                 .append (name, producer.name)
-                .append (address, producer.address)
+                .append (producerAddress, producer.producerAddress)
                 .isEquals ();
     }
 
@@ -45,7 +45,7 @@ public class Producer extends BaseEntity {
     public int hashCode () {
         return new HashCodeBuilder (17, 37)
                 .append (name)
-                .append (address)
+                .append (producerAddress)
                 .toHashCode ();
     }
 }

@@ -13,7 +13,7 @@ import static com.keiko.shopservice.repository.specs.ProductStockSpec.byEan;
 import static com.keiko.shopservice.repository.specs.ProductStockSpec.byShop;
 
 @Service
-public class ShopServiceImpl extends AbstractCrudServiceImpl<Shop>
+public class ShopServiceImpl extends DefaultCrudServiceImpl<Shop>
         implements ShopService {
 
     @Autowired

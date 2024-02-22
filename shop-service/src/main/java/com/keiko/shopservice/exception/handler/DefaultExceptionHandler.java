@@ -1,6 +1,6 @@
 package com.keiko.shopservice.exception.handler;
 
-import com.keiko.shopservice.exception.response.ErrorResponse;
+import com.keiko.commonservice.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

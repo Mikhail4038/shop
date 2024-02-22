@@ -1,6 +1,6 @@
 package com.keiko.paymentservice.service.impl;
 
-import com.keiko.paymentservice.entity.CompletedOrder;
+import com.keiko.commonservice.entity.resource.payment.CompletedOrder;
 import com.keiko.paymentservice.entity.PayerDetails;
 import com.keiko.paymentservice.entity.PaymentOrder;
 import com.keiko.paymentservice.exception.model.CompletedOrderException;

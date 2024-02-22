@@ -6,6 +6,7 @@ import jakarta.persistence.PreUpdate;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class TimeEntityListener {
 
@@ -26,7 +27,7 @@ public class TimeEntityListener {
         }
     }
 
-    private Timestamp now () {
-        return Timestamp.from (Instant.now ());
+    private LocalDateTime now () {
+        return LocalDateTime.now ();
     }
 }

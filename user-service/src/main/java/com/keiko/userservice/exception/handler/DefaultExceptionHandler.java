@@ -1,6 +1,6 @@
 package com.keiko.userservice.exception.handler;
 
-import com.keiko.userservice.exception.response.ErrorResponse;
+import com.keiko.commonservice.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

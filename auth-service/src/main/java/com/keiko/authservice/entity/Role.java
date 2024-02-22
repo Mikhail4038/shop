@@ -1,5 +1,6 @@
 package com.keiko.authservice.entity;
 
+import com.keiko.commonservice.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;

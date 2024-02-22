@@ -1,10 +1,10 @@
 package com.keiko.addressservice.util;
 
-import com.keiko.addressservice.entity.Address;
 import com.keiko.addressservice.request.GeocodeRequest;
-import com.keiko.addressservice.request.ReverseGeocodeRequest;
 import com.keiko.addressservice.response.GeocodeResponse;
 import com.keiko.addressservice.response.ReverseGeocodeResponse;
+import com.keiko.commonservice.entity.resource.Address;
+import com.keiko.commonservice.request.ReverseGeocodeRequest;
 
 public class TestData {
     public static GeocodeRequest createTestGeoCodeRequest () {

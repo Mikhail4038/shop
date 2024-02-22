@@ -1,12 +1,12 @@
 package com.keiko.shopservice.service.impl;
 
+import com.keiko.commonservice.entity.resource.stock.ProductStockData;
+import com.keiko.commonservice.entity.resource.stock.ProductStockEmail;
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.Shop;
 import com.keiko.shopservice.entity.StopList;
-import com.keiko.shopservice.entity.resources.ProductStockData;
-import com.keiko.shopservice.entity.resources.ProductStockEmail;
 import com.keiko.shopservice.properties.EmailProperties;
-import com.keiko.shopservice.service.AbstractCrudService;
 import com.keiko.shopservice.service.UploadProductStockService;
 import com.keiko.shopservice.service.resources.NotificationService;
 import com.keiko.shopservice.service.resources.ProductService;
@@ -33,14 +33,13 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @Log4j2
-public class UploadProductStockServiceImpl
-        implements UploadProductStockService {
+public class UploadProductStockServiceImpl implements UploadProductStockService {
 
     @Autowired
     private ShopServiceImpl shopService;
 
     @Autowired
-    private AbstractCrudService<ProductStock> productStockService;
+    private DefaultCrudService<ProductStock> productStockService;
 
     @Autowired
     private ProductService productService;
@@ -57,7 +56,7 @@ public class UploadProductStockServiceImpl
     @Override
     @Transactional
     public void upload (MultipartFile file, Long shopId) {
-        Shop shop = shopService.fetchById (shopId);
+        Shop shop = shopService.fetchBy (shopId);
         List<ProductStock> uploadProductStocks = uploadProductStocks (file, shop);
         saveProductStocks (uploadProductStocks, shopId);
     }

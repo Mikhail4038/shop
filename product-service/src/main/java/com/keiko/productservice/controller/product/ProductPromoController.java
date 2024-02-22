@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.PROMO_BASE;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.PROMO_PRODUCTS;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE + PROMO_BASE)

@@ -1,5 +1,6 @@
 package com.keiko.userservice.controller;
 
+import com.keiko.commonservice.controller.DefaultCrudController;
 import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.User;
 import com.keiko.userservice.request.UpgradeUserRolesRequest;
@@ -10,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.USER_BASE;
 import static com.keiko.userservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = USER_BASE)
 public class UserController
-        extends AbstractCrudController<User, UserDto> {
+        extends DefaultCrudController<User, UserDto> {
 
     @Autowired
     private UserService userService;

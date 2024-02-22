@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.converter.product;
 
-import com.keiko.productservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.entity.Product;

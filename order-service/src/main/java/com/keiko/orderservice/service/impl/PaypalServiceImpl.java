@@ -1,9 +1,9 @@
 package com.keiko.orderservice.service.impl;
 
+import com.keiko.commonservice.entity.resource.payment.CompletedOrder;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderStatus;
-import com.keiko.orderservice.entity.resources.payment.CompletedOrder;
-import com.keiko.orderservice.entity.resources.payment.PaymentOrder;
+import com.keiko.orderservice.entity.resources.PaymentOrder;
 import com.keiko.orderservice.exception.model.OrderProcessException;
 import com.keiko.orderservice.service.PaymentService;
 import com.keiko.orderservice.service.resources.PaypalService;
@@ -43,7 +43,7 @@ public class PaypalServiceImpl implements PaymentService {
     private void setPayIdAndOrderStatus (Order order, PaymentOrder paymentOrder) {
         String payId = paymentOrder.getPayId ();
         order.setPayId (payId);
-        order.setOrderStatus (OrderStatus.PAYMENT_CAPTURED);
+        order.setOrderStatus (OrderStatus.APPROVED);
         orderService.save (order);
     }
 

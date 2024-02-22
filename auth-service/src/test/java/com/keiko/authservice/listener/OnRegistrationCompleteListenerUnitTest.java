@@ -4,7 +4,7 @@ import com.keiko.authservice.entity.EmailNotificationData;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
 import com.keiko.authservice.event.listener.OnRegistrationCompleteListener;
-import com.keiko.authservice.service.NotificationService;
+import com.keiko.authservice.service.resources.NotificationService;
 import com.keiko.authservice.service.VerificationTokenService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

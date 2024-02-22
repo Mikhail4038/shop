@@ -2,10 +2,10 @@ package com.keiko.addressservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keiko.addressservice.request.GeocodeRequest;
-import com.keiko.addressservice.request.ReverseGeocodeRequest;
 import com.keiko.addressservice.response.GeocodeResponse;
 import com.keiko.addressservice.response.ReverseGeocodeResponse;
 import com.keiko.addressservice.service.AddressService;
+import com.keiko.commonservice.request.ReverseGeocodeRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

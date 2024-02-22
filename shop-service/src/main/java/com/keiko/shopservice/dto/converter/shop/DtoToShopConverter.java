@@ -1,6 +1,6 @@
 package com.keiko.shopservice.dto.converter.shop;
 
-import com.keiko.shopservice.dto.converter.AbstractToEntityConverter;
+import com.keiko.commonservice.dto.converter.AbstractToEntityConverter;
 import com.keiko.shopservice.dto.model.shop.ShopDto;
 import com.keiko.shopservice.entity.Shop;
 import jakarta.annotation.PostConstruct;

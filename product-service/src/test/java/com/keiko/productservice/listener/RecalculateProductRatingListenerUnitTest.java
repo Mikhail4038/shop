@@ -1,10 +1,10 @@
 package com.keiko.productservice.listener;
 
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.event.RecalculateProductRatingEvent;
 import com.keiko.productservice.event.listener.RecalculateProductRatingListener;
-import com.keiko.productservice.service.AbstractCrudService;
 import com.keiko.productservice.service.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class RecalculateProductRatingListenerUnitTest {
     private ReviewService reviewService;
 
     @Mock
-    private AbstractCrudService<Product> productService;
+    private DefaultCrudService<Product> productService;
 
     @InjectMocks
     private RecalculateProductRatingListener recalculateProductRatingListener;

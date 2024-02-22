@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface ProductStockRepository
-        extends AbstractCrudRepository<ProductStock>,
+        extends DefaultCrudRepository<ProductStock>,
         JpaSpecificationExecutor<ProductStock> {
 
     List<ProductStock> findByEan (String ean);

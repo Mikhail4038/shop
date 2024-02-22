@@ -1,11 +1,11 @@
 package com.keiko.productservice.util;
 
+import com.keiko.commonservice.entity.resource.User;
 import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.*;
-import com.keiko.productservice.entity.resources.User;
 import com.keiko.productservice.event.RecalculateProductRatingEvent;
 
 public class TestData {
@@ -32,7 +32,7 @@ public class TestData {
     private static final String ADDRESS_HOUSE = "house";
     private static final String ADDRESS_CITY = "city";
     private static final String ADDRESS_COUNTRY = "country";
-    private static final String ADDRESS_LOCALE = "locale";
+    private static final String ADDRESS_POSTCODE = "postcode";
 
 
     public static Product testProduct () {
@@ -107,7 +107,7 @@ public class TestData {
         address.setHouse (ADDRESS_HOUSE);
         address.setCity (ADDRESS_CITY);
         address.setCountry (ADDRESS_COUNTRY);
-        address.setLocale (ADDRESS_LOCALE);
+        address.setPostcode (ADDRESS_POSTCODE);
         return address;
     }
 

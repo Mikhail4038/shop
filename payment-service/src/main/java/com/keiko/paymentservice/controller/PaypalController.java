@@ -1,6 +1,6 @@
 package com.keiko.paymentservice.controller;
 
-import com.keiko.paymentservice.entity.CompletedOrder;
+import com.keiko.commonservice.entity.resource.payment.CompletedOrder;
 import com.keiko.paymentservice.entity.PaymentOrder;
 import com.keiko.paymentservice.service.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;

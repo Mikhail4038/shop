@@ -1,18 +1,18 @@
 package com.keiko.orderservice.service.impl;
 
-import com.keiko.orderservice.dto.model.order.OrderDto;
+import com.keiko.commonservice.entity.resource.Address;
+import com.keiko.commonservice.entity.resource.Shop;
+import com.keiko.commonservice.request.RouteDetailsRequest;
+import com.keiko.commonservice.request.StockOrderEntryRequest;
+import com.keiko.commonservice.response.RouteDetailsResponse;
+import com.keiko.commonservice.service.impl.DefaultCrudServiceImpl;
+import com.keiko.orderservice.dto.model.OrderDto;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
 import com.keiko.orderservice.entity.OrderStatus;
-import com.keiko.orderservice.entity.resources.Address;
 import com.keiko.orderservice.entity.resources.OrderDetailsEmail;
-import com.keiko.orderservice.entity.resources.Shop;
 import com.keiko.orderservice.exception.model.OrderProcessException;
 import com.keiko.orderservice.repository.OrderRepository;
-import com.keiko.orderservice.request.BookingOrderEntryRequest;
-import com.keiko.orderservice.request.RouteDetailsRequest;
-import com.keiko.orderservice.request.SellingOrderEntryRequest;
-import com.keiko.orderservice.response.RouteDetailsResponse;
 import com.keiko.orderservice.service.OrderService;
 import com.keiko.orderservice.service.resources.*;
 import org.modelmapper.ModelMapper;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @Service
-public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
+public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
         implements OrderService {
 
     private static final Integer KILOMETER_BASE_RATE = 3;
@@ -72,13 +72,13 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
         }
 
         for (OrderEntry entry : order.getEntries ()) {
-            BookingOrderEntryRequest cancelBookingRequest = BookingOrderEntryRequest.builder ()
-                    .ean (entry.getProductEan ())
-                    .quantity (entry.getQuantity ())
-                    .shopId (order.getShopId ())
-                    .build ();
-            shopService.cancelBookedStock (cancelBookingRequest);
-
+            StockOrderEntryRequest cancelBookEntryRequest =
+                    StockOrderEntryRequest.builder ()
+                            .ean (entry.getProductEan ())
+                            .quantity (entry.getQuantity ())
+                            .shopId (order.getShopId ())
+                            .build ();
+            shopService.cancelBookStock (cancelBookEntryRequest);
         }
         order.setOrderStatus (OrderStatus.CANCELLED);
         super.save (order);
@@ -107,12 +107,16 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
     private void sellProductStocks (Order order) {
         List<OrderEntry> entries = order.getEntries ();
         Long shopId = order.getShopId ();
-        SellingOrderEntryRequest sellingRequest =
-                SellingOrderEntryRequest.builder ()
-                        .entries (entries)
-                        .shopId (shopId)
-                        .build ();
-        shopService.sellProductStocks (sellingRequest);
+
+        for (OrderEntry entry : entries) {
+            StockOrderEntryRequest sellEntryRequest =
+                    StockOrderEntryRequest.builder ()
+                            .ean (entry.getProductEan ())
+                            .quantity (entry.getQuantity ())
+                            .shopId (shopId)
+                            .build ();
+            shopService.sellProductStocks (sellEntryRequest);
+        }
     }
 
     private void calculateFinalSumOrder (Order order) {
@@ -122,14 +126,14 @@ public class OrderServiceImpl extends AbstractCrudServiceImpl<Order>
 
     private void calculateDeliveryCost (Order order) {
         Shop shop = shopService.fetchBy (order.getShopId ());
-        Address shopAddress = shop.getShopAddress ();
+        Address shopAddress = modelMapper.map (shop.getShopAddress (), Address.class);
         Address deliveryAddress = modelMapper.map (order.getDeliveryAddress (), Address.class);
 
-        RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest
-                .builder ()
-                .from (shopAddress)
-                .to (deliveryAddress)
-                .build ();
+        RouteDetailsRequest routeDetailsRequest =
+                RouteDetailsRequest.builder ()
+                        .from (shopAddress)
+                        .to (deliveryAddress)
+                        .build ();
 
         RouteDetailsResponse routeDetailsResponse = addressService.calculateRoute (routeDetailsRequest);
         Double deliveryDistance = routeDetailsResponse.getDistance ();

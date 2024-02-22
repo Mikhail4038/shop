@@ -1,6 +1,6 @@
 package com.keiko.addressservice.request;
 
-import com.keiko.addressservice.entity.Address;
+import com.keiko.commonservice.entity.resource.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

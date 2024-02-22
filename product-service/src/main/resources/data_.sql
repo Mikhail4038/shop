@@ -1,6 +1,6 @@
-insert into t_producer_address (created,modified,street,house,city,country,locale) values(now(),now(),'Kupaly','12','Hrodno','Belarus','BY');
+insert into t_producer_address (created,modified,street,house,city,country,postcode) values(now(),now(),'Kupaly','12','Hrodno','Belarus',230025);
 
-insert into t_producer (created,modified,name,address_id) values(now(),now(),'Conte',1);
+insert into t_producer (created,modified,name,producer_address_id) values(now(),now(),'Conte',1);
 
 insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'45.0',1);
 insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'30.0',1);

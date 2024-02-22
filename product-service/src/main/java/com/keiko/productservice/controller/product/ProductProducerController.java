@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController

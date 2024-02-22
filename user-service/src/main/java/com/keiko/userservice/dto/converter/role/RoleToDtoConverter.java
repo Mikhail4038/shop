@@ -1,6 +1,6 @@
 package com.keiko.userservice.dto.converter.role;
 
-import com.keiko.userservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.userservice.dto.model.role.RoleDto;
 import com.keiko.userservice.entity.Role;
 import org.springframework.stereotype.Component;

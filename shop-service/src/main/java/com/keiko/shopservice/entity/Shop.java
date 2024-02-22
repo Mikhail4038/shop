@@ -25,6 +25,6 @@ public class Shop extends BaseEntity {
     @OneToMany (fetch = LAZY, mappedBy = "shop")
     private List<ProductStock> productStock;
 
-    @OneToOne (cascade = {PERSIST, REMOVE})
+    @OneToOne (cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private ShopAddress shopAddress;
 }

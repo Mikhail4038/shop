@@ -1,10 +1,8 @@
 package com.keiko.shopservice.service.impl;
 
+import com.keiko.commonservice.request.StockOrderEntryRequest;
 import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.StopList;
-import com.keiko.shopservice.entity.resources.BookingOrderEntryRequest;
-import com.keiko.shopservice.entity.resources.OrderEntry;
-import com.keiko.shopservice.entity.resources.SellingOrderEntryRequest;
 import com.keiko.shopservice.exception.model.ProductStockLevelException;
 import com.keiko.shopservice.repository.ProductStockRepository;
 import com.keiko.shopservice.service.ProductStockService;
@@ -18,7 +16,7 @@ import static com.keiko.shopservice.repository.specs.ProductStockSpec.*;
 import static java.util.Comparator.comparing;
 
 @Service
-public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStock>
+public class ProductStockServiceImpl extends DefaultCrudServiceImpl<ProductStock>
         implements ProductStockService {
 
     @Autowired
@@ -41,10 +39,10 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void bookedStock (BookingOrderEntryRequest bookedRequest) {
-        String ean = bookedRequest.getEan ();
-        Long quantity = bookedRequest.getQuantity ();
-        Long shopId = bookedRequest.getShopId ();
+    public void bookStock (StockOrderEntryRequest bookEntryRequest) {
+        String ean = bookEntryRequest.getEan ();
+        Long quantity = bookEntryRequest.getQuantity ();
+        Long shopId = bookEntryRequest.getShopId ();
 
         List<ProductStock> productStocks =
                 productStockRepository.findAll (byShop (shopId).and (byEan (ean)).and (inStopList (StopList.NONE)));
@@ -78,10 +76,10 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void cancelBookedStock (BookingOrderEntryRequest cancelBookedRequest) {
-        String ean = cancelBookedRequest.getEan ();
-        Long quantity = cancelBookedRequest.getQuantity ();
-        Long shopId = cancelBookedRequest.getShopId ();
+    public void cancelBookedStock (StockOrderEntryRequest cancelBookEntryRequest) {
+        String ean = cancelBookEntryRequest.getEan ();
+        Long quantity = cancelBookEntryRequest.getQuantity ();
+        Long shopId = cancelBookEntryRequest.getShopId ();
 
         List<ProductStock> productStocks =
                 productStockRepository.findAll (byShop (shopId).and (byEan (ean)).and (hasBookedStock ()));
@@ -118,40 +116,36 @@ public class ProductStockServiceImpl extends AbstractCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void sellStock (SellingOrderEntryRequest sellingRequest) {
-        List<OrderEntry> entries = sellingRequest.getEntries ();
-        Long shopId = sellingRequest.getShopId ();
+    public void sellStock (StockOrderEntryRequest sellEntryRequest) {
+        Long shopId = sellEntryRequest.getShopId ();
+        String ean = sellEntryRequest.getEan ();
+        Long quantity = sellEntryRequest.getQuantity ();
 
-        for (OrderEntry entry : entries) {
-            String ean = entry.getProductEan ();
-            Long quantity = entry.getQuantity ();
+        List<ProductStock> productStocks =
+                productStockRepository.findAll (byShop (shopId).and (byEan (ean).and (hasBookedStock ())));
+        productStocks.sort (comparing (ProductStock::getExpirationDate));
 
-            List<ProductStock> productStocks =
-                    productStockRepository.findAll (byShop (shopId).and (byEan (ean).and (hasBookedStock ())));
-            productStocks.sort (comparing (ProductStock::getExpirationDate));
+        ProductStock stock;
+        for (int i = 0; i < productStocks.size (); i++) {
+            stock = productStocks.get (i);
+            Long booked = stock.getBooked ();
 
-            ProductStock stock;
-            for (int i = 0; i < productStocks.size (); i++) {
-                stock = productStocks.get (i);
-                Long booked = stock.getBooked ();
+            if (booked.equals (quantity)) {
+                stock.setBooked (0L);
+                checkStockBalance (stock);
+                super.save (stock);
+                break;
+            }
 
-                if (booked.equals (quantity)) {
-                    stock.setBooked (0L);
-                    checkStockBalance (stock);
-                    super.save (stock);
-                    break;
-                }
-
-                if (booked > quantity) {
-                    stock.setBooked (booked - quantity);
-                    super.save (stock);
-                    break;
-                } else {
-                    stock.setBooked (0L);
-                    checkStockBalance (stock);
-                    super.save (stock);
-                    quantity -= booked;
-                }
+            if (booked > quantity) {
+                stock.setBooked (booked - quantity);
+                super.save (stock);
+                break;
+            } else {
+                stock.setBooked (0L);
+                checkStockBalance (stock);
+                super.save (stock);
+                quantity -= booked;
             }
         }
     }

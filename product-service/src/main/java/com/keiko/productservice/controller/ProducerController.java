@@ -9,5 +9,5 @@ import static com.keiko.productservice.constants.WebResourceKeyConstants.PRODUCE
 
 @RestController
 @RequestMapping (value = PRODUCER_BASE)
-public class ProducerController extends AbstractCrudController<Producer, ProducerDto> {
+public class ProducerController extends DefaultCrudController<Producer, ProducerDto> {
 }

@@ -1,6 +1,7 @@
 package com.keiko.userservice.entity;
 
-import com.keiko.userservice.listener.TimeEntityListener;
+import com.keiko.commonservice.entity.BaseEntity;
+import com.keiko.commonservice.listener.TimeEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -11,10 +12,8 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.sql.Timestamp;
 import java.util.Set;
 
-import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity (name = "t_role")
@@ -29,15 +28,6 @@ public class Role extends BaseEntity {
 
     @ManyToMany (mappedBy = "roles", fetch = LAZY)
     private Set<User> users;
-
-    public Role (String name) {
-        this.name = name;
-    }
-
-    public Role (Long id, Timestamp created, Timestamp modified, String name) {
-        super (id, created, modified);
-        this.name = name;
-    }
 
     @Override
     public boolean equals (Object o) {

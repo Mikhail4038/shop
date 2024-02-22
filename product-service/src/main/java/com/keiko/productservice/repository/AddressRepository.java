@@ -2,5 +2,5 @@ package com.keiko.productservice.repository;
 
 import com.keiko.productservice.entity.Address;
 
-public interface AddressRepository extends AbstractCrudRepository<Address> {
+public interface AddressRepository extends DefaultCrudRepository<Address> {
 }

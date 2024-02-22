@@ -4,7 +4,7 @@ import com.keiko.productservice.entity.Review;
 
 import java.util.List;
 
-public interface ReviewRepository extends AbstractCrudRepository<Review> {
+public interface ReviewRepository extends DefaultCrudRepository<Review> {
 
     List<Review> findByUserId (Long userId);
 

@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import java.util.Arrays;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;

@@ -1,6 +1,6 @@
 package com.keiko.productservice.dto.converter.address;
 
-import com.keiko.productservice.dto.converter.AbstractToDtoConverter;
+import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.productservice.dto.model.address.AddressDto;
 import com.keiko.productservice.entity.Address;
 import org.springframework.stereotype.Component;
