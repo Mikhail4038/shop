@@ -16,7 +16,7 @@ class RoleRepositoryIntegrationTest {
     private static final String SAVED_ROLE_NAME = "TEST";
     private static final String NOT_SAVED_ROLE_NAME = "UNKNOWN";
     private static final String EXCEPTION_MESSAGE = "No value present";
-    private static final String USER_EMAIL = "admin@gmail.com";
+    private static final String USER_EMAIL = "test@gmail.com";
 
     @Autowired
     private RoleRepository roleRepository;

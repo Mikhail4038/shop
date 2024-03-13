@@ -1,10 +1,10 @@
 package com.keiko.authservice.controller;
 
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
 import com.keiko.authservice.jwt.JwtTokenHelper;
 import com.keiko.authservice.request.JwtRefreshRequest;
 import com.keiko.authservice.request.LoginRequest;
+import com.keiko.authservice.request.RegistrationRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.response.LoginResponse;
 import com.keiko.authservice.service.AuthService;
@@ -29,11 +29,11 @@ public class AuthController {
     @Autowired
     private JwtTokenHelper jwtTokenHelper;
 
-    @PostMapping (value = REGISTRATION_USER)
     @Transactional
-    public ResponseEntity registration (@RequestBody User user) {
-        authService.registration (user);
-        eventPublisher.publishEvent (new OnRegistrationCompleteEvent (user));
+    @PostMapping (value = REGISTRATION_USER)
+    public ResponseEntity registration (@RequestBody RegistrationRequest registrationRequest) {
+        authService.registration (registrationRequest);
+        eventPublisher.publishEvent (new OnRegistrationCompleteEvent (registrationRequest.getEmail ()));
         return ResponseEntity.ok ().build ();
     }
 

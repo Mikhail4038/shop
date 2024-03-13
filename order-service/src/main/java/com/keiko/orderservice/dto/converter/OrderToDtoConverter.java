@@ -2,8 +2,8 @@ package com.keiko.orderservice.dto.converter;
 
 import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
 import com.keiko.commonservice.entity.resource.Shop;
-import com.keiko.commonservice.entity.resource.User;
 import com.keiko.commonservice.entity.resource.product.Product;
+import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.orderservice.dto.model.OrderDto;
 import com.keiko.orderservice.dto.model.OrderEntryDto;
 import com.keiko.orderservice.entity.Order;

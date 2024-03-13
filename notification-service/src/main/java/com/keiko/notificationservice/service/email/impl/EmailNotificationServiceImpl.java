@@ -13,6 +13,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -39,6 +40,7 @@ public class EmailNotificationServiceImpl
     private Configuration configuration;
 
     @Override
+    @KafkaListener (topics = {"confirmRegistration"}, groupId = "my-group")
     public void sendEmail (SimpleEmail simpleEmail) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage ();
         simpleMailMessage.setTo (simpleEmail.getToAddress ());
@@ -74,6 +76,11 @@ public class EmailNotificationServiceImpl
             log.error (ex.getMessage ());
         }
         javaMailSender.send (helper.getMimeMessage ());
+    }
+
+    public void testKafka (String message) {
+        System.out.println (message);
+
     }
 
     private String getOrderDetailsEmailContent (Order order, String message) {

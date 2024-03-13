@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class EmailNotificationData {
+public class ConfirmRegistrationEmail {
     private String toAddress;
     private String subject;
     private String message;

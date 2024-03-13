@@ -1,15 +1,21 @@
 package com.keiko.authservice.service.impl;
 
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.VerificationToken;
-import com.keiko.authservice.exception.model.*;
+import com.keiko.authservice.exception.model.BadCredentialException;
+import com.keiko.authservice.exception.model.UserAlreadyExistException;
+import com.keiko.authservice.exception.model.UserLockedException;
+import com.keiko.authservice.exception.model.VerificationTokenProcessException;
 import com.keiko.authservice.jwt.JwtProvider;
 import com.keiko.authservice.request.LoginRequest;
+import com.keiko.authservice.request.RegistrationRequest;
 import com.keiko.authservice.response.LoginResponse;
 import com.keiko.authservice.service.AuthService;
 import com.keiko.authservice.service.RefreshTokenService;
-import com.keiko.authservice.service.UserService;
 import com.keiko.authservice.service.VerificationTokenService;
+import com.keiko.authservice.service.resources.UserService;
+import com.keiko.commonservice.entity.resource.Address;
+import com.keiko.commonservice.entity.resource.user.Role;
+import com.keiko.commonservice.entity.resource.user.User;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Service
 @Validated
@@ -36,16 +43,14 @@ public class DefaultAuthService implements AuthService {
     private JwtProvider jwtProvider;
 
     @Override
-    public void registration (@NonNull User user) {
-        final String email = user.getEmail ();
+    public void registration (@NonNull RegistrationRequest registrationRequest) {
+        final String email = registrationRequest.getEmail ();
         if (emailExists (email)) {
             String message = String.format ("There is an account with that email address: %s", email);
             throw new UserAlreadyExistException (message);
         }
-        final String presentedPassword = user.getPassword ();
-        final String encodePassword = BCrypt.hashpw (presentedPassword, BCrypt.gensalt ());
-        user.setPassword (encodePassword);
-        user.setEnabled (false);
+
+        User user = createNewUser (registrationRequest);
         userService.save (user);
     }
 
@@ -54,12 +59,13 @@ public class DefaultAuthService implements AuthService {
     public void confirmRegistration (String token) {
         VerificationToken verificationToken =
                 verificationTokenService.findByToken (token);
-        User user = verificationToken.getUser ();
+        String email = verificationToken.getEmail ();
 
         if (validateToken (verificationToken)) {
-            String message = String.format ("VerificationToken for user: %s,expired", user);
+            String message = String.format ("VerificationToken for user: %s,expired", email);
             throw new VerificationTokenProcessException (message);
         }
+        User user = userService.findByEmail (email);
         user.setEnabled (true);
         userService.save (user);
         verificationTokenService.deleteByToken (token);
@@ -81,17 +87,12 @@ public class DefaultAuthService implements AuthService {
     }
 
     private boolean emailExists (String email) {
-        try {
-            userService.findByEmail (email);
-            return true;
-        } catch (UserNotFoundException ex) {
-            return false;
-        }
+        return userService.isExists (email);
     }
 
     private boolean validateToken (VerificationToken verificationToken) {
         LocalDateTime now = LocalDateTime.now ();
-        LocalDateTime toValid = verificationToken.getExpiryDate ().toLocalDateTime ();
+        LocalDateTime toValid = verificationToken.getExpiryDate ();
         return now.isAfter (toValid);
     }
 
@@ -121,5 +122,25 @@ public class DefaultAuthService implements AuthService {
         final String refreshToken = jwtProvider.generateRefreshToken (user);
         LoginResponse loginResponse = new LoginResponse (accessToken, refreshToken);
         return loginResponse;
+    }
+
+    private User createNewUser (RegistrationRequest registrationRequest) {
+        User user = new User ();
+
+        final String email = registrationRequest.getEmail ();
+        final String name = registrationRequest.getName ();
+        final Address address = registrationRequest.getAddress ();
+        final String presentedPassword = registrationRequest.getPassword ();
+        final String encodePassword = BCrypt.hashpw (presentedPassword, BCrypt.gensalt ());
+        final Long roleId = registrationRequest.getRoleId ();
+
+        Role role = userService.findRoleById (roleId);
+        user.setEmail (email);
+        user.setPassword (encodePassword);
+        user.setName (name);
+        user.setEnabled (false);
+        user.setRoles (Set.of (role));
+        user.setUserAddress (address);
+        return user;
     }
 }

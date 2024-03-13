@@ -1,6 +1,6 @@
 package com.keiko.orderservice.service.resources;
 
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;

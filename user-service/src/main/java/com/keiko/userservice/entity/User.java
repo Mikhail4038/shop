@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity (name = "t_user")
@@ -31,11 +31,12 @@ public class User extends BaseEntity {
     private String password;
 
     private String name;
+    private boolean enabled;
 
     @ManyToMany (fetch = LAZY, cascade = {MERGE})
     private Set<Role> roles;
 
-    @OneToOne
+    @OneToOne (cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     private UserAddress userAddress;
 
     public User (Long id, LocalDateTime created, LocalDateTime modified, @Email String email, String password, String name, Set<Role> roles, UserAddress userAddress) {

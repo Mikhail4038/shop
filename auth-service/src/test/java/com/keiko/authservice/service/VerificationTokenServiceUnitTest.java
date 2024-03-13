@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.keiko.authservice.util.TestData.testVerificationToken;
@@ -55,14 +54,6 @@ class VerificationTokenServiceUnitTest {
     void should_successfully_deleteByToken () {
         verificationTokenService.deleteByToken (verificationToken.getToken ());
         verify (verificationTokenRepository, times (1)).deleteByToken (anyString ());
-        verifyNoMoreInteractions (verificationTokenRepository);
-    }
-
-    @Test
-    void should_successfully_deleteExpiredToken () {
-        final LocalDateTime now = LocalDateTime.now ();
-        verificationTokenService.deleteExpiredToken (now);
-        verify (verificationTokenRepository, times (1)).deleteByExpiryDateLessThan (any (LocalDateTime.class));
         verifyNoMoreInteractions (verificationTokenRepository);
     }
 }

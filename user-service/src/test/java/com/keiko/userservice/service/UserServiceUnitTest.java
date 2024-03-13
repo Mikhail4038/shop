@@ -42,12 +42,6 @@ class UserServiceUnitTest {
     }
 
     @Test
-    void should_unSuccessfully_save_new_user () {
-        assertThrows (UnsupportedOperationException.class,
-                () -> userService.save (user));
-    }
-
-    @Test
     void should_successfully_findByEmail () {
         final String email = user.getEmail ();
         when (userRepository.findByEmail (email)).thenReturn (Optional.of (user));

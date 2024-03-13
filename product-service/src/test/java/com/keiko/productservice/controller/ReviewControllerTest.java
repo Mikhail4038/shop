@@ -1,6 +1,6 @@
 package com.keiko.productservice.controller;
 
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.productservice.dto.model.product.ProductData;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;

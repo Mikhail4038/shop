@@ -1,12 +1,12 @@
 package com.keiko.authservice.jwt;
 
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.jwt.JwtRefreshToken;
 import com.keiko.authservice.jwt.impl.DefaultJwtTokenHelper;
 import com.keiko.authservice.request.JwtRefreshRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.service.RefreshTokenService;
-import com.keiko.authservice.service.UserService;
+import com.keiko.authservice.service.resources.UserService;
+import com.keiko.commonservice.entity.resource.user.User;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

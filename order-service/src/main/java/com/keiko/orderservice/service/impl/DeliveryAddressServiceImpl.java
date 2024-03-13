@@ -1,6 +1,6 @@
 package com.keiko.orderservice.service.impl;
 
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.commonservice.request.ReverseGeocodeRequest;
 import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.orderservice.entity.DeliveryAddress;

@@ -14,4 +14,11 @@ public class WebResourceKeyConstants {
 
     // notification
     public static final String SIMPLE = "/simple";
+
+    // user
+    public static final String IS_EXISTS_USER = "/isExists";
+    public static final String FIND_USER_BY_EMAIL = "/findByEmail";
+    public static final String FIND_NOT_ENABLED_USERS = "/findNotEnabled";
+    public static final String DELETE_USER_BY_EMAIL = "/deleteByEmail";
+    public static final String DELETE_ALL = "/deleteAll";
 }

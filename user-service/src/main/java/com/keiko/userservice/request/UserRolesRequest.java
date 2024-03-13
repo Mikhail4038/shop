@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpgradeUserRolesRequest {
+public class UserRolesRequest {
     private Long userId;
     private Set<Long> rolesId;
 }

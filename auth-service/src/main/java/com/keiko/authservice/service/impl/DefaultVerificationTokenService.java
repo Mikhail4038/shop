@@ -8,7 +8,9 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.keiko.authservice.repository.specs.VerificationTokenSpecs.isExpired;
 
 @Service
 public class DefaultVerificationTokenService implements VerificationTokenService {
@@ -34,7 +36,12 @@ public class DefaultVerificationTokenService implements VerificationTokenService
     }
 
     @Override
-    public void deleteExpiredToken (LocalDateTime date) {
-        verificationTokenRepository.deleteByExpiryDateLessThan (date);
+    public void deleteAll (List<VerificationToken> tokens) {
+        verificationTokenRepository.deleteAll (tokens);
+    }
+
+    @Override
+    public List<VerificationToken> findExpiredTokens () {
+        return verificationTokenRepository.findAll (isExpired ());
     }
 }

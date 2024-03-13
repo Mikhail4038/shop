@@ -1,14 +1,15 @@
 package com.keiko.authservice.util;
 
-import com.keiko.authservice.entity.Role;
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.VerificationToken;
 import com.keiko.authservice.entity.jwt.JwtRefreshToken;
 import com.keiko.authservice.event.OnRegistrationCompleteEvent;
 import com.keiko.authservice.request.JwtRefreshRequest;
 import com.keiko.authservice.request.LoginRequest;
+import com.keiko.authservice.request.RegistrationRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.response.LoginResponse;
+import com.keiko.commonservice.entity.resource.user.Role;
+import com.keiko.commonservice.entity.resource.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -22,6 +23,7 @@ public class TestData {
 
     // role
     private static final String ROLE_NAME = "ADMIN";
+    private static final Long USER_ROLE_ID = 1L;
 
     // verification token
     private static final String VERIFICATION_TOKEN_VALUE = "verify";
@@ -36,7 +38,6 @@ public class TestData {
     // refresh response
     private static final String NEW_ACCESS_TOKEN_VALUE = "newAccessToken";
     private static final String NEW_REFRESH_TOKEN_VALUE = "newRefreshToken";
-
 
     public static User testUser () {
         User user = new User ();
@@ -71,6 +72,14 @@ public class TestData {
         return request;
     }
 
+    public static RegistrationRequest testRegistrationRequest () {
+        RegistrationRequest request = new RegistrationRequest ();
+        request.setEmail (USER_EMAIL);
+        request.setPassword (USER_PASSWORD);
+        request.setRoleId (USER_ROLE_ID);
+        return request;
+    }
+
     public static LoginResponse testLoginResponse () {
         LoginResponse response = new LoginResponse ();
         response.setAccessToken (ACCESS_TOKEN);
@@ -99,7 +108,7 @@ public class TestData {
 
     public static OnRegistrationCompleteEvent registrationCompleteEvent () {
         OnRegistrationCompleteEvent event
-                = new OnRegistrationCompleteEvent (testUser ());
+                = new OnRegistrationCompleteEvent (USER_EMAIL);
         return event;
     }
 }

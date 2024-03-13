@@ -2,15 +2,15 @@ package com.keiko.authservice.entity;
 
 import com.keiko.commonservice.entity.BaseEntity;
 import com.keiko.commonservice.listener.TimeEntityListener;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Table (name = "t_verificationToken")
@@ -24,24 +24,19 @@ public class VerificationToken extends BaseEntity {
     @Column (nullable = false)
     private String token;
 
-    @OneToOne (fetch = LAZY, optional = false)
-    private User user;
-    private Timestamp expiryDate;
+    @Column (unique = true)
+    private String email;
 
-    public VerificationToken (String token) {
+    private LocalDateTime expiryDate;
+
+    public VerificationToken (String token, String email) {
         this.token = token;
+        this.email = email;
         this.expiryDate = calculateExpiryDate (EXPIRATION);
     }
 
-    public VerificationToken (String token, User user) {
-        this.token = token;
-        this.user = user;
-        this.expiryDate = calculateExpiryDate (EXPIRATION);
-    }
-
-    private Timestamp calculateExpiryDate (int expiryTimeInHours) {
+    private LocalDateTime calculateExpiryDate (int expiryTimeInHours) {
         LocalDateTime expiryDate = LocalDateTime.now ().plusHours (expiryTimeInHours);
-        Timestamp deadLine = Timestamp.valueOf (expiryDate);
-        return deadLine;
+        return expiryDate;
     }
 }

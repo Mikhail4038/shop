@@ -1,7 +1,7 @@
 package com.keiko.productservice.dto.model.review;
 
 import com.keiko.commonservice.dto.model.BaseDto;
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import lombok.Getter;
 import lombok.Setter;
 

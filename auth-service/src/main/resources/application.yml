@@ -1,0 +1,36 @@
+server:
+  port: 8081
+
+spring:
+  application.name: auth-service
+
+  #database,jwt,properties
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: database,jwt
+
+  #mongo db
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+      database: shop
+
+  #kafka
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  # set up initial data
+  #sql.init.mode: always
+  #jpa.defer-datasource-initialization: true
+
+#eureka
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl.defaultZone: http://localhost:8761/eureka/

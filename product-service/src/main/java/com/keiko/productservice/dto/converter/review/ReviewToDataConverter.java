@@ -1,7 +1,7 @@
 package com.keiko.productservice.dto.converter.review;
 
 import com.keiko.commonservice.dto.converter.AbstractToDtoConverter;
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.service.resources.UserService;

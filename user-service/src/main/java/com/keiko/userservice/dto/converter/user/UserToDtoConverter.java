@@ -14,11 +14,12 @@ public class UserToDtoConverter
         super (User.class, UserDto.class);
     }
 
-    @PostConstruct
+    // TODO
+   /* @PostConstruct
     public void setUpMapping () {
         getModelMapper ().createTypeMap (User.class, UserDto.class)
                 .addMappings (mapper -> mapper.skip (UserDto::setPassword));
-    }
+    }*/
 
     public void mapSpecificFields (User user, UserDto dto) {
     }

@@ -3,7 +3,7 @@ package com.keiko.orderservice.dto.model;
 import com.keiko.commonservice.dto.model.BaseDto;
 import com.keiko.commonservice.entity.resource.Address;
 import com.keiko.commonservice.entity.resource.Shop;
-import com.keiko.commonservice.entity.resource.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.orderservice.entity.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;

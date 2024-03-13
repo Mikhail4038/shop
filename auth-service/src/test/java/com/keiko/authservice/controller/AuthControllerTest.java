@@ -1,13 +1,14 @@
 package com.keiko.authservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.jwt.JwtTokenHelper;
 import com.keiko.authservice.request.JwtRefreshRequest;
 import com.keiko.authservice.request.LoginRequest;
+import com.keiko.authservice.request.RegistrationRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.response.LoginResponse;
 import com.keiko.authservice.service.impl.DefaultAuthService;
+import com.keiko.commonservice.entity.resource.user.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ class AuthControllerTest {
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (status ().isOk ());
 
-        verify (authService, times (1)).registration (any (User.class));
+        verify (authService, times (1)).registration (any (RegistrationRequest.class));
         verifyNoMoreInteractions (authService);
     }
 

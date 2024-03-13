@@ -1,0 +1,21 @@
+server:
+  port: 8082
+spring:
+  application.name: user-service
+
+  # database
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: database
+
+  # set up initial data
+  sql.init.mode: always
+  jpa.defer-datasource-initialization: true
+
+# eureka
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl.defaultZone: http://localhost:8761/eureka/

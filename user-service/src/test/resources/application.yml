@@ -1,0 +1,6 @@
+# set up initial data
+spring:
+  jpa:
+    hibernate.ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql.init.data-locations: test_data.sql

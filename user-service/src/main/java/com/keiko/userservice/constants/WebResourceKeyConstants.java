@@ -6,11 +6,14 @@ package com.keiko.userservice.constants;
 public class WebResourceKeyConstants {
 
     // user
+    public static final String IS_EXISTS_USER = "/isExists";
     public static final String FIND_USER_BY_EMAIL = "/findByEmail";
-    public static final String DELETE_USER_BY_EMAIL = "/deleteByEmail";
     public static final String FIND_USERS_BY_ROLE = "/findByRole";
-    public static final String ADD_ROLES = "/addRoles";
+    public static final String FIND_NOT_ENABLED_USERS = "/findNotEnabled";
+    public static final String DELETE_USER_BY_EMAIL = "/deleteByEmail";
+    public static final String DELETE_ALL = "/deleteAll";
     public static final String DELETE_ROLES = "/deleteRoles";
+    public static final String ADD_ROLES = "/addRoles";
 
     // role
     public static final String FIND_ROLE_BY_NAME = "/findByName";

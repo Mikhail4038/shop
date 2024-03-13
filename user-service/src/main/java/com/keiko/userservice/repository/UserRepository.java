@@ -4,6 +4,7 @@ import com.keiko.commonservice.repository.DefaultCrudRepository;
 import com.keiko.userservice.entity.User;
 import org.springframework.data.jpa.repository.Modifying;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +16,7 @@ public interface UserRepository
     void deleteByEmail (String email);
 
     List<User> findByRoles_name (String name);
+
+    List<User> findByEnabledIs (boolean enabled);
 
 }

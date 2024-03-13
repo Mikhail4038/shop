@@ -1,7 +1,7 @@
 package com.keiko.userservice.service;
 
 import com.keiko.userservice.entity.User;
-import com.keiko.userservice.request.UpgradeUserRolesRequest;
+import com.keiko.userservice.request.UserRolesRequest;
 import lombok.NonNull;
 
 import java.util.List;
@@ -9,11 +9,15 @@ import java.util.List;
 public interface UserService {
     User findByEmail (String email);
 
-    void deleteByEmail (String email);
-
     List<User> findByRole (String role);
 
-    void addRoles (@NonNull UpgradeUserRolesRequest request);
+    List<User> findNotEnabled ();
 
-    void deleteRoles (@NonNull UpgradeUserRolesRequest request);
+    void deleteByEmail (String email);
+
+    void deleteAll (List<User> users);
+
+    void addRoles (@NonNull UserRolesRequest addRolesRequest);
+
+    void deleteRoles (@NonNull UserRolesRequest deleteRolesRequest);
 }

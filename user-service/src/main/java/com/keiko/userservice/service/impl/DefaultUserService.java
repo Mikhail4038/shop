@@ -7,7 +7,7 @@ import com.keiko.userservice.exception.model.RoleNotFoundException;
 import com.keiko.userservice.exception.model.UserNotFoundException;
 import com.keiko.userservice.repository.RoleRepository;
 import com.keiko.userservice.repository.UserRepository;
-import com.keiko.userservice.request.UpgradeUserRolesRequest;
+import com.keiko.userservice.request.UserRolesRequest;
 import com.keiko.userservice.service.UserService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.EMPTY_SET;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
@@ -40,8 +39,19 @@ public class DefaultUserService extends DefaultCrudServiceImpl<User>
     }
 
     @Override
+    public List<User> findNotEnabled () {
+        List<User> users = userRepository.findByEnabledIs (false);
+        return users;
+    }
+
+    @Override
     public void deleteByEmail (String email) {
         userRepository.deleteByEmail (email);
+    }
+
+    @Override
+    public void deleteAll (List<User> users) {
+        userRepository.deleteAll (users);
     }
 
     @Override
@@ -50,11 +60,11 @@ public class DefaultUserService extends DefaultCrudServiceImpl<User>
     }
 
     @Override
-    public void addRoles (@NonNull UpgradeUserRolesRequest request) {
-        Set<Role> rolesForAdd = getRolesFromRequest (request);
+    public void addRoles (@NonNull UserRolesRequest addRolesRequest) {
+        Set<Role> rolesForAdd = getRolesFromRequest (addRolesRequest);
 
         if (isNotEmpty (rolesForAdd)) {
-            User user = getUserFromRequest (request);
+            User user = getUserFromRequest (addRolesRequest);
             Set<Role> presentedRoles = user.getRoles ();
 
             if (nonNull (presentedRoles)) {
@@ -68,27 +78,19 @@ public class DefaultUserService extends DefaultCrudServiceImpl<User>
     }
 
     @Override
-    public void deleteRoles (@NonNull UpgradeUserRolesRequest request) {
-        User user = getUserFromRequest (request);
+    public void deleteRoles (@NonNull UserRolesRequest deleteRolesRequest) {
+        User user = getUserFromRequest (deleteRolesRequest);
         Set<Role> actualRoles = user.getRoles ();
 
         if (nonNull (actualRoles)) {
-            Set<Role> rolesForRemove = getRolesFromRequest (request);
+            Set<Role> rolesForRemove = getRolesFromRequest (deleteRolesRequest);
             rolesForRemove.forEach (actualRoles::remove);
             user.setRoles (actualRoles);
             userRepository.save (user);
         }
     }
 
-    @Override
-    public void save (User user) {
-        if (isNull (user.getId ())) {
-            throw new UnsupportedOperationException ("User can be saved only from registration");
-        }
-        super.save (user);
-    }
-
-    private User getUserFromRequest (UpgradeUserRolesRequest request) {
+    private User getUserFromRequest (UserRolesRequest request) {
         final Long userId = request.getUserId ();
         User user = userRepository.findById (userId)
                 .orElseThrow (() -> new UserNotFoundException (
@@ -96,7 +98,7 @@ public class DefaultUserService extends DefaultCrudServiceImpl<User>
         return user;
     }
 
-    private Set<Role> getRolesFromRequest (UpgradeUserRolesRequest request) {
+    private Set<Role> getRolesFromRequest (UserRolesRequest request) {
         Set<Long> rolesName = request.getRolesId ();
         if (nonNull (rolesName)) {
             Set<Role> roles = rolesName.stream ()

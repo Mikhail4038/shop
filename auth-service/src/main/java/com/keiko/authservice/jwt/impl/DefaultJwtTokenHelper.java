@@ -1,13 +1,13 @@
 package com.keiko.authservice.jwt.impl;
 
-import com.keiko.authservice.entity.User;
 import com.keiko.authservice.entity.jwt.JwtRefreshToken;
 import com.keiko.authservice.jwt.JwtProvider;
 import com.keiko.authservice.jwt.JwtTokenHelper;
 import com.keiko.authservice.request.JwtRefreshRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.service.RefreshTokenService;
-import com.keiko.authservice.service.UserService;
+import com.keiko.authservice.service.resources.UserService;
+import com.keiko.commonservice.entity.resource.user.User;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

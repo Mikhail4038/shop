@@ -1,6 +1,6 @@
 package com.keiko.authservice.jwt;
 
-import com.keiko.authservice.entity.User;
+import com.keiko.commonservice.entity.resource.user.User;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 

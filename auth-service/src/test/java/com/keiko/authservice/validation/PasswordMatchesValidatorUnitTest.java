@@ -1,6 +1,6 @@
 package com.keiko.authservice.validation;
 
-import com.keiko.authservice.entity.User;
+import com.keiko.authservice.request.RegistrationRequest;
 import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.keiko.authservice.util.TestData.testUser;
+import static com.keiko.authservice.util.TestData.testRegistrationRequest;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,18 +22,18 @@ public class PasswordMatchesValidatorUnitTest {
 
     @InjectMocks
     private static PasswordMatchesValidator passwordMatchesValidator;
-    private static User user;
+    private static RegistrationRequest registrationRequest;
 
     @BeforeAll
     static void setUp () {
-        user = testUser ();
+        registrationRequest = testRegistrationRequest ();
         passwordMatchesValidator = new PasswordMatchesValidator ();
     }
 
     @Test
     void should_successfully_password_matches () {
-        user.setPasswordConfirm (user.getPassword ());
-        Object[] objects = {user};
+        registrationRequest.setPasswordConfirm (registrationRequest.getPassword ());
+        Object[] objects = {registrationRequest};
         boolean isMatch
                 = passwordMatchesValidator.isValid (objects, constraintValidatorContext);
         assertTrue (isMatch);
@@ -41,8 +41,8 @@ public class PasswordMatchesValidatorUnitTest {
 
     @Test
     void should_unSuccessfully_password_not_matches () {
-        user.setPasswordConfirm (INCORRECT_PASSWORD_CONFIRM);
-        Object[] objects = {user};
+        registrationRequest.setPasswordConfirm (INCORRECT_PASSWORD_CONFIRM);
+        Object[] objects = {registrationRequest};
         boolean isMatch
                 = passwordMatchesValidator.isValid (objects, constraintValidatorContext);
         assertFalse (isMatch);

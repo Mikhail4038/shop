@@ -1,6 +1,6 @@
 package com.keiko.authservice.validation;
 
-import com.keiko.authservice.entity.User;
+import com.keiko.authservice.request.RegistrationRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.constraintvalidation.SupportedValidationTarget;
@@ -14,9 +14,9 @@ public class PasswordMatchesValidator
 
     @Override
     public boolean isValid (Object o[], ConstraintValidatorContext constraintValidatorContext) {
-        final User user = (User) o[0];
-        final String presentedPassword = user.getPassword ();
-        final String passwordConfirm = user.getPasswordConfirm ();
+        final RegistrationRequest registrationRequest = (RegistrationRequest) o[0];
+        final String presentedPassword = registrationRequest.getPassword ();
+        final String passwordConfirm = registrationRequest.getPasswordConfirm ();
         return presentedPassword.equals (passwordConfirm);
     }
 }
