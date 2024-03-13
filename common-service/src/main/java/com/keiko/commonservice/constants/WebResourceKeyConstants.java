@@ -18,7 +18,6 @@ public class WebResourceKeyConstants {
     public static final String PRODUCT_STOCK_BASE = "/stocks";
     public static final String ORDER_BASE = "/orders";
     public static final String PAYPAL_BASE = "/paypal";
-    public static final String EMAIL_NOTIFICATION_BASE = "/email";
     public static final String ADDRESS_BASE = "/address";
 
 }

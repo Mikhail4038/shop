@@ -24,9 +24,6 @@ public class WebResourceKeyConstants {
     //product
     public static final String BY_EAN = "/ean";
 
-    //notification
-    public static final String ORDER_DETAILS = "/orderDetails";
-
     //address
     public static final String REVERSE_GEOCODE = "/reverseGeocode";
     public static final String CALCULATE_ROUTE = "/calculateRoute";

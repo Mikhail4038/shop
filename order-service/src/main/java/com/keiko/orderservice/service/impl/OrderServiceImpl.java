@@ -14,9 +14,13 @@ import com.keiko.orderservice.entity.resources.OrderDetailsEmail;
 import com.keiko.orderservice.exception.model.OrderProcessException;
 import com.keiko.orderservice.repository.OrderRepository;
 import com.keiko.orderservice.service.OrderService;
-import com.keiko.orderservice.service.resources.*;
+import com.keiko.orderservice.service.resources.AddressService;
+import com.keiko.orderservice.service.resources.PaypalService;
+import com.keiko.orderservice.service.resources.ShopService;
+import com.keiko.orderservice.service.resources.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,13 +47,13 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
     private PaypalService paymentService;
 
     @Autowired
+    private KafkaTemplate<Long, OrderDetailsEmail> kafkaTemplate;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private Function<Order, OrderDto> toDtoConverter;
-
-    @Autowired
-    private NotificationService notificationService;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -161,7 +165,7 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
                 .message ("Order details: ")
                 .order (dto)
                 .build ();
-        notificationService.sendOrderDetails (orderDetailsEmail);
+        kafkaTemplate.send ("orderDetails", orderDetailsEmail);
     }
 
     private boolean isValidOrderStatus (Order order, OrderStatus status) {

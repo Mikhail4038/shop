@@ -12,9 +12,6 @@ public class WebResourceKeyConstants {
     public static final String GENERATE_NEW_ACCESS_TOKEN = "/accessToken";
     public static final String GENERATE_NEW_REFRESH_TOKEN = "/refreshToken";
 
-    // notification
-    public static final String SIMPLE = "/simple";
-
     // user
     public static final String IS_EXISTS_USER = "/isExists";
     public static final String FIND_USER_BY_EMAIL = "/findByEmail";

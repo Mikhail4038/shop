@@ -5,7 +5,7 @@ import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.StopList;
 import com.keiko.shopservice.exception.model.ProductStockLevelException;
 import com.keiko.shopservice.repository.ProductStockRepository;
-import com.keiko.shopservice.service.ProductStockService;
+import com.keiko.shopservice.service.ProductStocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ import static com.keiko.shopservice.repository.specs.ProductStockSpec.*;
 import static java.util.Comparator.comparing;
 
 @Service
-public class ProductStockServiceImpl extends DefaultCrudServiceImpl<ProductStock>
-        implements ProductStockService {
+public class ProductStocksServiceImpl extends DefaultCrudServiceImpl<ProductStock>
+        implements ProductStocksService {
 
     @Autowired
     private ProductStockRepository productStockRepository;

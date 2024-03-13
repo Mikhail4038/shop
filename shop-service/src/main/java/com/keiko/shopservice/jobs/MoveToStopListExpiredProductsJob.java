@@ -7,11 +7,11 @@ import com.keiko.shopservice.entity.ProductStock;
 import com.keiko.shopservice.entity.Shop;
 import com.keiko.shopservice.entity.StopList;
 import com.keiko.shopservice.properties.EmailProperties;
-import com.keiko.shopservice.service.ProductStockService;
-import com.keiko.shopservice.service.resources.NotificationService;
+import com.keiko.shopservice.service.ProductStocksService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -29,10 +29,10 @@ public class MoveToStopListExpiredProductsJob {
     private DefaultCrudService<Shop> shopService;
 
     @Autowired
-    private ProductStockService productStockService;
+    private ProductStocksService productStocksService;
 
     @Autowired
-    private NotificationService notificationService;
+    private KafkaTemplate<Long, ProductStockEmail> kafkaTemplate;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -60,13 +60,13 @@ public class MoveToStopListExpiredProductsJob {
         try {
             List<ProductStock> productStocks = future.get ();
             if (!productStocks.isEmpty ()) {
-                ProductStockEmail data = ProductStockEmail.builder ()
+                ProductStockEmail productStockEmail = ProductStockEmail.builder ()
                         .toAddress (emailProperties.getAdminEmail ())
                         .subject ("Move products stock to Stop list")
                         .message ("Stock next products moved to Stop list, because they're expired.")
                         .productStocks (convertToData (productStocks))
                         .build ();
-                notificationService.sendProductStocks (data);
+                kafkaTemplate.send ("productStocks", productStockEmail);
             }
         } catch (InterruptedException ex) {
             log.error (ex.getMessage ());
@@ -76,12 +76,12 @@ public class MoveToStopListExpiredProductsJob {
     }
 
     private List<ProductStock> findExpiredProductStocks (Long shopId) {
-        return productStockService.findProductStocksToMoveExpiredStopList (shopId);
+        return productStocksService.findProductStocksToMoveExpiredStopList (shopId);
     }
 
     private void addToStopList (List<ProductStock> expiredProductStocks) {
         expiredProductStocks.forEach (stock -> stock.setStopList (StopList.EXPIRED));
-        productStockService.saveAll (expiredProductStocks);
+        productStocksService.saveAll (expiredProductStocks);
     }
 
     private List<ProductStockData> convertToData (List<ProductStock> productStocks) {

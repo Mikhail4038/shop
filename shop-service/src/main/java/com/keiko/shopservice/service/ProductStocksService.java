@@ -6,7 +6,7 @@ import com.keiko.shopservice.entity.ProductStock;
 import java.util.Collection;
 import java.util.List;
 
-public interface ProductStockService {
+public interface ProductStocksService {
     Long countProductStockForSell (String ean, Long shopId);
 
     void bookStock (StockOrderEntryRequest bookEntryRequest);

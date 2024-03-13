@@ -53,7 +53,7 @@ public class UserController
     }
 
     @GetMapping (value = FIND_NOT_ENABLED_USERS)
-    public ResponseEntity<List<UserDto>> findNotEnabledUsers () {
+    public ResponseEntity<List<UserDto>> findNotEnabled () {
         List<User> users = userService.findNotEnabled ();
         List<UserDto> dto = users
                 .stream ().map (getToDtoConverter ()::apply)

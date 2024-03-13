@@ -1,4 +1,4 @@
-insert into t_producer_address (created,modified,street,house,city,country,postcode) values(now(),now(),'Kupaly','12','Hrodno','Belarus',230025);
+insert into t_producer_address (created,modified,street,house,city,country,postcode) values(now(),now(),'вуліца Перамогі','43','Гродна','Беларусь',230026);
 
 insert into t_producer (created,modified,name,producer_address_id) values(now(),now(),'Conte',1);
 

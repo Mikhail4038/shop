@@ -8,7 +8,6 @@ import com.keiko.shopservice.entity.Shop;
 import com.keiko.shopservice.entity.StopList;
 import com.keiko.shopservice.properties.EmailProperties;
 import com.keiko.shopservice.service.UploadProductStockService;
-import com.keiko.shopservice.service.resources.NotificationService;
 import com.keiko.shopservice.service.resources.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +33,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @Log4j2
-public class UploadProductStockServiceImpl implements UploadProductStockService {
+public class UploadProductStocksServiceImpl implements UploadProductStockService {
 
     @Autowired
     private ShopServiceImpl shopService;
@@ -45,7 +45,7 @@ public class UploadProductStockServiceImpl implements UploadProductStockService 
     private ProductService productService;
 
     @Autowired
-    private NotificationService notificationService;
+    private KafkaTemplate<Long, ProductStockEmail> kafkaTemplate;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -108,23 +108,23 @@ public class UploadProductStockServiceImpl implements UploadProductStockService 
         }
 
         if (!existProducts.isEmpty ()) {
-            ProductStockEmail data = ProductStockEmail.builder ()
+            ProductStockEmail productStockEmail = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock was completely")
                     .message ("Stock next products uploaded successful")
                     .productStocks (convertToData (existProducts))
                     .build ();
-            sendNotification (data);
+            sendNotification (productStockEmail);
         }
 
         if (!notExistProducts.isEmpty ()) {
-            ProductStockEmail data = ProductStockEmail.builder ()
+            ProductStockEmail productStockEmail = ProductStockEmail.builder ()
                     .toAddress (emailProperties.getAdminEmail ())
                     .subject ("Upload Products stock wasn't completely")
                     .message ("Stock next products didn't upload, because ean product not found.")
                     .productStocks (convertToData (notExistProducts))
                     .build ();
-            sendNotification (data);
+            sendNotification (productStockEmail);
         }
     }
 
@@ -171,6 +171,15 @@ public class UploadProductStockServiceImpl implements UploadProductStockService 
     }
 
     private void sendNotification (ProductStockEmail productStockEmail) {
-        notificationService.sendProductStocks (productStockEmail);
+        kafkaTemplate.send ("productStocks", productStockEmail)
+                .whenComplete ((result, ex) -> {
+                    if (ex == null) {
+                        log.info (String.format (
+                                "ProductStockEmail, result upload product stocks, sent message broker"));
+                    } else {
+                        log.error (String.format (
+                                "ProductStockEmail, result upload product stocks, didn't send message broker, exception: %s", ex.getMessage ()));
+                    }
+                });
     }
 }

@@ -1,0 +1,2 @@
+insert into t_shop_address(created,modified,street,house,city,country,postcode) values(now(),now(),'праспект Янкі Купалы','26','Гродна','Беларусь','230010');
+insert into t_shop(created,modified, shop_address_id) values(now(),now(),1);

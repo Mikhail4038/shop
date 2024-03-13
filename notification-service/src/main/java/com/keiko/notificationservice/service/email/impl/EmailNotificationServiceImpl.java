@@ -51,6 +51,7 @@ public class EmailNotificationServiceImpl
     }
 
     @Override
+    @KafkaListener (topics = {"productStocks"}, groupId = "my-group")
     public void sendProductsStock (ProductStocksEmail productStocksEmail) {
         MimeMessageHelper helper = generateMimeMessageHelper (productStocksEmail);
         try {
@@ -65,6 +66,7 @@ public class EmailNotificationServiceImpl
     }
 
     @Override
+    @KafkaListener (topics = {"orderDetails"}, groupId = "my-group")
     public void sendOrderDetails (OrderDetailsEmail orderDetailsEmail) {
         MimeMessageHelper helper = generateMimeMessageHelper (orderDetailsEmail);
         try {

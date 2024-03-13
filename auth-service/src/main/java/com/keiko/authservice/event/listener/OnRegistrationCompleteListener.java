@@ -52,10 +52,10 @@ public class OnRegistrationCompleteListener {
                 .whenComplete ((result, ex) -> {
                     if (ex == null) {
                         log.info (String.format (
-                                "ConfirmRegistrationEmail registration email to address: %s, sent message broker", confirmRegistrationEmail.getToAddress ()));
+                                "ConfirmRegistrationEmail, confirm email to address: %s, sent message broker", confirmRegistrationEmail.getToAddress ()));
                     } else {
                         log.error (String.format (
-                                "ConfirmRegistrationEmail registration email to address: %s, didn't send message broker, exception: %s", confirmRegistrationEmail.getToAddress (), ex.getMessage ()));
+                                "ConfirmRegistrationEmail, confirm email to address: %s, didn't send message broker, exception: %s", confirmRegistrationEmail.getToAddress (), ex.getMessage ()));
                     }
                 });
     }
