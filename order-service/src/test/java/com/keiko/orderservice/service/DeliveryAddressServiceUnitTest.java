@@ -55,10 +55,9 @@ class DeliveryAddressServiceUnitTest {
 
     @Test
     void should_successfully_saveDeliveryAddress () {
-        Long orderId = order.getId ();
-        when (orderService.fetchBy (orderId)).thenReturn (order);
+        when (orderService.fetchBy (ORDER_ID)).thenReturn (order);
 
-        deliveryAddressService.saveDeliveryAddress (deliveryAddress, orderId);
+        deliveryAddressService.saveDeliveryAddress (deliveryAddress, ORDER_ID);
 
         verify (orderService, times (1)).fetchBy (anyLong ());
         verify (orderService, times (1)).save (any (Order.class));
@@ -70,25 +69,21 @@ class DeliveryAddressServiceUnitTest {
 
     @Test
     void should_successfully_saveDeliveryAddressByGeocode () {
-        Long orderId = order.getId ();
         when (addressService.reverseGeocode (reverseGeocodeRequest)).thenReturn (deliveryAddress);
-        when (orderService.fetchBy (orderId)).thenReturn (order);
+        when (orderService.fetchBy (ORDER_ID)).thenReturn (order);
 
-        deliveryAddressService.saveDeliveryAddress (reverseGeocodeRequest, orderId);
+        deliveryAddressService.saveDeliveryAddress (reverseGeocodeRequest, ORDER_ID);
 
         verify (addressService, times (1)).reverseGeocode (any (ReverseGeocodeRequest.class));
     }
 
     @Test
     void should_successfully_saveDeliveryByUserAddress () {
-        Long orderId = order.getId ();
-        Long userId = order.getUserId ();
-
-        when (orderService.fetchBy (orderId)).thenReturn (order);
-        when (userService.fetchBy (userId)).thenReturn (user);
+        when (orderService.fetchBy (ORDER_ID)).thenReturn (order);
+        when (userService.fetchBy (USER_ID)).thenReturn (user);
         when (modelMapper.map (user.getUserAddress (), DeliveryAddress.class)).thenReturn (deliveryAddress);
 
-        deliveryAddressService.saveDeliveryAddress (orderId);
+        deliveryAddressService.saveDeliveryAddress (ORDER_ID);
 
         verify (orderService, times (2)).fetchBy (anyLong ());
         verify (userService, times (1)).fetchBy (anyLong ());

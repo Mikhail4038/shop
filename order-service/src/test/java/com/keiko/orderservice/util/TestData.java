@@ -1,22 +1,26 @@
 package com.keiko.orderservice.util;
 
 import com.keiko.commonservice.entity.resource.Address;
+import com.keiko.commonservice.entity.resource.payment.CompletedOrder;
 import com.keiko.commonservice.entity.resource.user.User;
 import com.keiko.commonservice.request.ReverseGeocodeRequest;
 import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
+import com.keiko.orderservice.entity.resources.PaymentOrder;
 import com.keiko.orderservice.request.OrderEntryRequest;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestData {
 
-    private static final Long ORDER_ID = 1L;
-    private static final Long USER_ID = 1L;
+    public static final Long ORDER_ID = 1L;
+    public static final Long USER_ID = 1L;
     private static final Long SHOP_ID = 1L;
     private static final Long ORDER_ENTRY_ID = 1L;
+    private static final BigDecimal TOTAL_AMOUNT = BigDecimal.valueOf (100);
 
     private static final String ADDRESS_HOUSE = "house";
     private static final String ADDRESS_STREET = "street";
@@ -30,12 +34,20 @@ public class TestData {
     private static final String PRODUCT_EAN = "ean";
     private static final Long PRODUCT_QUANTITY = 2L;
 
+    private static final String APPROVE_URL = "http://approve.your.order";
+    public static final String PAY_ID = "1";
+    private static final String PAYMENT_ORDER_STATUS = "ok";
+
+    private static final String COMPLETE_ORDER_MESSAGE = "complete";
+    private static final String COMPLETE_ORDER_STATUS = "ok";
+
     public static Order testOrder () {
         Order order = new Order ();
         order.setId (ORDER_ID);
         order.setUserId (USER_ID);
         order.setShopId (SHOP_ID);
         order.setEntries (testOrderEntries ());
+        order.setTotalAmount (TOTAL_AMOUNT);
         return order;
     }
 
@@ -87,5 +99,20 @@ public class TestData {
         orderEntryRequest.setProductEan (PRODUCT_EAN);
         orderEntryRequest.setQuantity (PRODUCT_QUANTITY);
         return orderEntryRequest;
+    }
+
+    public static PaymentOrder testPaymentOrder () {
+        PaymentOrder paymentOrder = new PaymentOrder ();
+        paymentOrder.setApproveUrl (APPROVE_URL);
+        paymentOrder.setPayId (PAY_ID);
+        paymentOrder.setStatus (PAYMENT_ORDER_STATUS);
+        return paymentOrder;
+    }
+
+    public static CompletedOrder testCompletedOrder () {
+        CompletedOrder completedOrder = new CompletedOrder ();
+        completedOrder.setMessage (COMPLETE_ORDER_MESSAGE);
+        completedOrder.setStatus (COMPLETE_ORDER_STATUS);
+        return completedOrder;
     }
 }

@@ -1,10 +1,12 @@
 package com.keiko.orderservice.service.impl;
 
 import com.keiko.commonservice.entity.resource.payment.CompletedOrder;
+import com.keiko.commonservice.service.DefaultCrudService;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderStatus;
 import com.keiko.orderservice.entity.resources.PaymentOrder;
 import com.keiko.orderservice.exception.model.OrderProcessException;
+import com.keiko.orderservice.service.OrderService;
 import com.keiko.orderservice.service.PaymentService;
 import com.keiko.orderservice.service.resources.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,14 @@ public class PaypalServiceImpl implements PaymentService {
     private PaypalService paypalService;
 
     @Autowired
-    private OrderServiceImpl orderService;
+    private OrderService orderService;
+
+    @Autowired
+    private DefaultCrudService<Order> orderCrudService;
 
     @Override
     public PaymentOrder createPayment (Long orderId) {
-        Order order = orderService.fetchBy (orderId);
+        Order order = orderCrudService.fetchBy (orderId);
         checkOrderStatus (order);
         BigDecimal totalAmount = order.getTotalAmount ();
 
@@ -44,13 +49,13 @@ public class PaypalServiceImpl implements PaymentService {
         String payId = paymentOrder.getPayId ();
         order.setPayId (payId);
         order.setOrderStatus (OrderStatus.APPROVED);
-        orderService.save (order);
+        orderCrudService.save (order);
     }
 
     private void changeOrderStatus (String payId) {
         Order order = orderService.fetchByPayId (payId);
         order.setOrderStatus (OrderStatus.PAID);
-        orderService.save (order);
+        orderCrudService.save (order);
     }
 
     private void checkOrderStatus (Order order) {
