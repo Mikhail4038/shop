@@ -1,6 +1,6 @@
 package com.keiko.productservice.controller.product;
 
-import com.keiko.productservice.controller.DefaultCrudController;
+import com.keiko.commonservice.controller.DefaultCrudController;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductService;

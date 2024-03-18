@@ -1,5 +1,6 @@
 package com.keiko.productservice.controller;
 
+import com.keiko.commonservice.controller.DefaultCrudController;
 import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.Review;
