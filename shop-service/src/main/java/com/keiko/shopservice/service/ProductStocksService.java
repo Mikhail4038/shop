@@ -7,11 +7,12 @@ import java.util.Collection;
 import java.util.List;
 
 public interface ProductStocksService {
+
     Long countProductStockForSell (String ean, Long shopId);
 
     void bookStock (StockOrderEntryRequest bookEntryRequest);
 
-    void cancelBookedStock (StockOrderEntryRequest cancelBookEntryRequest);
+    void cancelBookStock (StockOrderEntryRequest cancelBookEntryRequest);
 
     void sellStock (StockOrderEntryRequest sellEntryRequest);
 

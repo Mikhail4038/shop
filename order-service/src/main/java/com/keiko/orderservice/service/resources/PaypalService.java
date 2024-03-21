@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 
 import static com.keiko.commonservice.constants.MicroServiceConstants.PAYMENT_SERVICE;
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.PAYPAL_BASE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.COMPLETE_PAYMENT;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.INIT_PAYMENT;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.*;
 
 @Service
 @FeignClient (name = PAYMENT_SERVICE)
 public interface PaypalService {
 
-    @PostMapping (value = PAYPAL_BASE + INIT_PAYMENT)
+    @PostMapping (value = PAYPAL_BASE + CREATE_PAYMENT)
     PaymentOrder createPayment (@RequestParam BigDecimal sum);
 
     @PostMapping (value = PAYPAL_BASE + COMPLETE_PAYMENT)

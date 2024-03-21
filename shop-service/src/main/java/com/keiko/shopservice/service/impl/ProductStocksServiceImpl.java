@@ -76,7 +76,7 @@ public class ProductStocksServiceImpl extends DefaultCrudServiceImpl<ProductStoc
     }
 
     @Override
-    public void cancelBookedStock (StockOrderEntryRequest cancelBookEntryRequest) {
+    public void cancelBookStock (StockOrderEntryRequest cancelBookEntryRequest) {
         String ean = cancelBookEntryRequest.getEan ();
         Long quantity = cancelBookEntryRequest.getQuantity ();
         Long shopId = cancelBookEntryRequest.getShopId ();

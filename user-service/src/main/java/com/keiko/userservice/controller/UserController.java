@@ -6,18 +6,20 @@ import com.keiko.userservice.entity.User;
 import com.keiko.userservice.exception.model.UserNotFoundException;
 import com.keiko.userservice.request.UserRolesRequest;
 import com.keiko.userservice.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.USER_BASE;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.*;
 import static com.keiko.userservice.constants.WebResourceKeyConstants.*;
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = USER_BASE)
+@Tag (name = "Users API")
 public class UserController
         extends DefaultCrudController<User, UserDto> {
 
@@ -35,6 +37,7 @@ public class UserController
         }
         return ResponseEntity.ok ().body (isExists);
     }
+
 
     @GetMapping (value = FIND_USER_BY_EMAIL)
     public ResponseEntity<UserDto> findByEmail (@RequestParam String email) {

@@ -3,6 +3,7 @@ package com.keiko.productservice.controller.product;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductProducerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,13 @@ import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE + PRODUCT_PRODUCER_BASE)
-public class ProductProducerController extends ProductController {
+@Tag (name = "Product producer API")
+public class ProductProducerController extends AbstractProductController {
 
     @Autowired
     private ProductProducerService productProducerService;
 
-    @GetMapping (value = BY_PRODUCER)
+    @GetMapping (value = FIND_BY_PRODUCER)
     public ResponseEntity<List<ProductDto>> findByProducer (@RequestParam Long producerId,
                                                             @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findProductsByProducer (producerId, sortByAscend);
@@ -30,7 +32,7 @@ public class ProductProducerController extends ProductController {
         return ResponseEntity.ok (dto);
     }
 
-    @GetMapping (value = PROMO_BY_PRODUCER)
+    @GetMapping (value = FIND_PROMO_BY_PRODUCER)
     public ResponseEntity<List<ProductDto>> findPromoProductByProducer (@RequestParam Long producerId,
                                                                         @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findPromoProductByProducer (producerId, sortByAscend);

@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.keiko.commonservice.constants.MicroServiceConstants.ADDRESS_SERVICE;
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.ADDRESS_BASE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.CALCULATE_ROUTE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.REVERSE_GEOCODE;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.*;
 
 @Service
 @FeignClient (name = ADDRESS_SERVICE)

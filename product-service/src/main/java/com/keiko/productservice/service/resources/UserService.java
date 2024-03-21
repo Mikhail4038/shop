@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.keiko.commonservice.constants.MicroServiceConstants.USER_SERVICE;
 import static com.keiko.commonservice.constants.WebResourceKeyConstants.USER_BASE;
-import static com.keiko.productservice.constants.WebResourceKeyConstants.FETCH_BY_ID;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.FETCH_BY;
 
 @Service
 @FeignClient (name = USER_SERVICE)
 public interface UserService {
 
-    @GetMapping (value = USER_BASE + FETCH_BY_ID)
+    @GetMapping (value = USER_BASE + FETCH_BY)
     User fetchBy (@RequestParam Long id);
 }

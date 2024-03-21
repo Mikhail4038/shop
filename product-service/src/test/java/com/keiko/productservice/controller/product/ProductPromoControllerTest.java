@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
 import static com.keiko.productservice.constants.WebResourceKeyConstants.PROMO_BASE;
-import static com.keiko.productservice.constants.WebResourceKeyConstants.PROMO_PRODUCTS;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.FIND_PROMO;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -26,7 +26,7 @@ class ProductPromoControllerTest extends ParentProductControllerTest {
         when (productService.findPromoProducts (null)).thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + PROMO_BASE + PROMO_PRODUCTS)
+        mockMvc.perform (get (PRODUCT_BASE + PROMO_BASE + FIND_PROMO)
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
                 .andExpect (jsonPath ("$[0].id", is (productDto.getId ()), Long.class))

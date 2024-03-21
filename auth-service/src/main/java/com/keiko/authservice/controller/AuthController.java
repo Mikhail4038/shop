@@ -8,6 +8,7 @@ import com.keiko.authservice.request.RegistrationRequest;
 import com.keiko.authservice.response.JwtRefreshResponse;
 import com.keiko.authservice.response.LoginResponse;
 import com.keiko.authservice.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import static com.keiko.authservice.constants.WebResourceKeyConstants.*;
 
 @RestController
 @RequestMapping (value = AUTH_BASE)
+@Tag (name = "Auth API")
 public class AuthController {
 
     @Autowired

@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.keiko.addressservice.constants.WebResourceKeyConstants.*;
 import static com.keiko.addressservice.util.TestData.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.REVERSE_GEOCODE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

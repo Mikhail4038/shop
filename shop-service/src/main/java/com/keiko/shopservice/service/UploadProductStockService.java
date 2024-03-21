@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UploadProductStockService {
 
-    void upload (MultipartFile file, Long shopId);
+    void uploadProductStocks (MultipartFile file, Long shopId);
 }

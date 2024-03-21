@@ -74,7 +74,7 @@ class ProductServiceUnitTest {
 
     @Test
     void should_successfully_search () {
-        productService.searchProducts (PRODUCER_ID, IS_PROMOTIONAL, MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING);
+        productService.advancedSearch (PRODUCER_ID, IS_PROMOTIONAL, MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING);
         verify (productRepository, times (1)).findAll (any (Specification.class));
     }
 }

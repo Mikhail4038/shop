@@ -55,7 +55,7 @@ public class UploadProductStocksServiceImpl implements UploadProductStockService
 
     @Override
     @Transactional
-    public void upload (MultipartFile file, Long shopId) {
+    public void uploadProductStocks (MultipartFile file, Long shopId) {
         Shop shop = shopService.fetchBy (shopId);
         List<ProductStock> uploadProductStocks = uploadProductStocks (file, shop);
         saveProductStocks (uploadProductStocks, shopId);

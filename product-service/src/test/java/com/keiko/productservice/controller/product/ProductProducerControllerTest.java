@@ -27,7 +27,7 @@ class ProductProducerControllerTest extends ParentProductControllerTest {
         when (productService.findProductsByProducer (PRODUCER_ID, null)).thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + PRODUCT_PRODUCER_BASE + BY_PRODUCER)
+        mockMvc.perform (get (PRODUCT_BASE + PRODUCT_PRODUCER_BASE + FIND_BY_PRODUCER)
                 .queryParam ("producerId", PRODUCER_ID.toString ())
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
@@ -45,7 +45,7 @@ class ProductProducerControllerTest extends ParentProductControllerTest {
         when (productService.findPromoProductByProducer (PRODUCER_ID, null)).thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + PRODUCT_PRODUCER_BASE + PROMO_BY_PRODUCER)
+        mockMvc.perform (get (PRODUCT_BASE + PRODUCT_PRODUCER_BASE + FIND_PROMO_BY_PRODUCER)
                 .queryParam ("producerId", PRODUCER_ID.toString ())
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))

@@ -4,6 +4,7 @@ import com.keiko.commonservice.controller.DefaultCrudController;
 import com.keiko.userservice.dto.model.role.RoleDto;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.service.RoleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = ROLE_BASE)
+@Tag (name = "Roles API")
 public class RoleController
         extends DefaultCrudController<Role, RoleDto> {
 

@@ -48,6 +48,7 @@ public class EmailNotificationServiceImpl
         simpleMailMessage.setSubject (simpleEmail.getSubject ());
         simpleMailMessage.setText (simpleEmail.getMessage ());
         javaMailSender.send (simpleMailMessage);
+        log.info (String.format ("Confirm registration email, sent to: %s", simpleEmail.getToAddress ()));
     }
 
     @Override
@@ -63,6 +64,7 @@ public class EmailNotificationServiceImpl
             log.error (ex.getMessage ());
         }
         javaMailSender.send (helper.getMimeMessage ());
+        log.info (String.format ("Product stocks email, sent to: %s", productStocksEmail.getToAddress ()));
     }
 
     @Override
@@ -78,11 +80,8 @@ public class EmailNotificationServiceImpl
             log.error (ex.getMessage ());
         }
         javaMailSender.send (helper.getMimeMessage ());
-    }
-
-    public void testKafka (String message) {
-        System.out.println (message);
-
+        log.info (String.format ("Order details sent to: %s", orderDetailsEmail.getToAddress ()));
+        log.info (String.format ("Order details email, sent to: %s", orderDetailsEmail.getToAddress ()));
     }
 
     private String getOrderDetailsEmailContent (Order order, String message) {

@@ -6,9 +6,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import java.util.Arrays;
 
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.FIND_BY_EAN;
 import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_BASE;
-import static com.keiko.productservice.constants.WebResourceKeyConstants.BY_EAN;
-import static com.keiko.productservice.constants.WebResourceKeyConstants.SEARCH;
+import static com.keiko.productservice.constants.WebResourceKeyConstants.ADVANCED_SEARCH;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -25,11 +25,11 @@ class ProductControllerTest extends ParentProductControllerTest {
 
     @Test
     void search_should_successfully () throws Exception {
-        when (productService.searchProducts (PRODUCER_ID, IS_PROMOTIONAL, MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING))
+        when (productService.advancedSearch (PRODUCER_ID, IS_PROMOTIONAL, MIN_PRICE, MAX_PRICE, MIN_RATING, MAX_RATING))
                 .thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + SEARCH)
+        mockMvc.perform (get (PRODUCT_BASE + ADVANCED_SEARCH)
                 .queryParam ("producerId", PRODUCER_ID.toString ())
                 .queryParam ("isPromotional", IS_PROMOTIONAL.toString ())
                 .queryParam ("minPrice", MIN_PRICE.toString ())
@@ -43,7 +43,7 @@ class ProductControllerTest extends ParentProductControllerTest {
                 .andExpect (jsonPath ("$[0].name", is (productDto.getName ())))
                 .andExpect (status ().isOk ());
 
-        verify (productService, times (1)).searchProducts (anyLong (), anyBoolean (), anyDouble (), anyDouble (), anyFloat (), anyFloat ());
+        verify (productService, times (1)).advancedSearch (anyLong (), anyBoolean (), anyDouble (), anyDouble (), anyFloat (), anyFloat ());
         verify (toDtoConverter, times (1)).apply (any (Product.class));
     }
 
@@ -52,7 +52,7 @@ class ProductControllerTest extends ParentProductControllerTest {
         when (productService.findByEan (product.getEan ())).thenReturn (product);
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + BY_EAN)
+        mockMvc.perform (get (PRODUCT_BASE + FIND_BY_EAN)
                 .contentType (APPLICATION_JSON_VALUE)
                 .queryParam ("ean", product.getEan ()))
                 .andExpect (jsonPath ("$.id", is (productDto.getId ()), Long.class))

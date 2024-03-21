@@ -164,7 +164,7 @@ class OrderControllerTest {
         when (orderService.fetchByStatus (orderStatus)).thenReturn (Arrays.asList (order));
         when (toDtoConverter.apply (order)).thenReturn (orderDto);
 
-        mockMvc.perform (get (ORDER_BASE + FETCH_BY_STATUS)
+        mockMvc.perform (get (ORDER_BASE + FIND_BY_STATUS)
                 .queryParam ("status", orderStatus.toString ())
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))

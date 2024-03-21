@@ -20,6 +20,7 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <modelmapper.version>3.0.0</modelmapper.version>
         <common-service.version>0.0.1-SNAPSHOT</common-service.version>
+        <openapi.version>2.0.2</openapi.version>
     </properties>
 
     <dependencies>
@@ -69,6 +70,11 @@
             <groupId>com.keiko</groupId>
             <artifactId>common-service</artifactId>
             <version>${common-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${openapi.version}</version>
         </dependency>
     </dependencies>
 

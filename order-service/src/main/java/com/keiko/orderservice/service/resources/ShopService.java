@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.keiko.commonservice.constants.MicroServiceConstants.SHOP_SERVICE;
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_STOCK_BASE;
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.SHOP_BASE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.orderservice.constants.WebResourceKeyConstants.FETCH_SHOP_BY_ID;
 
 @Service
 @FeignClient (name = SHOP_SERVICE)
@@ -21,10 +20,10 @@ public interface ShopService {
     @GetMapping (value = PRODUCT_STOCK_BASE + COUNT_PRODUCT_STOCK_FOR_SELL)
     Long countProductForSell (@RequestParam String ean, @RequestParam Long shopId);
 
-    @PostMapping (value = PRODUCT_STOCK_BASE + BOOKED_STOCK)
+    @PostMapping (value = PRODUCT_STOCK_BASE + BOOK_STOCK)
     void bookStock (@RequestBody StockOrderEntryRequest bookEntryRequest);
 
-    @PostMapping (value = PRODUCT_STOCK_BASE + CANCEL_BOOKED_STOCK)
+    @PostMapping (value = PRODUCT_STOCK_BASE + CANCEL_BOOK_STOCK)
     void cancelBookStock (@RequestBody StockOrderEntryRequest cancelBookEntryRequest);
 
     @PostMapping (value = PRODUCT_STOCK_BASE + SELL_STOCK)

@@ -76,7 +76,7 @@ public class ProductServiceImpl extends DefaultCrudServiceImpl<Product>
     }
 
     @Override
-    public List<Product> searchProducts (Long producerId, Boolean isPromotional,
+    public List<Product> advancedSearch (Long producerId, Boolean isPromotional,
                                          Double minPrice, Double maxPrice,
                                          Float minRating, Float maxRating) {
         Specification<Product> spec = Specification.where (null);

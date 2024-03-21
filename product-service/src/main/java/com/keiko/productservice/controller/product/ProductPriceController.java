@@ -3,6 +3,7 @@ package com.keiko.productservice.controller.product;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductPriceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,8 @@ import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController
 @RequestMapping (value = PRODUCT_BASE + PRICE_BASE)
-public class ProductPriceController extends ProductController {
+@Tag (name = "Product price API")
+public class ProductPriceController extends AbstractProductController{
 
     @Autowired
     private ProductPriceService productPriceService;
@@ -47,5 +49,4 @@ public class ProductPriceController extends ProductController {
         List<ProductDto> dto = convertToDto (products);
         return ResponseEntity.ok (dto);
     }
-
 }

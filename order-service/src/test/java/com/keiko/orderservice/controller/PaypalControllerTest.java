@@ -10,9 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.keiko.commonservice.constants.WebResourceKeyConstants.PAYPAL_BASE;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.COMPLETE_PAYMENT;
-import static com.keiko.orderservice.constants.WebResourceKeyConstants.INIT_PAYMENT;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.*;
 import static com.keiko.orderservice.util.TestData.*;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -44,7 +42,7 @@ public class PaypalControllerTest {
     void createPayment_should_successfully () throws Exception {
         when (paymentService.createPayment (ORDER_ID)).thenReturn (paymentOrder);
 
-        mockMvc.perform (post (PAYPAL_BASE + INIT_PAYMENT)
+        mockMvc.perform (post (PAYPAL_BASE + CREATE_PAYMENT)
                 .contentType (APPLICATION_JSON_VALUE)
                 .queryParam ("orderId", ORDER_ID.toString ()))
                 .andExpect (jsonPath ("$.status", is (paymentOrder.getStatus ())))

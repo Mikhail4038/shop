@@ -48,7 +48,6 @@
             <artifactId>common-service</artifactId>
             <version>${common-service.version}</version>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>

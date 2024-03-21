@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-import static com.keiko.paymentservice.constants.WebResourceKeyConstants.*;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.COMPLETE_PAYMENT;
+import static com.keiko.commonservice.constants.WebResourceKeyConstants.CREATE_PAYMENT;
+import static com.keiko.paymentservice.constants.WebResourceKeyConstants.GET_PAYMENT_DETAILS;
+import static com.keiko.paymentservice.constants.WebResourceKeyConstants.PAYPAL_BASE;
 
 @RestController
 @RequestMapping (value = PAYPAL_BASE)
@@ -19,7 +22,7 @@ public class PaypalController {
     private PaypalService paypalService;
 
 
-    @PostMapping (value = INIT_PAYMENT)
+    @PostMapping (value = CREATE_PAYMENT)
     public ResponseEntity<PaymentOrder> createPayment (@RequestParam BigDecimal sum) {
         PaymentOrder paymentOrder = paypalService.createPayment (sum);
         return ResponseEntity.ok (paymentOrder);

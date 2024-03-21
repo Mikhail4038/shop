@@ -3,6 +3,7 @@ package com.keiko.productservice.controller.product;
 import com.keiko.productservice.dto.model.product.ProductDto;
 import com.keiko.productservice.entity.Product;
 import com.keiko.productservice.service.product.ProductRatingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,9 @@ import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController
-@RequestMapping (value = PRODUCTs_BASE + RATING_BASE)
-public class ProductRatingController extends ProductController {
+@RequestMapping (value = PRODUCT_BASE + RATING_BASE)
+@Tag (name = "Product rating API")
+public class ProductRatingController extends AbstractProductController {
 
     @Autowired
     private ProductRatingService productRatingService;

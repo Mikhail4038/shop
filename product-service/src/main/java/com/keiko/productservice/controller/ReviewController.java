@@ -5,6 +5,7 @@ import com.keiko.productservice.dto.model.review.ReviewData;
 import com.keiko.productservice.dto.model.review.ReviewDto;
 import com.keiko.productservice.entity.Review;
 import com.keiko.productservice.service.ReviewService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping (value = REVIEW_BASE)
+@Tag (name = "Reviews API")
 public class ReviewController extends DefaultCrudController<Review, ReviewDto> {
 
     @Autowired

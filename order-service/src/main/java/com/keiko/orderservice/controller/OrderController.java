@@ -10,6 +10,8 @@ import com.keiko.orderservice.request.OrderEntryRequest;
 import com.keiko.orderservice.service.DeliveryAddressService;
 import com.keiko.orderservice.service.OrderEntryService;
 import com.keiko.orderservice.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping (value = ORDER_BASE)
+@Tag (name = "Orders API")
 public class OrderController extends DefaultCrudController<Order, OrderDto> {
 
     @Autowired
@@ -59,6 +62,8 @@ public class OrderController extends DefaultCrudController<Order, OrderDto> {
         return ResponseEntity.ok ().build ();
     }
 
+    @Operation (summary = "Save delivery address",
+            description = "Use new delivery address")
     @PostMapping (value = SAVE_DELIVERY_ADDRESS + "/{orderId}")
     public ResponseEntity saveDeliveryAddress (@RequestBody DeliveryAddress deliveryAddress,
                                                @PathVariable Long orderId) {
@@ -66,12 +71,16 @@ public class OrderController extends DefaultCrudController<Order, OrderDto> {
         return ResponseEntity.ok ().build ();
     }
 
+    @Operation (summary = "Save delivery address",
+            description = "Use user address")
     @GetMapping (value = SAVE_DELIVERY_ADDRESS + "/{orderId}")
     public ResponseEntity userAddressToDeliveryAddress (@PathVariable Long orderId) {
         deliveryAddressService.saveDeliveryAddress (orderId);
         return ResponseEntity.ok ().build ();
     }
 
+    @Operation (summary = "Save delivery address",
+            description = "Point delivery address at map")
     @PostMapping (value = POINT_DELIVERY_ADDRESS + "/{orderId}")
     public ResponseEntity pointAtMap (@RequestBody ReverseGeocodeRequest reverseGeocodeRequest,
                                       @PathVariable Long orderId) {
@@ -85,7 +94,7 @@ public class OrderController extends DefaultCrudController<Order, OrderDto> {
         return ResponseEntity.ok ().build ();
     }
 
-    @GetMapping (value = FETCH_BY_STATUS)
+    @GetMapping (value = FIND_BY_STATUS)
     public ResponseEntity<List<OrderDto>> fetchByStatus (@RequestParam OrderStatus status) {
         List<Order> orders = orderService.fetchByStatus (status);
         List<OrderDto> dto = orders.stream ()
