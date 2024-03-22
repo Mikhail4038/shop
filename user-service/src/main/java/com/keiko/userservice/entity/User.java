@@ -36,7 +36,7 @@ public class User extends BaseEntity {
     @ManyToMany (fetch = LAZY, cascade = {MERGE})
     private Set<Role> roles;
 
-    @OneToOne (cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
+    @OneToOne (cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private UserAddress userAddress;
 
     public User (Long id, LocalDateTime created, LocalDateTime modified, @Email String email, String password, String name, Set<Role> roles, UserAddress userAddress) {

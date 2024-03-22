@@ -1,0 +1,68 @@
+server:
+  port: 8080
+spring:
+  application.name: zuul-proxy
+
+  # jwt properties
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: jwt
+
+# eureka
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl.defaultZone: http://localhost:8761/eureka/
+
+# routes
+zuul:
+  routes:
+    auth-service:
+      path: /auth/**
+      stripPrefix: false
+      serviceId: auth-service
+
+    user-service:
+      path: /users/**
+      stripPrefix: false
+      serviceId: user-service
+    role-service:
+      path: /roles/**
+      stripPrefix: false
+      serviceId: user-service
+
+    product-service:
+      path: /products/**
+      stripPrefix: false
+      serviceId: product-service
+    producer-service:
+      path: /producers/**
+      stripPrefix: false
+      serviceId: product-service
+    review-service:
+      path: /reviews/**
+      stripPrefix: false
+      serviceId: product-service
+
+    shop-service:
+      path: /shops/**
+      stripPrefix: false
+      serviceId: shop-service
+    stock-service:
+      path: /stocks/**
+      stripPrefix: false
+      serviceId: shop-service
+
+    order-service:
+      path: /orders/**
+      stripPrefix: false
+      serviceId: order-service
+    paypal-service:
+      path: /paypal/**
+      stripPrefix: false
+      serviceId: order-service
+
+ribbon:
+  ReadTimeout: 60000

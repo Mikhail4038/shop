@@ -17,14 +17,14 @@ import static com.keiko.commonservice.constants.WebResourceKeyConstants.PRODUCT_
 import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 
 @RestController
-@RequestMapping (value = PRODUCT_BASE + PRODUCT_PRODUCER_BASE)
+@RequestMapping (value = PRODUCT_BASE + PRODUCER_BASE)
 @Tag (name = "Product producer API")
 public class ProductProducerController extends AbstractProductController {
 
     @Autowired
     private ProductProducerService productProducerService;
 
-    @GetMapping (value = FIND_BY_PRODUCER)
+    @GetMapping (value = FETCH_BY)
     public ResponseEntity<List<ProductDto>> findByProducer (@RequestParam Long producerId,
                                                             @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findProductsByProducer (producerId, sortByAscend);
@@ -32,7 +32,7 @@ public class ProductProducerController extends AbstractProductController {
         return ResponseEntity.ok (dto);
     }
 
-    @GetMapping (value = FIND_PROMO_BY_PRODUCER)
+    @GetMapping (value = FIND_PROMO)
     public ResponseEntity<List<ProductDto>> findPromoProductByProducer (@RequestParam Long producerId,
                                                                         @RequestParam (required = false) Boolean sortByAscend) {
         List<Product> products = productProducerService.findPromoProductByProducer (producerId, sortByAscend);

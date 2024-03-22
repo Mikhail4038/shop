@@ -26,7 +26,7 @@ public class DefaultJwtTokenHelper implements JwtTokenHelper {
     private RefreshTokenService refreshTokenService;
 
     @Override
-    public JwtRefreshResponse getAccessToken (@NonNull JwtRefreshRequest jwtRefreshRequest) {
+    public JwtRefreshResponse generateAccessToken (@NonNull JwtRefreshRequest jwtRefreshRequest) {
 
         final String presentedRefreshToken = jwtRefreshRequest.getRefreshToken ();
         if (jwtProvider.validateRefreshToken (presentedRefreshToken)) {
@@ -43,7 +43,7 @@ public class DefaultJwtTokenHelper implements JwtTokenHelper {
     }
 
     @Override
-    public JwtRefreshResponse getRefreshToken (@NonNull JwtRefreshRequest jwtRefreshRequest) {
+    public JwtRefreshResponse generateRefreshToken (@NonNull JwtRefreshRequest jwtRefreshRequest) {
         final String presentedRefreshToken = jwtRefreshRequest.getRefreshToken ();
         if (jwtProvider.validateRefreshToken (presentedRefreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims (presentedRefreshToken);

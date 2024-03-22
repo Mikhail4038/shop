@@ -5,7 +5,7 @@ import com.keiko.authservice.response.JwtRefreshResponse;
 import lombok.NonNull;
 
 public interface JwtTokenHelper {
-    JwtRefreshResponse getAccessToken (@NonNull JwtRefreshRequest jwtRefreshRequest);
+    JwtRefreshResponse generateAccessToken (@NonNull JwtRefreshRequest jwtRefreshRequest);
 
-    JwtRefreshResponse getRefreshToken (@NonNull JwtRefreshRequest jwtRefreshRequest);
+    JwtRefreshResponse generateRefreshToken (@NonNull JwtRefreshRequest jwtRefreshRequest);
 }

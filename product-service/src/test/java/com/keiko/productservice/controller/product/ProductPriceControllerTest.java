@@ -63,7 +63,7 @@ class ProductPriceControllerTest extends ParentProductControllerTest {
         when (productService.findProductsPriceRange (MIN_PRICE, MAX_PRICE, null)).thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + PRICE_BASE + PRICE_RANGE)
+        mockMvc.perform (get (PRODUCT_BASE + PRICE_BASE + RANGE)
                 .queryParam ("minPrice", MIN_PRICE.toString ())
                 .queryParam ("maxPrice", MAX_PRICE.toString ())
                 .contentType (APPLICATION_JSON_VALUE))

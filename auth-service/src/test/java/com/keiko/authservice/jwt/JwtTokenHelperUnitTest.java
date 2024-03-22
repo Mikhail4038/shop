@@ -58,7 +58,7 @@ class JwtTokenHelperUnitTest {
         final String refreshToken = jwtRefreshRequest.getRefreshToken ();
         when (jwtProvider.validateRefreshToken (refreshToken)).thenReturn (false);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getAccessToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateAccessToken (jwtRefreshRequest);
 
         assertNull (jwtRefreshResponse.getAccessToken ());
         assertNull (jwtRefreshResponse.getRefreshToken ());
@@ -76,7 +76,7 @@ class JwtTokenHelperUnitTest {
         when (jwtProvider.getRefreshClaims (refreshToken)).thenReturn (claims);
         when (refreshTokenService.findByEmail (email)).thenReturn (jwtRefreshToken);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getAccessToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateAccessToken (jwtRefreshRequest);
 
         assertNull (jwtRefreshResponse.getAccessToken ());
         assertNull (jwtRefreshResponse.getRefreshToken ());
@@ -104,7 +104,7 @@ class JwtTokenHelperUnitTest {
         when (userService.findByEmail (email)).thenReturn (user);
         when (jwtProvider.generateAccessToken (user)).thenReturn (ACCESS_TOKEN_VALUE);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getAccessToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateAccessToken (jwtRefreshRequest);
         final String accessTokenValue = jwtRefreshResponse.getAccessToken ();
 
         assertNotNull (accessTokenValue);
@@ -133,7 +133,7 @@ class JwtTokenHelperUnitTest {
 
         when (jwtProvider.validateRefreshToken (refreshToken)).thenReturn (false);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getRefreshToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateRefreshToken (jwtRefreshRequest);
         assertNull (jwtRefreshResponse.getAccessToken ());
         assertNull (jwtRefreshResponse.getRefreshToken ());
 
@@ -151,7 +151,7 @@ class JwtTokenHelperUnitTest {
         when (jwtProvider.getRefreshClaims (refreshToken)).thenReturn (claims);
         when (refreshTokenService.findByEmail (email)).thenReturn (jwtRefreshToken);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getRefreshToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateRefreshToken (jwtRefreshRequest);
 
         assertNull (jwtRefreshResponse.getAccessToken ());
         assertNull (jwtRefreshResponse.getRefreshToken ());
@@ -180,7 +180,7 @@ class JwtTokenHelperUnitTest {
         when (jwtProvider.generateAccessToken (user)).thenReturn (ACCESS_TOKEN_VALUE);
         when (jwtProvider.generateRefreshToken (user)).thenReturn (REFRESH_TOKEN_NEW_VALUE);
 
-        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.getRefreshToken (jwtRefreshRequest);
+        JwtRefreshResponse jwtRefreshResponse = jwtTokenHelper.generateRefreshToken (jwtRefreshRequest);
         final String accessTokenValue = jwtRefreshResponse.getAccessToken ();
         final String refreshTokenValue = jwtRefreshResponse.getRefreshToken ();
 

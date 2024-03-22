@@ -29,7 +29,7 @@ public class DefaultRoleService extends DefaultCrudServiceImpl<Role>
     }
 
     @Override
-    public List<Role> getUserRoles (String user) {
-        return roleRepository.findByUsers_email (user);
+    public List<Role> getUserRoles (String email) {
+        return roleRepository.findByUsers_email (email);
     }
 }

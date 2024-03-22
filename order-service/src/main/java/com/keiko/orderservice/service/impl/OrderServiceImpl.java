@@ -7,6 +7,7 @@ import com.keiko.commonservice.request.StockOrderEntryRequest;
 import com.keiko.commonservice.response.RouteDetailsResponse;
 import com.keiko.commonservice.service.impl.DefaultCrudServiceImpl;
 import com.keiko.orderservice.dto.model.OrderDto;
+import com.keiko.orderservice.entity.DeliveryAddress;
 import com.keiko.orderservice.entity.Order;
 import com.keiko.orderservice.entity.OrderEntry;
 import com.keiko.orderservice.entity.OrderStatus;
@@ -27,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
+
+import static java.util.Objects.nonNull;
 
 @Service
 public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
@@ -95,7 +98,7 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
         if (!isValidOrderStatus (order, OrderStatus.CREATED)) {
             throw new OrderProcessException ("Order cannot be placed, please check order status");
         }
-        ;
+
         sellProductStocks (order);
         calculateFinalSumOrder (order);
         sendOrderDetailsEmail (order);
@@ -134,20 +137,26 @@ public class OrderServiceImpl extends DefaultCrudServiceImpl<Order>
     }
 
     private void calculateDeliveryCost (Order order) {
+        DeliveryAddress presentedDeliveryAddress = order.getDeliveryAddress ();
         Shop shop = shopService.fetchBy (order.getShopId ());
-        Address shopAddress = modelMapper.map (shop.getShopAddress (), Address.class);
-        Address deliveryAddress = modelMapper.map (order.getDeliveryAddress (), Address.class);
+        Address shopAddress = shop.getShopAddress ();
 
-        RouteDetailsRequest routeDetailsRequest =
-                RouteDetailsRequest.builder ()
-                        .from (shopAddress)
-                        .to (deliveryAddress)
-                        .build ();
+        if (nonNull (presentedDeliveryAddress) && nonNull (shopAddress)) {
+            Address deliveryAddress = modelMapper.map (presentedDeliveryAddress, Address.class);
 
-        RouteDetailsResponse routeDetailsResponse = addressService.calculateRoute (routeDetailsRequest);
-        Double deliveryDistance = routeDetailsResponse.getDistance ();
-        Double deliveryCost = deliveryDistance * KILOMETER_BASE_RATE;
-        order.setDeliveryCost (BigDecimal.valueOf (deliveryCost));
+            RouteDetailsRequest routeDetailsRequest =
+                    RouteDetailsRequest.builder ()
+                            .from (shopAddress)
+                            .to (deliveryAddress)
+                            .build ();
+
+            RouteDetailsResponse routeDetailsResponse = addressService.calculateRoute (routeDetailsRequest);
+            Double deliveryDistance = routeDetailsResponse.getDistance ();
+            Double deliveryCost = deliveryDistance * KILOMETER_BASE_RATE;
+            order.setDeliveryCost (BigDecimal.valueOf (deliveryCost));
+        } else {
+            order.setDeliveryCost (BigDecimal.ZERO);
+        }
     }
 
     private void calculateTotalAmount (Order order) {

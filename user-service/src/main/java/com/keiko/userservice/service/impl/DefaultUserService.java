@@ -9,6 +9,7 @@ import com.keiko.userservice.repository.RoleRepository;
 import com.keiko.userservice.repository.UserRepository;
 import com.keiko.userservice.request.UserRolesRequest;
 import com.keiko.userservice.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,12 @@ public class DefaultUserService extends DefaultCrudServiceImpl<User>
     }
 
     @Override
+    @Transactional
     public void deleteByEmail (String email) {
-        userRepository.deleteByEmail (email);
+        Integer deletedUserCount = userRepository.deleteByEmail (email);
+        if (deletedUserCount == null || deletedUserCount == 0) {
+            throw new UserNotFoundException (String.format ("User with email: %s not found", email));
+        }
     }
 
     @Override

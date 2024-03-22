@@ -58,14 +58,14 @@ public class AuthController {
     }
 
     @PostMapping (value = GENERATE_NEW_ACCESS_TOKEN)
-    public ResponseEntity<JwtRefreshResponse> getNewAccessToken (@RequestBody JwtRefreshRequest jwtRefreshRequest) {
-        JwtRefreshResponse jwtResponse = jwtTokenHelper.getAccessToken (jwtRefreshRequest);
+    public ResponseEntity<JwtRefreshResponse> generateAccessToken (@RequestBody JwtRefreshRequest jwtRefreshRequest) {
+        JwtRefreshResponse jwtResponse = jwtTokenHelper.generateAccessToken (jwtRefreshRequest);
         return ResponseEntity.ok ().body (jwtResponse);
     }
 
     @PostMapping (value = GENERATE_NEW_REFRESH_TOKEN)
-    public ResponseEntity<JwtRefreshResponse> getNewRefreshToken (@RequestBody JwtRefreshRequest jwtRefreshRequest) {
-        JwtRefreshResponse jwtResponse = jwtTokenHelper.getRefreshToken (jwtRefreshRequest);
+    public ResponseEntity<JwtRefreshResponse> generateRefreshToken (@RequestBody JwtRefreshRequest jwtRefreshRequest) {
+        JwtRefreshResponse jwtResponse = jwtTokenHelper.generateRefreshToken (jwtRefreshRequest);
         return ResponseEntity.ok ().body (jwtResponse);
     }
 }

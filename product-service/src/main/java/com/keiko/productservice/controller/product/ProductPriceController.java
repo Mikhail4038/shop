@@ -19,7 +19,7 @@ import static com.keiko.productservice.constants.WebResourceKeyConstants.*;
 @RestController
 @RequestMapping (value = PRODUCT_BASE + PRICE_BASE)
 @Tag (name = "Product price API")
-public class ProductPriceController extends AbstractProductController{
+public class ProductPriceController extends AbstractProductController {
 
     @Autowired
     private ProductPriceService productPriceService;
@@ -40,7 +40,7 @@ public class ProductPriceController extends AbstractProductController{
         return ResponseEntity.ok (dto);
     }
 
-    @GetMapping (value = PRICE_RANGE)
+    @GetMapping (value = RANGE)
     public ResponseEntity<List<ProductDto>> findProductsPriceRange (
             @RequestParam Double minPrice, Double maxPrice,
             @RequestParam (required = false) Boolean sortByAscend) {

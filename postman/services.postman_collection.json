@@ -1,0 +1,2121 @@
+{
+	"info": {
+		"_postman_id": "696264c4-5cb7-400c-a0c5-1c8b91e1ce3f",
+		"name": "shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth-service",
+			"item": [
+				{
+					"name": "registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mihaila4038@yandex.by\",\r\n    \"password\":\"500290\",\r\n    \"passwordConfirm\":\"500290\",\r\n    \"name\":\"Mikhail\",\r\n    \"roleId\":\"1\",\r\n    \"address\":{\r\n    \"street\": \"вуліца Вольгі Соламавай\",\r\n    \"house\": \"40\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230027\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm registration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/confirmRegistration?token=400fc6f3-6a36-427d-9696-3f7dad353975",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"confirmRegistration"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "400fc6f3-6a36-427d-9696-3f7dad353975"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mihaila4038@yandex.by\",\r\n    \"password\":\"500290\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "block",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/block?email=mihaila4038@yandex.ru",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"block"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "mihaila4038@yandex.ru"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "job",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/job",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generate new access token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/generateAccessToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"generateAccessToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generate new refresh token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/generateRefreshToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"generateRefreshToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product-service",
+			"item": [
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "crud",
+							"item": [
+								{
+									"name": "save",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"ean\": \"7\",\r\n    \"name\": \"sweater\",\r\n    \"expirationDate\": \"2024-10-10\",\r\n    \"price\":{\r\n        \"value\":\"70\"\r\n    },\r\n    \"producer\": {\r\n        \"id\":\"1\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8084/products/save",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"products",
+												"save"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchBy",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/products/fetchBy?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"products",
+												"fetchBy"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/products/fetchAll",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"products",
+												"fetchAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/products/delete?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"products",
+												"delete"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "price less than",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/price/isLessThan?price=80&sortByAscend=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"price",
+										"isLessThan"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "80"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "price more than",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/price/isMoreThan?price=25&sortByAscend=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"price",
+										"isMoreThan"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "25"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "price range",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/price/priceRange?minPrice=25&maxPrice=75",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"price",
+										"priceRange"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": "25"
+										},
+										{
+											"key": "maxPrice",
+											"value": "75"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "0",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rating less than",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/rating/isLessThan?rating=11&sortByAscend=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"rating",
+										"isLessThan"
+									],
+									"query": [
+										{
+											"key": "rating",
+											"value": "11"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rating more than",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/rating/isMoreThan?rating=5&sortByAscend=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"rating",
+										"isMoreThan"
+									],
+									"query": [
+										{
+											"key": "rating",
+											"value": "5"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rating range",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/rating/ratingRange?minRating=5&maxRating=10&sortByAscend=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"rating",
+										"ratingRange"
+									],
+									"query": [
+										{
+											"key": "minRating",
+											"value": "5"
+										},
+										{
+											"key": "maxRating",
+											"value": "10"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "promo products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/promo/isPromo?sortByAscend=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"promo",
+										"isPromo"
+									],
+									"query": [
+										{
+											"key": "sortByAscend",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "by producer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/producers/fetchBy?producerId=1&sortByAscend=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"producers",
+										"fetchBy"
+									],
+									"query": [
+										{
+											"key": "producerId",
+											"value": "1"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "promo products by producer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/producers/isPromo?producerId=1&sortByAscend=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"producers",
+										"isPromo"
+									],
+									"query": [
+										{
+											"key": "producerId",
+											"value": "1"
+										},
+										{
+											"key": "sortByAscend",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "advanced search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/advancedSearch?producerId=1&isPromotional=0&minPrice=40&maxPrice=70&minRating=5&maxRating=11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"advancedSearch"
+									],
+									"query": [
+										{
+											"key": "producerId",
+											"value": "1"
+										},
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "isPromotional",
+											"value": "0"
+										},
+										{
+											"key": "minPrice",
+											"value": "40"
+										},
+										{
+											"key": "maxPrice",
+											"value": "70"
+										},
+										{
+											"key": "minRating",
+											"value": "5"
+										},
+										{
+											"key": "maxRating",
+											"value": "11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by ean",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/findByEan?ean=1234",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"findByEan"
+									],
+									"query": [
+										{
+											"key": "ean",
+											"value": "1234"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "is exist",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/products/isExist?ean=1234",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"products",
+										"isExist"
+									],
+									"query": [
+										{
+											"key": "ean",
+											"value": "1234"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "producer",
+					"item": [
+						{
+							"name": "crud",
+							"item": [
+								{
+									"name": "save",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"Velo\",\r\n    \"producerAddress\":{\r\n    \"street\": \"вуліца Захарава\",\r\n    \"house\": \"28\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"231137\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8084/producers/save",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"producers",
+												"save"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchBy",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/producers/fetchBy?id=2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"producers",
+												"fetchBy"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/producers/fetchAll",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"producers",
+												"fetchAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/producers/delete?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"producers",
+												"delete"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "review",
+					"item": [
+						{
+							"name": "crud",
+							"item": [
+								{
+									"name": "save",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"user\":{\r\n        \"id\":\"2\"\r\n        },\r\n    \"message\":\"Bad product\",\r\n    \"assessment\":\"3\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8084/reviews/save",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"reviews",
+												"save"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchBy",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/review/fetchBy?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"review",
+												"fetchBy"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetchAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/review/fetchAll",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"review",
+												"fetchAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8084/review/delete?id=3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8084",
+											"path": [
+												"review",
+												"delete"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "user reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/reviews/findByUser?userId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"reviews",
+										"findByUser"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "product reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8084/reviews/findByProduct?productId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"reviews",
+										"findByProduct"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "user-service",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "crud",
+							"item": [
+								{
+									"name": "save",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"miha_@yandex.by\",\r\n    \"password\":\"500290\",\r\n    \"passwordConfirm\":\"500290\",\r\n    \"name\":\"Mikhail\",\r\n    \"enabled\":\"true\",\r\n    \"roles\":[{\r\n        \"id\":\"1\"\r\n    }]\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/user/save",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"user",
+												"save"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetch by",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/user/fetchBy?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"user",
+												"fetchBy"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetch all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/user/fetchAll",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"user",
+												"fetchAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/user/delete?id=2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"user",
+												"delete"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "find by email",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/users/findByEmail?email=mihaila1984@yandex.by",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"users",
+										"findByEmail"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "mihaila1984@yandex.by"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete by email",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/users/deleteByEmail?email=miha@yandex.ru",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"users",
+										"deleteByEmail"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "miha@yandex.ru"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by role",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/users/findByRole?role=ADMIN",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"users",
+										"findByRole"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "ADMIN"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add roles",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":\"2\",\r\n    \"rolesId\":[1]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/users/addRoles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"users",
+										"addRoles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete roles",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":\"1\",\r\n    \"rolesId\":[2]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/users/deleteRoles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"users",
+										"deleteRoles"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "role",
+					"item": [
+						{
+							"name": "crud",
+							"item": [
+								{
+									"name": "save",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"SUPER_USER\",\r\n    \"users\":[\r\n{\r\n    \"id\":\"1\"\r\n}\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/roles/save",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"roles",
+												"save"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetch by",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/roles/fetchBy?id=2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"roles",
+												"fetchBy"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetch all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/roles/fetchAll",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"roles",
+												"fetchAll"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/roles/delete?id=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"roles",
+												"delete"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "find by name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/roles/findByName?name=USER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"roles",
+										"findByName"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "USER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user roles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/roles/getUserRoles?user=admin@gmail.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"roles",
+										"getUserRoles"
+									],
+									"query": [
+										{
+											"key": "user",
+											"value": "admin@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "order-service",
+			"item": [
+				{
+					"name": "crud",
+					"item": [
+						{
+							"name": "save",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"2\",\r\n    \"deliveryAddress\":{\r\n        \"street\":\"Popovicha\",\r\n        \"house\":\"15\",\r\n        \"city\":\"Hrodno\",\r\n        \"country\":\"Belarus\",\r\n        \"zipCode\":\"230027\"\r\n    },\r\n    \"orderStatus\":\"CREATED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/orders/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"orders",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetchBy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8087/orders/fetchBy?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"orders",
+										"fetchBy"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetchAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8087/orders/fetchAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"orders",
+										"fetchAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8087/orders/delete?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"orders",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "payment",
+					"item": [
+						{
+							"name": "create payment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/paypal/create?orderId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"paypal",
+										"create"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "complete payment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8087/paypal/complete?payId=1H981597KR893092U",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"paypal",
+										"complete"
+									],
+									"query": [
+										{
+											"key": "payId",
+											"value": "1H981597KR893092U"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/orders/create/3/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"create",
+								"3",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save entry to order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productEan\":\"1234\",\r\n    \"quantity\":\"3\",\r\n    \"orderId\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8087/orders/saveEntry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"saveEntry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove order entry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productEan\":\"1234\",\r\n    \"quantity\":\"12\",\r\n    \"orderId\":\"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8087/orders/removeEntry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"removeEntry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "place order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/orders/place?orderId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"place"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/orders/cancel?orderId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save delivery address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"вуліца Міру\",\r\n    \"house\": \"7\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230011\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8087/orders/saveDeliveryAddress/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"saveDeliveryAddress",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save delivery address / user address to delivery address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/orders/saveDeliveryAddress/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"saveDeliveryAddress",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "point delivery address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"lat\":\"53.67443631550146\",\r\n    \"lng\":\"23.814592262381616\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8087/orders/pointDeliveryAddress/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"pointDeliveryAddress",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch by status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/orders/byStatus?status=APPROVED",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"orders",
+								"byStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "APPROVED"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shop-service",
+			"item": [
+				{
+					"name": "stock-service",
+					"item": [
+						{
+							"name": "upload",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Админ/OneDrive - EPAM/Desktop/qwe.xlsx"
+										},
+										{
+											"key": "shopId",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8085/stocks/upload",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"stocks",
+										"upload"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "crud",
+					"item": [
+						{
+							"name": "save",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"shopAddress\":{\r\n    \"street\": \"праспект Янкі Купалы\",\r\n    \"house\": \"26\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230010\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/shops/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"shops",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetch by",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/shops/fetchBy?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"shops",
+										"fetchBy"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "fetch all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/shops/fetchAll",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"shops",
+										"fetchAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/shops/delete?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"shops",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "address-service",
+			"item": [
+				{
+					"name": "geocode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"address\":{\r\n    \"street\": \"вуліца Вольгі Соламавай\",\r\n    \"house\": \"40\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230027\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/address/geocode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"address",
+								"geocode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reverseGeocode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lat\":\"53.6774500814885\",\r\n    \"lng\":\"23.845166313384265\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/address/reverseGeocode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"address",
+								"reverseGeocode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calculate route",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\":{\r\n    \"street\": \"вуліца Вольгі Соламавай\",\r\n    \"house\": \"40\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230027\"\r\n},\r\n\r\n    \"to\":{\r\n    \"street\": \"вуліца Савецкіх Пагранічнікаў\",\r\n    \"house\": \"104\",\r\n    \"city\": \"Гродна\",\r\n    \"country\": \"Беларусь\",\r\n    \"postcode\": \"230024\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/address/calculateRoute",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"address",
+								"calculateRoute"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment-service",
+			"item": [
+				{
+					"name": "create payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userEmail\":\"miha@yandex.ru\",\r\n    \"totalAmount\":\"100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/paypal/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"paypal",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8088/paypal/complete?token=55Y10837KE327805P",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"paypal",
+								"complete"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "55Y10837KE327805P"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get payment details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8088/paypal/getPayment?payId=6W1184946R2416805",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"paypal",
+								"getPayment"
+							],
+							"query": [
+								{
+									"key": "payId",
+									"value": "6W1184946R2416805"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

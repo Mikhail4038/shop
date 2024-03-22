@@ -7,5 +7,5 @@ import java.util.List;
 public interface RoleService {
     Role findByName (String name);
 
-    List<Role> getUserRoles (String user);
+    List<Role> getUserRoles (String email);
 }

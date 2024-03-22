@@ -36,8 +36,8 @@ public class RoleController
     }
 
     @GetMapping (value = GET_USER_ROLES)
-    public ResponseEntity<List<String>> getAllRoles (@RequestParam String user) {
-        List<Role> roles = roleService.getUserRoles (user);
+    public ResponseEntity<List<String>> getUserRoles (@RequestParam String email) {
+        List<Role> roles = roleService.getUserRoles (email);
         List<String> dto = roles
                 .stream ().map (Role::getName)
                 .collect (toList ());

@@ -62,7 +62,7 @@ class ProductRatingControllerTest extends ParentProductControllerTest {
         when (productService.findProductsRatingRange (MIN_RATING, MAX_RATING, null)).thenReturn (Arrays.asList (product));
         when (toDtoConverter.apply (product)).thenReturn (productDto);
 
-        mockMvc.perform (get (PRODUCT_BASE + RATING_BASE + RATING_RANGE)
+        mockMvc.perform (get (PRODUCT_BASE + RATING_BASE + RANGE)
                 .queryParam ("minRating", MIN_RATING.toString ())
                 .queryParam ("maxRating", MAX_RATING.toString ())
                 .contentType (APPLICATION_JSON_VALUE))

@@ -40,7 +40,7 @@ public class ProductRatingController extends AbstractProductController {
         return ResponseEntity.ok (dto);
     }
 
-    @GetMapping (value = RATING_RANGE)
+    @GetMapping (value = RANGE)
     public ResponseEntity<List<ProductDto>> findProductsRatingRange (
             @RequestParam Float minRating, Float maxRating,
             @RequestParam (required = false) Boolean sortByAscend) {
