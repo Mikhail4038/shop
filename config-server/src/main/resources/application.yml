@@ -1,0 +1,12 @@
+server:
+  port: 8888
+
+spring:
+  application.name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Mikhail4038/application-properties.git
+          default-label: master

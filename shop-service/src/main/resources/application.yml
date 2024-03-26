@@ -6,7 +6,9 @@ spring:
   # database
   cloud:
     config:
-      uri: http://localhost:8888
+      discovery:
+        enabled: true
+        service-id: config-server
       name: database,email
 
   # set up initial data

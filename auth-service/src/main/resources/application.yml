@@ -4,29 +4,27 @@ server:
 spring:
   application.name: auth-service
 
-  #database,jwt,properties
+  # database,jwt
   cloud:
     config:
-      uri: http://localhost:8888
+      discovery:
+        enabled: true
+        service-id: config-server
       name: database,jwt
 
-  #mongo db
+  # mongo db
   data:
     mongodb:
       port: 27017
       host: localhost
       database: shop
 
-  #kafka
+  # kafka
   kafka:
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-  # set up initial data
-  #sql.init.mode: always
-  #jpa.defer-datasource-initialization: true
 
 #eureka
 eureka:

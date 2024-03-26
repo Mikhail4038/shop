@@ -20,7 +20,8 @@ import static jakarta.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners (TimeEntityListener.class)
-public class Shop extends BaseEntity {
+public class
+Shop extends BaseEntity {
 
     @OneToMany (fetch = LAZY, mappedBy = "shop")
     private List<ProductStock> productStock;
