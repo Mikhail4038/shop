@@ -4,12 +4,12 @@ import com.keiko.userservice.dto.model.role.RoleDto;
 import com.keiko.userservice.dto.model.user.UserDto;
 import com.keiko.userservice.entity.Role;
 import com.keiko.userservice.entity.User;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class TestData {
 
     private static final String USER_EMAIL = "admin@gmail.com";
-    private static final String USER_PASSWORD = BCrypt.hashpw ("500290", BCrypt.gensalt ());
+    private static final String USER_PASSWORD = "";
+    //private static final String USER_PASSWORD = BCrypt.hashpw ("500290", BCrypt.gensalt ());
     private static final String USER_NAME = "test";
     private static final String ROLE_NAME = "ADMIN";
 

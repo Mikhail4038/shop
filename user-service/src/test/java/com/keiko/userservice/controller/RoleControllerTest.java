@@ -74,7 +74,7 @@ class RoleControllerTest {
         when (roleService.getUserRoles (user.getEmail ())).thenReturn (Arrays.asList (role));
 
         mockMvc.perform (get (ROLE_BASE + GET_USER_ROLES)
-                .queryParam ("user", user.getEmail ())
+                .queryParam ("email", user.getEmail ())
                 .contentType (APPLICATION_JSON_VALUE))
                 .andExpect (jsonPath ("$", hasSize (1)))
                 .andExpect (jsonPath ("$[0]", is (role.getName ())))

@@ -53,7 +53,10 @@ class UserServiceUnitTest {
 
     @Test
     void should_successfully_deleteByEmail () {
-        userService.deleteByEmail (user.getEmail ());
+        String email = user.getEmail ();
+        when (userRepository.deleteByEmail (email)).thenReturn (1);
+
+        userService.deleteByEmail (email);
         verify (userRepository, times (1)).deleteByEmail (anyString ());
         verifyNoMoreInteractions (userRepository);
     }
