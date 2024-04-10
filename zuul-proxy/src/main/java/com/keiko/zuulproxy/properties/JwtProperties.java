@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class JwtProperties {
     private String accessSecret;
     private String refreshSecret;
-
-    public JwtProperties () {
-        System.out.println ("QQQQ");
-    }
+    private Long validityPeriodAccessToken;
+    private Long validityPeriodRefreshToken;
 }

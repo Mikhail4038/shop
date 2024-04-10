@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <jjwt.version>0.11.5</jjwt.version>
+        <common-service.version>0.0.1-SNAPSHOT</common-service.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,11 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.keiko</groupId>
+            <artifactId>common-service</artifactId>
+            <version>${common-service.version}</version>
         </dependency>
     </dependencies>
 

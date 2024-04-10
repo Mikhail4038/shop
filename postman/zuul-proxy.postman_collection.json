@@ -81,7 +81,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"500290\"\r\n}"
+							"raw": "{\r\n    \"email\":\"mihaila4038@yandex.by\",\r\n    \"password\":\"500290\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/auth/login",
@@ -218,14 +218,14 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8080/user/save",
+											"raw": "http://localhost:8080/users/save",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8080",
 											"path": [
-												"user",
+												"users",
 												"save"
 											]
 										}
@@ -240,7 +240,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTEwMzM0NjksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.aBeSjffU77wdElB2qn8eHDjFtR09t2nbbF812E2az8hr1BznHlZ_YAOpzQj7svk29htBByPE1afWiFVTlHqARQ",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTExMTcxMjEsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGVzIjpbIkFETUlOIl0sIm5hbWUiOiJhZG1pbiJ9.74K0CYxOCbYA-iee5vL3igQCody0PeDSJTtuK5Ot4w_nj0zqUSWN43zOFBMUxAsFCBRfK_krssXs19rDQM-cDg",
 													"type": "string"
 												}
 											]
@@ -248,14 +248,14 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8080/user/fetchBy?id=1",
+											"raw": "http://localhost:8080/users/fetchBy?id=1",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8080",
 											"path": [
-												"user",
+												"users",
 												"fetchBy"
 											],
 											"query": [
@@ -284,14 +284,14 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8080/user/fetchAll",
+											"raw": "http://localhost:8080/users/fetchAll",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8080",
 											"path": [
-												"user",
+												"users",
 												"fetchAll"
 											]
 										}
@@ -307,14 +307,14 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8080/user/delete?id=1",
+											"raw": "http://localhost:8080/users/delete?id=1",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8080",
 											"path": [
-												"user",
+												"users",
 												"delete"
 											],
 											"query": [
@@ -332,45 +332,176 @@
 						{
 							"name": "find by email",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/users/findByEmail?email=mihaila4038@yandex.by",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"findByEmail"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "mihaila4038@yandex.by"
+										}
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "find by role",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/users/findByRole?role=ADMIN",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"findByRole"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "ADMIN"
+										}
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "delete by email",
 							"request": {
-								"method": "GET",
+								"method": "DELETE",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/users/deleteByEmail?email=mihaila4038@yandex.by",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"deleteByEmail"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "mihaila4038@yandex.by"
+										}
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "add roles",
 							"request": {
-								"method": "GET",
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
 								"header": [],
-								"url": null
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":\"1\",\r\n    \"rolesId\":[1]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/addRoles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"addRoles"
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "delete roles",
 							"request": {
-								"method": "GET",
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
 								"header": [],
-								"url": null
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":\"1\",\r\n    \"rolesId\":[1]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/deleteRoles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"deleteRoles"
+									]
+								}
 							},
 							"response": []
 						}
@@ -385,6 +516,16 @@
 								{
 									"name": "save",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -397,14 +538,14 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8082/user/save",
+											"raw": "http://localhost:8080/roles/save",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
-											"port": "8082",
+											"port": "8080",
 											"path": [
-												"user",
+												"roles",
 												"save"
 											]
 										}
@@ -414,17 +555,27 @@
 								{
 									"name": "fetch by",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8082/user/fetchBy?id=1",
+											"raw": "http://localhost:8080/roles/fetchBy?id=1",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
-											"port": "8082",
+											"port": "8080",
 											"path": [
-												"user",
+												"roles",
 												"fetchBy"
 											],
 											"query": [
@@ -440,17 +591,27 @@
 								{
 									"name": "fetch all",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8082/user/fetchAll",
+											"raw": "http://localhost:8080/roles/fetchAll",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
-											"port": "8082",
+											"port": "8080",
 											"path": [
-												"user",
+												"roles",
 												"fetchAll"
 											]
 										}
@@ -460,17 +621,27 @@
 								{
 									"name": "delete",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8082/user/delete?id=2",
+											"raw": "http://localhost:8080/roles/delete?id=2",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
-											"port": "8082",
+											"port": "8080",
 											"path": [
-												"user",
+												"roles",
 												"delete"
 											],
 											"query": [
@@ -488,23 +659,33 @@
 						{
 							"name": "find by name",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8082/role/findByName?name=SUPER_USER",
+									"raw": "http://localhost:8080/roles/findByName?name=ADMIN",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
-										"role",
+										"roles",
 										"findByName"
 									],
 									"query": [
 										{
 											"key": "name",
-											"value": "SUPER_USER"
+											"value": "ADMIN"
 										}
 									]
 								}
@@ -514,23 +695,33 @@
 						{
 							"name": "get user roles",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI3NjU3MzksInN1YiI6Im1paGFpbGE0MDM4QHlhbmRleC5ieSIsInJvbGVzIjpbIlVTRVIiXSwibmFtZSI6Ik1pa2hhaWwifQ.tgWnhs-2qpzxJIl21C6UvbdTZYDoOVQwnsEiMfOISdLBhujHseuW52W3XeHWGryR81JBnq6A-rxZ3xsRHJgb_A",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8082/role/getUserRoles?user=user@gmail.com",
+									"raw": "http://localhost:8080/roles/getUserRoles?user=mihaila4038@yandex.by",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
-										"role",
+										"roles",
 										"getUserRoles"
 									],
 									"query": [
 										{
 											"key": "user",
-											"value": "user@gmail.com"
+											"value": "mihaila4038@yandex.by"
 										}
 									]
 								}

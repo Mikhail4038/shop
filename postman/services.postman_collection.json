@@ -70,7 +70,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"mihaila4038@yandex.by\",\r\n    \"password\":\"500290\"\r\n}",
+							"raw": "{\r\n    \"email\":\"mihaila1984@yandex.by\",\r\n    \"password\":\"500290\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,7 +141,7 @@
 				{
 					"name": "generate new access token",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8081/auth/generateAccessToken",
@@ -161,8 +161,17 @@
 				{
 					"name": "generate new refresh token",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8081/auth/generateRefreshToken",
 							"protocol": "http",
@@ -981,14 +990,14 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8082/user/save",
+											"raw": "http://localhost:8082/users/save",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8082",
 											"path": [
-												"user",
+												"users",
 												"save"
 											]
 										}
@@ -1001,14 +1010,14 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8082/user/fetchBy?id=1",
+											"raw": "http://localhost:8082/users/fetchBy?id=1",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8082",
 											"path": [
-												"user",
+												"users",
 												"fetchBy"
 											],
 											"query": [
@@ -1027,14 +1036,14 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8082/user/fetchAll",
+											"raw": "http://localhost:8082/users/fetchAll",
 											"protocol": "http",
 											"host": [
 												"localhost"
 											],
 											"port": "8082",
 											"path": [
-												"user",
+												"users",
 												"fetchAll"
 											]
 										}

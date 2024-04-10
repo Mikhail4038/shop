@@ -40,7 +40,7 @@ public class EmailNotificationServiceImpl
     private Configuration configuration;
 
     @Override
-    @KafkaListener (topics = {"confirmRegistration"}, groupId = "my-group")
+    @KafkaListener (topics = {"confirmRegistration"}, groupId = "default-group")
     public void sendEmail (SimpleEmail simpleEmail) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage ();
         simpleMailMessage.setTo (simpleEmail.getToAddress ());
@@ -52,7 +52,7 @@ public class EmailNotificationServiceImpl
     }
 
     @Override
-    @KafkaListener (topics = {"productStocks"}, groupId = "my-group")
+    @KafkaListener (topics = {"productStocks"}, groupId = "default-group")
     public void sendProductsStock (ProductStocksEmail productStocksEmail) {
         MimeMessageHelper helper = generateMimeMessageHelper (productStocksEmail);
         try {
@@ -68,7 +68,7 @@ public class EmailNotificationServiceImpl
     }
 
     @Override
-    @KafkaListener (topics = {"orderDetails"}, groupId = "my-group")
+    @KafkaListener (topics = {"orderDetails"}, groupId = "default-group")
     public void sendOrderDetails (OrderDetailsEmail orderDetailsEmail) {
         MimeMessageHelper helper = generateMimeMessageHelper (orderDetailsEmail);
         try {
