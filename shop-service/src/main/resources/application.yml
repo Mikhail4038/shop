@@ -8,12 +8,5 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-      name: shop-service,db,email,eureka
+      name: db-docker,shop-service-docker,email,eureka
   config.import: optional:configserver:config-server
-
-  # kafka
-  kafka:
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.LongSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

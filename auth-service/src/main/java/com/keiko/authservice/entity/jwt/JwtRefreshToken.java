@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document ("token")
 public class JwtRefreshToken {
-
     @Id
     private String email;
     private String refreshToken;

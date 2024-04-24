@@ -107,6 +107,11 @@
             <version>${openapi.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>com.keiko</groupId>
             <artifactId>common-service</artifactId>
             <version>${common-service.version}</version>
@@ -126,6 +131,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>auth-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

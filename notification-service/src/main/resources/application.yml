@@ -9,22 +9,5 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-      name: email,eureka
+      name: notification,email,eureka
   config.import: optional:configserver:config-server
-
-  #kafka
-  kafka:
-    consumer:
-      enable-auto-commit: true
-      bootstrap-servers: localhost:9092
-      group-id: default-group
-      auto-offset-reset: earliest
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: "*"
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.LongDeserializer
-        spring.deserializer.value.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
