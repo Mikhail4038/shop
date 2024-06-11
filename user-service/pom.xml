@@ -20,7 +20,6 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <modelmapper.version>3.0.0</modelmapper.version>
         <common-service.version>0.0.1-SNAPSHOT</common-service.version>
         <openapi.version>2.0.2</openapi.version>
     </properties>
@@ -46,6 +45,11 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
@@ -56,11 +60,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
@@ -69,12 +68,6 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
         </dependency>
 
         <dependency>

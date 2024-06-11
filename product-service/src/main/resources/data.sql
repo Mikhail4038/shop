@@ -1,9 +1,9 @@
-insert into t_producer_address (created,modified,street,house,city,country,postcode) values(now(),now(),'вуліца Перамогі','43','Гродна','Беларусь',230026);
+insert into t_producer_address (created,modified,street,house,city,country,postcode) values(now(),now(),'вуліца Перамогі','43','Гродна','Беларусь','230026');
 
 insert into t_producer (created,modified,name,producer_address_id) values(now(),now(),'Conte',1);
 
-insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'45.0',1);
-insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'30.0',1);
+insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'45.0',true);
+insert into t_price(created,modified,cost,is_promotional) values(now(),now(),'30.0',true);
 
 insert into t_product(created,modified,ean,name,price_id,producer_id) values(now(),now(),'1234','sweater',1,1);
 insert into t_product(created,modified,ean,name,price_id,producer_id) values(now(),now(),'5678','dress',2,1);

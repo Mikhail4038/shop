@@ -9,7 +9,7 @@ spring:
         enabled: true
         service-id: config-server
       name: eureka
-    config.import: optional:configserver:config-server
+  config.import: optional:configserver:config-server
 
 apiKey: 84fe3816-116e-4992-af87-165c20b2f2c4
 apiResource: https://graphhopper.com/api/1

@@ -18,7 +18,6 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.4</spring-cloud.version>
-        <modelmapper.version>3.0.0</modelmapper.version>
         <poi.version>3.9</poi.version>
         <commons-io.version>2.15.0</commons-io.version>
         <common-service.version>0.0.1-SNAPSHOT</common-service.version>
@@ -62,11 +61,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>

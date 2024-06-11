@@ -8,5 +8,6 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-      name: product-service,db,eureka
+      #name: db-local,product-service-local,eureka
+      name: db-docker,product-service-docker,eureka
   config.import: optional:configserver:config-server

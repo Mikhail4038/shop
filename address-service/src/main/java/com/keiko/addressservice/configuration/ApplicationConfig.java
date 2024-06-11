@@ -1,6 +1,6 @@
 package com.keiko.addressservice.configuration;
 
-import com.squareup.okhttp.OkHttpClient;
+import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

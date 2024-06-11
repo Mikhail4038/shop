@@ -52,12 +52,12 @@ services:
     environment:
       eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
 
-  db-user:
-    image: postgres:latest
-    container_name: db-user
+  db-auth:
+    image: postgres:latest-alpine
+    container_name: db-auth
     environment:
       POSTGRES_PASSWORD: 500290
-      POSTGRES_USER: users
+      POSTGRES_USER: auth
 
   mongodb-auth:
     image: mongo:latest
@@ -65,19 +65,47 @@ services:
     ports:
       - 27017:27017
 
-  db-auth:
-    image: postgres:latest
-    container_name: db-auth
+  db-user:
+    image: postgres:latest-alpine
+    container_name: db-user
     environment:
       POSTGRES_PASSWORD: 500290
-      POSTGRES_USER: auth
+      POSTGRES_USER: users
+
+  db-product:
+    image: postgres:latest-alpine
+    container_name: db-product
+    environment:
+      POSTGRES_PASSWORD: 500290
+      POSTGRES_USER: products
 
   db-shop:
-    image: postgres:latest
+    image: postgres:latest-alpine
     container_name: db-shop
     environment:
       POSTGRES_PASSWORD: 500290
       POSTGRES_USER: shops
+
+  db-order:
+    image: postgres:latest-alpine
+    container_name: db-order
+    environment:
+      POSTGRES_PASSWORD: 500290
+      POSTGRES_USER: orders
+
+  auth-service:
+    image: auth-service:latest
+    container_name: auth-service
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - config-server
+      - db-auth
+      - mongodb-auth
+      - kafka
+    environment:
+      eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
 
   user-service:
     image: user-service:latest
@@ -91,16 +119,40 @@ services:
     environment:
       eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
 
-  auth-service:
-    image: auth-service:latest
-    container_name: auth-service
+  product-service:
+    image: product-service:latest
+    container_name: product-service
     restart: always
     ports:
-      - 8081:8081
+      - 8084:8084
     depends_on:
       - config-server
-      - db-auth
-      - mongodb-auth
+      - db-product
+    environment:
+      eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
+
+  shop-service:
+    image: shop-service:latest
+    container_name: shop-service
+    restart: always
+    ports:
+      - 8085:8085
+    depends_on:
+      - db-shop
+      - config-server
+      - kafka
+    environment:
+      eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
+
+  order-service:
+    image: order-service:latest
+    container_name: order-service
+    restart: always
+    ports:
+      - 8087:8087
+    depends_on:
+      - db-order
+      - config-server
       - kafka
     environment:
       eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
