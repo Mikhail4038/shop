@@ -53,7 +53,7 @@ services:
       eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
 
   db-auth:
-    image: postgres:latest-alpine
+    image: postgres:alpine
     container_name: db-auth
     environment:
       POSTGRES_PASSWORD: 500290
@@ -66,28 +66,28 @@ services:
       - 27017:27017
 
   db-user:
-    image: postgres:latest-alpine
+    image: postgres:alpine
     container_name: db-user
     environment:
       POSTGRES_PASSWORD: 500290
       POSTGRES_USER: users
 
   db-product:
-    image: postgres:latest-alpine
+    image: postgres:alpine
     container_name: db-product
     environment:
       POSTGRES_PASSWORD: 500290
       POSTGRES_USER: products
 
   db-shop:
-    image: postgres:latest-alpine
+    image: postgres:alpine
     container_name: db-shop
     environment:
       POSTGRES_PASSWORD: 500290
       POSTGRES_USER: shops
 
   db-order:
-    image: postgres:latest-alpine
+    image: postgres:alpine
     container_name: db-order
     environment:
       POSTGRES_PASSWORD: 500290
@@ -166,5 +166,16 @@ services:
     depends_on:
       - config-server
       - kafka
+    environment:
+      eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/
+
+  zuul-proxy:
+    image: zuul-proxy:latest
+    container_name: zuul-proxy
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - config-server
     environment:
       eureka.client.service-url.defaultZone: http://host.docker.internal:8761/eureka/

@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.28</version>
         </dependency>
 
         <!--JWT-->
@@ -92,6 +92,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>zuul-proxy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
